@@ -1,0 +1,10 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.login{
+    margin-right: 20px;
+}
+
+

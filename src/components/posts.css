@@ -1,0 +1,21 @@
+
+.posts{
+    width: min-content;
+}
+
+.post-bottom{
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+.post-author{
+    display: flex;
+}
+.post-author img{
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: 3px 2px 5px 0px rgb(79,59,120);
+}
+.post-author h4{
+    margin: auto;
+}
