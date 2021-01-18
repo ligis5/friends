@@ -1,5 +1,15 @@
 .waver{
-    margin-left: 2px;
-    display: grid;
-    border: 2px solid rgb(79,59,120);
+    display: flex;
+    width:50%;
+    height: 100px;
 }
+.waverGroup::-webkit-scrollbar {
+    width: 5px;
+  }
+.waverGroup{
+    height: 55vw;
+    overflow-y: scroll;
+    position: fixed;
+}
+
+

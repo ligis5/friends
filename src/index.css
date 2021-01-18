@@ -1,4 +1,4 @@
-body {
+*{
   background-color: rgb(33, 27, 28);
   margin: 0;
   font-family: 'Do Hyeon', sans-serif;
@@ -6,6 +6,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: aliceblue;
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

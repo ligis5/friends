@@ -1,9 +1,10 @@
-import React,{useEffect, useState, useMemo} from 'react';
+import React,{useEffect, useState} from 'react';
 import Posts from './components/Posts';
 import './App.css';
 import Header from './components/header';
 import Waver from './components/waver';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import {Container, Row, Col} from 'react-bootstrap';
 
 
 
@@ -34,66 +35,62 @@ function App() {
                   const x  = await response.json()
                   setAllPages(x.total / x.limit);
                   setData([...data ,...x.data])
-                  setBandau()
                  setLoading(false)
               } catch {
                   setHasError(true);
               }
               
           }
-          
-        
-          console.log(data)
-
-          
        const nextPage = () =>{
            setPages(pages + 1)
         } ;
        
-        const memoizedData = useMemo(() => data.map(({owner, id}) => (
-          <Waver key={id} owner={owner}/>
-            )), [data])
-
-          const ErrorComponent = () => (<h1>Error</h1>)
+        const ErrorComponent = () => (<h1>Error</h1>)
           
-  return (
-            
-    <div className="App">
-      <Header/>
-        <div className='page'>
-          <div className='people'>
-            {memoizedData}
-          </div>
-                {!hasError && (
-              <InfiniteScroll
-              scrollThreshold={0.9}
-              dataLength={data.length}
-              next={nextPage}
-              hasMore={true}
-              loader={<h4>Loading...</h4>}
-              >
-                  <div className='main'>
-                    <div>
-                      {!loading &&
-                        <Posts
-                          data={data}
-                          page={pages}
-                        />}
-                        {loading && <h1>Loading...</h1>}
+  return ( 
+    <Container fluid className='App'>
+      <Row>
+        <Col>
+          <Header/>
+        </Col>
+      </Row>
+        <Row>
+        <Col className='waverCol'>
+          {!loading &&
+            <Waver loading={loading}/>
+          }{
+            loading && <h5>...Loading</h5>
+          }
+        </Col>
+            <Col>
+                  {!hasError && (
+                <InfiniteScroll
+                scrollThreshold={0.9}
+                dataLength={data.length}
+                next={nextPage}
+                hasMore={true}
+                loader={<h4>Loading...</h4>}
+                >
+                    <div className='main'>
+                        {!loading &&
+                          <Posts
+                            data={data}
+                            page={pages}
+                          />}
+                          {loading && <h1>Loading...</h1>}
                     </div>
-                  </div>
-                  <button onClick={() => window.scrollTo(0, 0)}
-                    style={{position: 'fixed', 
-                    bottom:'0vw',
-                    right: '0vw',
-                    color:'whitesmoke',
-                    backgroundColor: 'rgb(79,59,120)'
-                  }}>Go Top</button>
-              </InfiniteScroll>
-          )}{hasError && <ErrorComponent></ErrorComponent>}
-      </div>
-    </div>
-             
+                    <button onClick={() => window.scrollTo(0, 0)}
+                      style={{position: 'fixed', 
+                      bottom:'0vw',
+                      right: '0vw',
+                      color:'whitesmoke',
+                      backgroundColor: 'rgb(79,59,120)'
+                    }}>Go Top</button>
+                </InfiniteScroll>
+              )}{hasError && <ErrorComponent></ErrorComponent>}
+            </Col>
+        </Row>
+    </Container>         
   );
 }
 

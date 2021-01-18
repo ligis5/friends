@@ -5,6 +5,7 @@ import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 
 
+
 const LikeDislike = ({likes}) => {
 
     const [like, setLike] = useState(likes);
@@ -39,11 +40,11 @@ const LikeDislike = ({likes}) => {
              <FontAwesomeIcon icon={faThumbsUp} color={color} 
                         onClick={likeButton}
                         className={color}
-                        style={{marginTop:'20px', cursor:'pointer'}}/>
-                    <p>Likes: {like}</p>
+                        />
+                    <h6>Likes: {like}</h6>
              <FontAwesomeIcon icon={faThumbsDown} color={color1}
                           onClick={dislikeButton}
-                          style={{marginTop:'20px', cursor:'pointer'}} />
+                           />
         </div>
     )
 }
