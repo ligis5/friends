@@ -1,16 +1,21 @@
 import React from 'react';
 import LikeDislike from './LikeDislike';
-import {Card} from 'react-bootstrap';
+import {Card, Image} from 'react-bootstrap';
 
 
-const Post = ({owner, tags, text, likes, image, publishDate}) => {   
-
-    // {owner.picture}
+const Post = ({owner, tags, text, likes, image, publishDate, isLogin}) => {   
+    
+    let ownerPhoto;
+    if(isLogin === true){
+        ownerPhoto = <Image src={owner.picture} roundedCircle 
+        style={{maxWidth:'60px', maxHeight:'60', position:'absolute', left:'0'}}/>
+    }
 
     return(
         <Card className="text-center" 
-        style={{ width: '40rem', marginTop:'20px' }}>
+        style={{ maxWidth: '40rem', marginTop:'20px' }}>
             <Card.Title style={{margin:'0'}}>
+            {ownerPhoto}
             Posted by {owner.firstName + ' ' + owner.lastName}
             </Card.Title>
            {image && ( <Card.Img variant="top" src={image} />)}

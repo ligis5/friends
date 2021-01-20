@@ -1,0 +1,20 @@
+Form{
+    margin: auto;
+    max-width: 500px;
+    color: aliceblue;
+}
+.formButton{
+    padding: 0;
+    color: aliceblue;
+    font-size: 120%;
+    border-radius: 7%;
+    width: 100px;
+    height: 35px;
+    background-color: rgb(79,59,120);
+    box-shadow: 1px 1px aliceblue;
+}
+.formButton:hover{
+    background-color: rgb(56, 41, 84);
+    margin:1px 1px;
+    box-shadow:none;
+}

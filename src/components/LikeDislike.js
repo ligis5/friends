@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import {Card} from 'react-bootstrap';
 
 
 
@@ -36,16 +37,15 @@ const LikeDislike = ({likes}) => {
     }
 
     return(
-        <div style={{display:'flex', gap:'10px'}}>
+        <Card.Text as='div' style={{display:'flex', gap:'10px'}}>
              <FontAwesomeIcon icon={faThumbsUp} color={color} 
                         onClick={likeButton}
-                        className={color}
                         />
                     <h6>Likes: {like}</h6>
              <FontAwesomeIcon icon={faThumbsDown} color={color1}
                           onClick={dislikeButton}
                            />
-        </div>
+        </Card.Text>
     )
 }
 export default LikeDislike;

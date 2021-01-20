@@ -1,10 +1,19 @@
 .header{
     display: flex;
     justify-content: space-between;
+    color: aliceblue;
 }
-
-.login{
-    margin-right: 20px;
+.regLog{
+    display: flex;
+    gap: 20px;
+}
+h2{
+    color:aliceblue;
+    text-decoration: none;
+    text-shadow:2px -2px rgb(15, 72, 133);
+}
+.signOut{
+    text-align: center;
 }
 
 

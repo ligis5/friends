@@ -2,10 +2,9 @@ import React,{useState, useEffect} from 'react';
 import './waver.css';
 import {ListGroup} from 'react-bootstrap';
 
-const Waver = ({loading}) => {
+const Waver = ({loading, APP_ID}) => {
 
      const BASE_URL = 'https://dummyapi.io/data/api/user';
-     const APP_ID = '5feb30439db72cfa73c9166d';
 
      const [pages, setPages] = useState(0);
      const [data, setData] = useState([]);
@@ -34,7 +33,6 @@ const Waver = ({loading}) => {
     }
     
 
-    console.log(pages)
     return (
         <div>
             {!loading === true && !waverLoading === true ? (
