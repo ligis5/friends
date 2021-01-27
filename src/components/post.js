@@ -1,22 +1,20 @@
 import React from 'react';
 import LikeDislike from './LikeDislike';
 import {Card, Image} from 'react-bootstrap';
+import { Link, Route } from "react-router-dom";
 
 
-const Post = ({owner, tags, text, likes, image, publishDate, isLogin}) => {   
+
+const Post = ({owner, tags, text, likes, image, publishDate, id}) => {   
     
-    let ownerPhoto;
-    if(isLogin === true){
-        ownerPhoto = <Image src={owner.picture} roundedCircle 
-        style={{maxWidth:'60px', maxHeight:'60', position:'absolute', left:'0'}}/>
-    }
 
     return(
         <Card className="text-center" 
         style={{ maxWidth: '40rem', marginTop:'20px' }}>
             <Card.Title style={{margin:'0'}}>
-            {ownerPhoto}
-            Posted by {owner.firstName + ' ' + owner.lastName}
+                    <Image src={owner.picture} roundedCircle 
+                    style={{maxWidth:'60px', maxHeight:'60', position:'absolute', left:'0'}}/>
+                Posted by {owner.firstName + ' ' + owner.lastName}
             </Card.Title>
            {image && ( <Card.Img variant="top" src={image} />)}
            {!image && (<h1>Loading...</h1>)}

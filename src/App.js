@@ -10,7 +10,7 @@ import { withRouter,
 } from "react-router-dom";
 import Login from './components/Login';
 import Register from './components/Register';
-
+import {auth} from './components/firebase';
 
 
 
@@ -28,11 +28,16 @@ function App({history, location}) {
       const [loading, setLoading] = useState(true);
       const [hasError, setHasError] = useState(false);
       const [isLogin, setIsLogin] = useState(false);
+      const [currentUser, setCurrentUser] = useState(null);
       
   
+
       useEffect(() => {
-        afterLogin();
           getData();
+          afterLogin();
+          return {
+            
+          }
       }, [pages, isLogin]);
           const getData = async () => {
               try{
@@ -40,41 +45,58 @@ function App({history, location}) {
                   const x  = await response.json()
                     setData([...data ,...x.data])
                  setLoading(false);
-              } catch {
+              } catch(error) {
                   setHasError(true);
+                  console.log(error);
               }
               
           }
-          const confirmLogin = () => {
-            setIsLogin(true);
+          console.log(currentUser)
+          console.log(isLogin)
+          
+          const afterLogin = () => {
+            if(isLogin === true) {
+              history.push('/')
+            }else if(isLogin === false){
+              history.push('/login')
+            }
           }
+          const onAuthStateChanged = () => {
+            auth.onAuthStateChanged( user => {
+              setCurrentUser(user);
+                if(currentUser){
+                  loginTrue();
+                }
+                else{
+                 setIsLogin(false)
+                } 
+              })
+          }
+          
 
        const nextPage = () =>{
            setPages(pages + 1);
         };
         const ErrorComponent = () => (<h1>Error</h1>);
 
-        const afterLogin = () => {
-          if(isLogin === true) {
-            history.push('/')
-          }else{
-            history.push('/login')
-          }
-        }
-        const signOut = () => {
-          setIsLogin(true);
-        }
+        const loginTrue = () => {
+          setIsLogin(true)
+      }
+      
 
+      const googleSignOut = () => {
+        auth.signOut();
+       }
 
   return ( 
     <Container fluid className='App'>
       <Row>
         <Col>
-          <Header 
+          <Header
+          isLogin={isLogin} 
            location={location.pathname}
-           loading={loading} 
-           isLogin={isLogin}
-           signOut={signOut}/>
+           googleSignOut={googleSignOut}
+           />
         </Col>
       </Row>
       <Switch>
@@ -93,7 +115,6 @@ function App({history, location}) {
                       <Container className='main' style={{padding:'0'}}>
                           {!loading &&
                             <Posts
-                              isLogin={isLogin}
                               data={data}
                               nextPage={nextPage}
                             />}
@@ -112,9 +133,7 @@ function App({history, location}) {
           </Row>
         </Route>
         <Route exact path='/login'>
-          <Login 
-          confirmLogin={confirmLogin}
-          afterLogin={afterLogin}
+          <Login loginTrue={loginTrue} isLogin={isLogin}
           />
         </Route>
         <Route exact path='/register'>

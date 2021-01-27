@@ -27,11 +27,6 @@ const Waver = ({loading, APP_ID}) => {
         }
     }
 
-    const randomNumber = () => {
-        const y = Math.floor(Math.random() * 6);
-        setPages(y);
-    }
-    
 
     return (
         <div>

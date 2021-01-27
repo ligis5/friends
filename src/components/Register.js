@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {Form, Button, Row} from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Form, Button, Row, Container, Col} from 'react-bootstrap';
+import { withRouter } from "react-router-dom";
+import {auth} from './firebase';
 
-const Register = () => {
+const Register = ({history}) => {
     const [regEmail, setRegEmail] = useState('');
     const [regPassword, setRegPassword] = useState('');
     const [regConfirmPassword, setRegConfirmPassowrd] = useState('');
@@ -20,12 +22,16 @@ const Register = () => {
         setRegConfirmPassowrd(e.target.value);
     }
 
-    const checkPasswords = () => {
+    const checkPasswords = async () => {
         if(regConfirmPassword !== regPassword){
             setVisible('');
         }else{
-            localStorage.setItem('password', regPassword);
-            
+            try{
+                const { user } = await auth.createUserWithEmailAndPassword(regEmail, regPassword);
+            } catch(error){
+                console.log(error);
+            }
+            history.push('/login')
         }
     }
 
@@ -34,7 +40,6 @@ const Register = () => {
         setRegEmail('');
         setRegPassword('');
         setRegConfirmPassowrd('')
-        localStorage.setItem('email', regEmail);
         checkPasswords();
     }
 
@@ -42,6 +47,8 @@ const Register = () => {
 
 
     return (
+        <Container>
+          <h1 style={{color: 'aliceblue', textAlign:'center'}}>Register</h1>
             <Form onSubmit={getLogin}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -73,8 +80,9 @@ const Register = () => {
                     </h5>
                 </Row>
             </Form>
+        </Container>
     )
 }
 
 
-export default Register;
+export default withRouter(Register);
