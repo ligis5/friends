@@ -12,8 +12,13 @@ const Post = ({owner, tags, text, likes, image, publishDate, id}) => {
         <Card className="text-center" 
         style={{ maxWidth: '40rem', marginTop:'20px' }}>
             <Card.Title style={{margin:'0'}}>
-                    <Image src={owner.picture} roundedCircle 
-                    style={{maxWidth:'60px', maxHeight:'60', position:'absolute', left:'0'}}/>
+                    <Image src={owner.picture} roundedCircle
+                    style={{
+                        maxWidth:'60px',
+                        maxHeight:'60', 
+                        position:'absolute', 
+                        left:'0'
+                    , boxShadow:'5px 2px 2px 1px rgb(56, 41, 84)'}}/>
                 Posted by {owner.firstName + ' ' + owner.lastName}
             </Card.Title>
            {image && ( <Card.Img variant="top" src={image} />)}

@@ -5,11 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter} from 'react-router-dom';
+import FirebaseFunctionsFiles from './components/FirebaseComponents/firebaseFunctionsFiles';
+import FirebaseFunctionsAuth from "./components/FirebaseComponents/firebaseFunctionsAuth";
 
 
 ReactDOM.render(
   <BrowserRouter>
+  <FirebaseFunctionsAuth>
+      <FirebaseFunctionsFiles>
     <App />
+    </FirebaseFunctionsFiles>
+    </FirebaseFunctionsAuth>
   </BrowserRouter>,
   document.getElementById('root')
 );

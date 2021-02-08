@@ -1,0 +1,28 @@
+Form{
+    margin: auto;
+    max-width: 500px;
+    min-width: 300px;
+    color: aliceblue;
+}
+.formButton{
+    padding: 0;
+    color: aliceblue;
+    font-size: 120%;
+    border-radius: 7%;
+    width: 100px;
+    height: 35px;
+    background-color: rgb(79,59,120);
+    box-shadow: 1px 1px aliceblue;
+}
+.formButton:active{
+    border: none;
+    background-color: rgb(56, 41, 84);
+    margin:1px 1px;
+    box-shadow:none;
+}
+.google{
+    background-color: rgb(66,133,244);
+}
+.google:active{
+    background-color: rgb(38, 85, 162);
+}
