@@ -14,13 +14,12 @@ const Login = () => {
     const email = useRef();
     const password = useRef();
     const [visible, setVisible] = useState('none');
-    const { setUserProfile } = useData();
     
     
     
 
     
-      
+      let wrongEmailOrPass;
     const loginWithEmail = async () => {
         try{
              login(email.current.value, password.current.value);
@@ -28,6 +27,9 @@ const Login = () => {
         }catch(error){
             setVisible('');
             console.log(error)
+            wrongEmailOrPass = <p style={{ display:visible, color:'#da1c1c'}}>
+            Wrong email or password
+            </p> 
         }
     }
 
@@ -47,9 +49,7 @@ const Login = () => {
             <Form onSubmit={getLogin}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{display: 'flex'}}>Email address
-                    <p style={{ display:visible, color:'#da1c1c'}}>
-                        Wrong email or password
-                        </p> 
+                    {wrongEmailOrPass}
                     </Form.Label>
                     <Form.Control required
                     type="email" placeholder="Enter email" ref={email} />
