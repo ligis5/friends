@@ -10,6 +10,8 @@ import NameAndPhoto from "./components/UserAuth/NameAndPhoto";
 import PrivateRoutingIn from "./components/Routing/PrivateRoutingIn";
 import PrivateRoutingOut from "./components/Routing/PrivateRoutingOut";
 import PrivateRoutingReg from "./components/Routing/PrivateRoutingReg";
+import ProfilePage from './components/Content/ProfilePage';
+
 
 const App = () => {
 
@@ -53,6 +55,9 @@ const App = () => {
         </PrivateRoutingOut>
         <PrivateRoutingIn exact path="/name-photo">
           <NameAndPhoto />
+        </PrivateRoutingIn>
+        <PrivateRoutingIn exact path="/profile">
+          <ProfilePage />
         </PrivateRoutingIn>
       </Switch>
     </Container>

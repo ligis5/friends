@@ -22,10 +22,8 @@ const Register = () => {
         }else{
             try{
                 setLoading(true)
-               register(regEmail.current.value, regPassword.current.value)
-               if(currentUser){
-                history.push('/name-photo')
-               }
+              await register(regEmail.current.value, regPassword.current.value)
+             
             } catch(error){
                 console.log(error);
                 if(error.code === 'auth/email-already-in-use'){

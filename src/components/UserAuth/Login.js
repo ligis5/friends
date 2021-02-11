@@ -19,17 +19,12 @@ const Login = () => {
     
 
     
-      let wrongEmailOrPass;
     const loginWithEmail = async () => {
         try{
-             login(email.current.value, password.current.value);
-            history.push('/')
+           await login(email.current.value, password.current.value);
         }catch(error){
             setVisible('');
             console.log(error)
-            wrongEmailOrPass = <p style={{ display:visible, color:'#da1c1c'}}>
-            Wrong email or password
-            </p> 
         }
     }
 
@@ -49,7 +44,9 @@ const Login = () => {
             <Form onSubmit={getLogin}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label style={{display: 'flex'}}>Email address
-                    {wrongEmailOrPass}
+                    <p style={{ display:visible, color:'#da1c1c'}}>
+                        Wrong email or password
+                        </p> 
                     </Form.Label>
                     <Form.Control required
                     type="email" placeholder="Enter email" ref={email} />

@@ -7,9 +7,9 @@
     height:auto;
     margin: auto;
     border: 1px solid aliceblue;
+    color: aliceblue;
 }
 .cardTitle{
-    color: aliceblue;
     text-align: center;
     
 }
@@ -42,13 +42,14 @@ input[type="file"] {
 }
 .nameInput{
     border-color: rgb(79,59,120);
-    color: aliceblue;
+    color:aliceblue;
     text-align: center;
 }
 
 .nameInput::placeholder{
-    color:aliceblue;
     width: 70%;
+    color:aliceblue;
+    
 }
 
 .cardBottom{
@@ -59,14 +60,12 @@ input[type="file"] {
     width: 300px;
 }
 .confirm{
-    color: aliceblue;
 padding: 0;
 background-color: rgb(29, 161, 29);
 border-radius: 50%;
 width: 30px;
 }
 .cancel{
-    color: aliceblue;
     padding: 0;
     background-color: rgb(207, 55, 55);
     border-radius: 50%;
