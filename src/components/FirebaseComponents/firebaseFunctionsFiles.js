@@ -15,7 +15,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const { currentUser } = useAuth();
   const [userData, setUserData] = useState();
   const [userPhoto, setUserPhoto] = useState();
-  const [loading, setLoading] = useState(true);
+
 
   const createUserProfile = (userName) => {
     const currentTime = new Date();
@@ -48,17 +48,23 @@ const FirebaseFunctionsFiles = ({ children }) => {
       });
   }
 
-  const createUserProfilePhoto = (profilePhoto) => {
+  const createUserProfilePhoto = (profilePhoto, newProfilePhoto) => {
+    if(newProfilePhoto){
+      setUserPhoto(newProfilePhoto)
+    }
     return storageRef
       .child(`${currentUser.uid}/profilePhoto/profilePic`)
       .put(profilePhoto);
   };
 
+  
+
+
   const setUserProfile = async () => {
     if (currentUser) {
       try {
         const docRef = await firestore.collection("users").doc(currentUser.uid);
-        docRef.get().then((doc) => {
+        docRef.onSnapshot((doc) => {
           if (doc && doc.exists) {
             setUserData(doc.data());
             storageRef
@@ -74,7 +80,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       }
     }
   };
-
+  
   useEffect(() => {
     setUserProfile();
   }, [currentUser]);

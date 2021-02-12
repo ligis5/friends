@@ -41,7 +41,7 @@ const Header = () => {
         {currentUser ? (
           <Row style={{ display: "flex", flexWrap: "nowrap" }}>
             <Image
-              src={userData ? userPhoto : basicUser}
+              src={userPhoto ? userPhoto : basicUser}
               roundedCircle
               style={{
                 maxWidth: "80px",

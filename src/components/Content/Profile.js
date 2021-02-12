@@ -1,41 +1,37 @@
 import React, { useState } from "react";
 import { Card, Image, Col, Row, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faCheck, faBan  } from "@fortawesome/free-solid-svg-icons";
 import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
-import Tilt from "react-tilt";
-import basicUser from ".././basicUser.png";
 import "./Profile.css";
 import AboutMe from './AboutMe';
 
 
 const Profile = () => {
-  const { userPhoto, userData } = useData();
-  const [userName, setUserName] = useState();
-//   const [profilePhoto, setProfilePhoto] = useState(userPhoto);
+  const { userPhoto, userData, createUserProfilePhoto, updateUserProfile } = useData();
+  const [newProfilePhoto, setNewProfilePhoto] = useState();
+  const [confirmPhoto, setConfirmPhoto] = useState(false)
+  const [photoFile, setPhotoFile] = useState();
   
-//   const handleAddPhoto = (e) => {
-//     const reader = new FileReader();
-//     const file = e.target.files[0];
-//     createUserProfilePhoto(file);
-//     if (file) {
-//       reader.onloadend = () => {
-//         setProfilePhoto(reader.result);
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
 
-//  const userProfileButton = () => {
-//    if(!userName){
-//      alert('Add profile photo and user name.')
-//    }else{
-//     setUserProfile()
-//     createUserProfile(userName);
-//    }
-    
-//  }
 
+  const handleAddPhoto = (e) => {
+    const file = e.target.files[0];
+    setPhotoFile(file)
+    if (file) {
+        setNewProfilePhoto(URL.createObjectURL(file));
+      setConfirmPhoto(true)
+    }
+  };
+  
+
+  const uploadPhoto = () => {
+    createUserProfilePhoto(photoFile, newProfilePhoto);
+    setConfirmPhoto(false)
+  }
+  const cancelPhoto = () => {
+    setConfirmPhoto(false)
+  }
 
   const { profilePhoto, createdAt, email, ...otherData } = userData || {};
 
@@ -54,30 +50,55 @@ if(createdAt){
         </Col>
         <Card.Body bsPrefix="user">
           <a href={userPhoto} target="_blank">
-            <Tilt className="TiltProfile" options={{ max: 10, scale: 1.05 }}>
               <Card.Img
                 className="profileImage"
-                src={userData ? userPhoto : basicUser}
+                src={newProfilePhoto ? newProfilePhoto : userPhoto}
               />
-            </Tilt>
           </a>
           <Container>
             <Row>
-              <label htmlFor="file-upload" className="file-upload">
+              {!confirmPhoto ?
+                <>
+                <label htmlFor="file-upload" className="file-upload" >
                 <div className="fileUploadButton">
                   <FontAwesomeIcon
                     className="awesomeAboutPhoto"
                     icon={faEdit}
                     color="aliceblue"
                   />
-                  <input
+                  <input 
                     id="file-upload"
                     type="file"
                     accept="image/x-png, image/jpeg"
-                    // onChange={handleAddPhoto}
+                    onChange={handleAddPhoto}
                   />
                 </div>
               </label>
+              </>
+              :
+              <>
+              <button className="aboutMe-button">
+                       <FontAwesomeIcon
+                         className="awesomeAbout"
+                         icon={faBan}
+                         color="aliceblue"
+                         onClick={cancelPhoto}
+                       />
+                     </button>
+                     <button style={{marginLeft:'auto'}}
+                       className="aboutMe-button"
+                       id="onOff1"
+                       onClick={uploadPhoto}
+                     >
+                       <FontAwesomeIcon
+                         className="awesomeAbout"
+                         icon={faCheck}
+                         color="aliceblue"
+                       />
+                     </button>
+              </>
+              }
+              
             </Row>
             <h5 style={{ textAlign: "center" }}>About Me</h5>
             <br />

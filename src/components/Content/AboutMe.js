@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEyeSlash, faEye, faEdit, faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 import {Container} from 'react-bootstrap';
-import ShowHide from "./ShowHide";
 import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
 
 
@@ -10,9 +9,7 @@ import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
 
 const AboutMe = ({value, name}) => {
 
-  
 
-    const [show, setShow] = useState(true);
     const [edit, setEdit] = useState(true);
     const inputValue = useRef('');
     const { updateUserProfile, userData } = useData();
@@ -28,9 +25,7 @@ useEffect( async () => {
   setUpload(false)
 }, [upload]);
 
-    const onOff = () => {
-        setShow(show ? false : true)
-    }
+    
 const editAboutMe = () => {
     setEdit(edit ? false : true)
 }
@@ -51,44 +46,29 @@ const cancelEdit = () => {
 
     return(
         <Container style={{display:'flex', marginTop:'10px', paddingRight:'0'}}>
-        <div style={{display:'flex'}}>{name}
+        <div style={{display:'flex'}}>{name} 
         :
-        <ShowHide show={show}>{edit ? value : <input style={{color:'aliceblue'}} ref={inputValue} />}</ShowHide></div>
+        {edit ? <div style={{marginLeft:'5px'}}>{value}</div> : <input style={{color:'aliceblue'}} ref={inputValue} />}</div>
               <div style={{width:'max-content'}}
                className="aboutMe-buttonGroup">
                    {edit ?
-                   <>
-                       <button className="aboutMe-button">
+                       <button className="aboutMe-button" onClick={editAboutMe}>
                        <FontAwesomeIcon
                          className="awesomeAbout"
                          icon={faEdit}
                          color="aliceblue"
-                         onClick={editAboutMe}
                        />
                      </button>
-                     <button
-                       className="aboutMe-button"
-                       id="onOff1"
-                       onClick={onOff}
-                     >
-                       <FontAwesomeIcon
-                         className="awesomeAbout"
-                         icon={ show ? faEye : faEyeSlash }
-                         color="aliceblue"
-                       />
-                     </button>
-                    </>
                     :
                     <>
-                       <button className="aboutMe-button">
+                       <button className="aboutMe-button" onClick={confirmEdit}>
                        <FontAwesomeIcon
                          className="awesomeAbout"
                          icon={faCheck}
                          color="aliceblue"
-                         onClick={confirmEdit}
                        />
                      </button>
-                     <button
+                     <button onClick={cancelEdit}
                        className="aboutMe-button"
                        id="onOff1"
                      >
@@ -96,7 +76,6 @@ const cancelEdit = () => {
                          className="awesomeAbout"
                          icon={ faBan }
                          color="aliceblue"
-                         onClick={cancelEdit}
                        />
                      </button>
                     </>

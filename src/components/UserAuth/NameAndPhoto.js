@@ -15,23 +15,20 @@ const NameAndPhoto = () => {
   const { createUserProfilePhoto, createUserProfile, setUserProfile } = useData();
   const userName = useRef();
   const [profilePhoto, setProfilePhoto] = useState();
+  const [photoFile, setPhotoFile] = useState();
  
-
-
+  
 
   const handleAddPhoto = (e) => {
-    const reader = new FileReader();
     const file = e.target.files[0];
-    createUserProfilePhoto(file);
+    setPhotoFile(file)
     if (file) {
-      reader.onloadend = () => {
-        setProfilePhoto(reader.result);
-      };
-      reader.readAsDataURL(file);
+        setProfilePhoto(URL.createObjectURL(file));
     }
   };
 
  const userProfileButton = () => {
+  createUserProfilePhoto(photoFile);
    if(!userName.current.value){
      alert('Add profile photo and user name.')
    }else{
@@ -66,6 +63,7 @@ const NameAndPhoto = () => {
               style={{
                 backgroundColor: "rgb(207, 55, 55)",
                 borderRadius: "50%",
+                color:'aliceblue'
               }}
             />
           </button>
@@ -84,6 +82,7 @@ const NameAndPhoto = () => {
               style={{
                 backgroundColor: "rgb(29, 161, 29)",
                 borderRadius: "50%",
+                color:'aliceblue'
               }}
             />
           </button>
