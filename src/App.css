@@ -18,5 +18,11 @@
     background: rgb(174, 11, 11);
   }
 
+  /* @media only screen and (max-width: 400px) {
+    .posts{
+      justify-content: center;
+    }
+  } */
+
 
 

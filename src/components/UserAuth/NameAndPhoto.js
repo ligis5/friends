@@ -27,8 +27,8 @@ const NameAndPhoto = () => {
     }
   };
 
- const userProfileButton = () => {
-  createUserProfilePhoto(photoFile);
+ const userProfileButton = async () => {
+ await createUserProfilePhoto(photoFile);
    if(!userName.current.value){
      alert('Add profile photo and user name.')
    }else{

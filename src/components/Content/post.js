@@ -1,17 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import LikeDislike from './LikeDislike';
-import {Card, Image} from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import { Link, Route } from "react-router-dom";
+import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
+import ReactPlayer from 'react-player/lazy';
 
 
 
-const Post = ({owner, tags, text, likes, image, publishDate, id}) => {   
-    
 
+const Post = ({postData}) => {   
+
+    const [postImage, setPostImage] = useState();
+    const { storageRef } = useData();
+    const {postPhoto, aboutPost, createdAt, video } = postData;
+
+   const publishDate = createdAt.toDate().toDateString();
+
+   if(postPhoto){
+    storageRef
+              .child(postPhoto)
+              .getDownloadURL()
+              .then((url) => {
+                setPostImage(url);
+              });
+   }
+
+   
+   
     return(
         <Card className="text-center" 
-        style={{ maxWidth: '40rem', marginTop:'20px' }}>
-            <Card.Title style={{margin:'0'}}>
+        style={{ maxWidth:'600px',minWidth:'400px', marginTop:'20px', color:'aliceblue'}}>
+            {/* <Card.Title style={{margin:'0'}}>
                     <Image src={owner.picture} roundedCircle
                     style={{
                         maxWidth:'60px',
@@ -20,12 +39,13 @@ const Post = ({owner, tags, text, likes, image, publishDate, id}) => {
                         left:'0'
                     , boxShadow:'5px 2px 2px 1px rgb(56, 41, 84)'}}/>
                 Posted by {owner.firstName + ' ' + owner.lastName}
-            </Card.Title>
-           {image && ( <Card.Img variant="top" src={image} />)}
-           {!image && (<h1>Loading...</h1>)}
+            </Card.Title> */}
+            {postImage ? <Card.Img variant="top" src={postImage}/> : <></>}
+            {video ? <ReactPlayer controls={true} width='598px' url={video}/> : <></>}
+            
             <Card.Body style={{padding:'0'}}>
                 <Card.Title style={{marginTop:'20px',}}>
-                    {text}
+                    {aboutPost}
                 </Card.Title>
                 <Card.Body style={{display:'grid',
                  gridTemplateColumns:'repeat(3, auto)',
@@ -33,15 +53,11 @@ const Post = ({owner, tags, text, likes, image, publishDate, id}) => {
                  marginTop:'70px',
                  justifyContent: 'space-between'
                  }}>
-                        <Card.Body style={{display:'flex', padding:'0', paddingLeft:'10px'}}>
-                        {
-                        tags.map(tag => <p style={{margin:'0'}} key={tag}>{'#' + tag}</p>)}
-                        </Card.Body>
-                    <Card.Body style={{border:'none', padding:'0'}}>
+                    {/* <Card.Body style={{border:'none', padding:'0'}}>
                         <LikeDislike likes={likes}/>
-                    </Card.Body>
+                    </Card.Body> */}
                         <Card.Text style={{display:'flex', padding:'0', paddingRight:'10px'}}>
-                            Date: {publishDate.substring(0,10)}
+                            Date: {publishDate.substring(4)}
                         </Card.Text>
                 </Card.Body>
             </Card.Body>

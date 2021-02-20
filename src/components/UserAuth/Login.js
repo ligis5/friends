@@ -3,13 +3,12 @@ import {Form, Button, Row, Container} from 'react-bootstrap';
 import './Login.css';
 import { googleAuth } from '../FirebaseComponents/firebase';
 import { useAuth } from '../FirebaseComponents/firebaseFunctionsAuth';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
 
 
 
 const Login = () => {
-    const history = useHistory();
     const { login } = useAuth();
     const email = useRef();
     const password = useRef();

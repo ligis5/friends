@@ -10,14 +10,18 @@ import NameAndPhoto from "./components/UserAuth/NameAndPhoto";
 import PrivateRoutingIn from "./components/Routing/PrivateRoutingIn";
 import PrivateRoutingOut from "./components/Routing/PrivateRoutingOut";
 import PrivateRoutingReg from "./components/Routing/PrivateRoutingReg";
+import PrivateRoutingUserData from './components/Routing/PrivateRoutingUserData';
 import ProfilePage from './components/Content/ProfilePage';
+import Posts from './components/Content/Posts';
+import CreatePost from './components/Content/CreatePost';
+
 
 
 const App = () => {
 
 
   return (
-    <Container fluid className="App">
+    <Container fluid className="App" style={{minWidth:'600px'}}>
       <Row>
         <Col style={{ padding: "0" }}>
           <Header />
@@ -25,6 +29,12 @@ const App = () => {
       </Row>
       <Switch>
         <PrivateRoutingIn exact path="/">
+          <Row>
+          <CreatePost />
+          <Col className='posts' style={{display:'grid', justifyContent:'center'}}>
+          <Posts />
+          </Col>
+          </Row>
           <Row>
             <Col style={{ padding: "0" }}>
               <Container style={{ padding: "0" }}>
@@ -53,9 +63,9 @@ const App = () => {
         <PrivateRoutingOut exact path="/forgot-password">
           <ForgotPassword />
         </PrivateRoutingOut>
-        <PrivateRoutingIn exact path="/name-photo">
+        <PrivateRoutingUserData exact path="/name-photo">
           <NameAndPhoto />
-        </PrivateRoutingIn>
+        </PrivateRoutingUserData>
         <PrivateRoutingIn exact path="/profile">
           <ProfilePage />
         </PrivateRoutingIn>

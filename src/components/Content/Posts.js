@@ -1,42 +1,47 @@
-
 import React from 'react';
 import Post from './post';
-import {Container} from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
+import { useCallback } from 'react';
 
 
- const Posts = ({data, nextPage}) => {
-    
-    const hash = {};
-    const filteredData = data.filter(({owner, id}) => {
-      const key = `${owner}${id}`; 
-      if (key in hash) {
-        return false;
+ const Posts = () => {
+   const { userPosts, allUsers } = useData()
+
+   let usersData = [];
+   allUsers.map((doc) => {
+    usersData.push({[doc.id]: doc.data()});
+});
+  
+  let allPosts;
+  usersData.map(y => {
+    userPosts.map(x => {
+      if(Object.keys(y).toString() === x.data().userId){
+       const q = Object.assign(x.data(), {['id']:x.id})
+       allPosts =  Object.assign(q, y)
       }
-     
-      hash[key] = true;
-      return true;
-    });
+    })
+  })
+  console.log(allPosts)
+
+
 
     return(
-        <InfiniteScroll
-        scrollThreshold={0.9}
-        dataLength={data.length}
-        next={nextPage}
-        hasMore={true}
-        loader={<h4>Loading...</h4>}
-        >
-            <Container style={{padding:'0'}}>
-                {
-                 filteredData.map(({id, ...otherPostProps}) => (
-                    <Post key={id} id={id}
-                    {...otherPostProps}
-                    owner={otherPostProps.owner}
-                    tags={otherPostProps.tags}
+        // <InfiniteScroll
+        // scrollThreshold={0.9}
+        // dataLength={data.length}
+        // next={nextPage}
+        // hasMore={true}
+        // loader={<h4>Loading...</h4>}
+        // >
+            <div>
+                {/* {
+                 userPosts.map((postData) => (
+                    <Post key={postData.id} postData={postData.data()}
                  />
-                 ))}
-            </Container>
-        </InfiniteScroll>
+                 ))} */}
+            </div>
+        // </InfiniteScroll>
     )
  }
         
