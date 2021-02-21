@@ -86,6 +86,18 @@ const Header = () => {
                     <p className="yes">Profile</p>
                   </Link>
                 </Dropdown.Item>
+                <Dropdown.Item as="div" href="#/action-1" bsPrefix="item1">
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      height: "min-content",
+                      width: "max-content",
+                    }}
+                    to="/"
+                  >
+                    <p className="yes">Home</p>
+                  </Link>
+                </Dropdown.Item>
                 <Dropdown.Item as="div" href="#/action-2" bsPrefix="item2">
                   <Link
                     onClick={SignOut}

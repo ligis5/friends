@@ -109,6 +109,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       setNewPost(true)
       return firestore.collection("posts").doc().set({
           aboutPost: postText,
+          likes: 0,
         createdAt: currentTime,
         userId: currentUser.uid
       });
@@ -124,6 +125,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       return firestore.collection("posts").doc().set({
           aboutPost: postText,
           postPhoto: x,
+          likes: 0,
           createdAt: currentTime,
           userId: currentUser.uid
       });
@@ -135,6 +137,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       return firestore.collection("posts").doc().set({
           aboutPost: postText,
           video: sendUrl,
+          likes: 0,
         createdAt: currentTime,
         userId: currentUser.uid
       });
@@ -161,6 +164,14 @@ const FirebaseFunctionsFiles = ({ children }) => {
         }
       );
   };
+
+const getLikeDislike = (like, postId) => {
+  console.log(like)
+  return firestore.collection("posts").doc(postId).update({
+    likes: like,
+});
+}
+
   useEffect(() => {
     if(newPost){
       retrievePosts()
@@ -176,6 +187,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   }, [currentUser]);
 
   const functions = {
+    // functions
     createUserProfilePhoto,
     createUserProfile,
     setUserProfile,
@@ -184,11 +196,15 @@ const FirebaseFunctionsFiles = ({ children }) => {
     uploadPostPhoto,
     createPostT,
     createPostV,
+    getLikeDislike,
+    // functions
+    // data
     userData,
     userPhoto,
     userPosts,
     storageRef,
     allUsers
+    // data
   };
   return (
     <FileContext.Provider value={functions}>{children}</FileContext.Provider>

@@ -2,27 +2,26 @@ import React from 'react';
 import Post from './post';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
-import { useCallback } from 'react';
+
 
 
  const Posts = () => {
    const { userPosts, allUsers } = useData()
-
-   let usersData = [];
-   allUsers.map((doc) => {
-    usersData.push({[doc.id]: doc.data()});
-});
   
-  let allPosts;
-  usersData.map(y => {
+  
+  // here we map over all posts and all users and for every post we assign a user that created said post.
+let allPosts = [];
+  allUsers.map(y => {
+   const z = Object.assign(y.data(), {['userId']:y.id})
     userPosts.map(x => {
-      if(Object.keys(y).toString() === x.data().userId){
+      if(z.userId === x.data().userId){
        const q = Object.assign(x.data(), {['id']:x.id})
-       allPosts =  Object.assign(q, y)
+       Object.assign(q, {['user']:z})
+       allPosts.push(q)
+       
       }
     })
   })
-  console.log(allPosts)
 
 
 
@@ -35,11 +34,11 @@ import { useCallback } from 'react';
         // loader={<h4>Loading...</h4>}
         // >
             <div>
-                {/* {
-                 userPosts.map((postData) => (
-                    <Post key={postData.id} postData={postData.data()}
+                {
+                 allPosts.map((postData) => (
+                    <Post key={postData.id} postData={postData}
                  />
-                 ))} */}
+                 ))}
             </div>
         // </InfiniteScroll>
     )
