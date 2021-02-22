@@ -7,6 +7,7 @@ import { faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
 import Tilt from 'react-tilt';
 import { Link, useHistory } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 
 
 
@@ -17,11 +18,20 @@ const NameAndPhoto = () => {
   const [profilePhoto, setProfilePhoto] = useState();
   const [photoFile, setPhotoFile] = useState();
  
-  
-
-  const handleAddPhoto = (e) => {
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true
+  }
+   
+  const handleAddPhoto = async (e) => {
     const file = e.target.files[0];
-    setPhotoFile(file)
+    try {
+      const compressedFile = await imageCompression(file, options);
+      await setPhotoFile(compressedFile);
+    } catch (error) {
+      console.log(error);
+    }
     if (file) {
         setProfilePhoto(URL.createObjectURL(file));
     }

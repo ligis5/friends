@@ -21,6 +21,11 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const [allUsers, setAllUsers] = useState();
 
   
+  const uuidv4 = () =>{
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
+  }
   
 
   const currentTime = new Date();
@@ -116,14 +121,13 @@ const FirebaseFunctionsFiles = ({ children }) => {
     }
   }
   // used to create photo post, using chosen photo from users device.
-  const createPostP = (postText, photoFile) => {
+  const createPostP = (postText, photoFile, y) => {
     const x = storage.ref(
-      `${currentUser.uid}/PostPhotos/${photoFile.name}`
+      `${currentUser.uid}/PostPhotos/${y}${photoFile.name}`
     ).fullPath
-      setNewPost(true)
-
       return firestore.collection("posts").doc().set({
           aboutPost: postText,
+          randomKey:y,
           postPhoto: x,
           likes: 0,
           createdAt: currentTime,
@@ -146,8 +150,9 @@ const FirebaseFunctionsFiles = ({ children }) => {
 // used for putting users post photos in storage and once that is done,
 //  it runs function that creates new user photo post.
   const uploadPostPhoto = ( postText, photoFile) => {
+    const y = uuidv4();
     return  storageRef
-      .child(`${currentUser.uid}/PostPhotos/${photoFile.name}`)
+      .child(`${currentUser.uid}/PostPhotos/${y}${photoFile.name}`)
       .put(photoFile)
       .on(
         "state_changed",
@@ -156,7 +161,10 @@ const FirebaseFunctionsFiles = ({ children }) => {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
           if(progress === 100){
-            createPostP( postText, photoFile)
+            createPostP( postText, photoFile, y)
+            setTimeout(() => {
+              setNewPost(true)
+            }, 500);
           }
         },
         (error) => {
@@ -166,10 +174,19 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
 
 const getLikeDislike = (like, postId) => {
-  console.log(like)
   return firestore.collection("posts").doc(postId).update({
     likes: like,
 });
+}
+
+const deletePost =async (postId, postPhoto) => {
+ await firestore.collection("posts").doc(postId).delete()
+  if(postPhoto){
+    storageRef.child(postPhoto).delete()
+  }
+  setTimeout(() => {
+    retrievePosts()
+  }, 500);
 }
 
   useEffect(() => {
@@ -192,11 +209,11 @@ const getLikeDislike = (like, postId) => {
     createUserProfile,
     setUserProfile,
     updateUserProfile,
-    createPostP,
     uploadPostPhoto,
     createPostT,
     createPostV,
     getLikeDislike,
+    deletePost,
     // functions
     // data
     userData,

@@ -1,6 +1,5 @@
 import React from 'react';
 import Post from './post';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
 
 
@@ -26,13 +25,6 @@ let allPosts = [];
 
 
     return(
-        // <InfiniteScroll
-        // scrollThreshold={0.9}
-        // dataLength={data.length}
-        // next={nextPage}
-        // hasMore={true}
-        // loader={<h4>Loading...</h4>}
-        // >
             <div>
                 {
                  allPosts.map((postData) => (
@@ -40,7 +32,6 @@ let allPosts = [];
                  />
                  ))}
             </div>
-        // </InfiniteScroll>
     )
  }
         

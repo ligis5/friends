@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 
 const useObserver = (ref) =>{
-    const [isIntersecting, setIntersecting] = useState(false)
+    const [Intersecting, setIntersecting] = useState(false)
 
     const options = {
         rootMargin:'200px'
@@ -10,7 +10,11 @@ const useObserver = (ref) =>{
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        if(!entry.isIntersecting){
+          return;
+        }
           setIntersecting(entry.isIntersecting)
+          observer.unobserve(entry.target)
       }, options)
   
     useEffect(() => {
@@ -20,6 +24,6 @@ const useObserver = (ref) =>{
       }
     }, [])
   
-    return isIntersecting
+    return Intersecting
   }
   export default useObserver

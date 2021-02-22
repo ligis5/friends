@@ -6,6 +6,7 @@ import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import ChooseTextPost from './chooseTextPost';
 import ChoosePicturePost from './choosePicturePost';
 import YoutubePost from './chooseYoutube';
+import imageCompression from 'browser-image-compression';
 import "./CreatePost.css";
 
 const CreatePost = () => {
@@ -16,6 +17,8 @@ const CreatePost = () => {
   const [confirmPhoto, setConfirmPhoto] = useState(false);
   const [photoFile, setPhotoFile] = useState();
 
+ 
+  
 
   const showButtons = () => {
     setHideButtons(false);
@@ -40,10 +43,20 @@ const CreatePost = () => {
     setGetUrl(false)
   }
 
-  const handleAddPhoto = (e) => {
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true
+  }
+
+  const handleAddPhoto = async (e) => {
     const file = e.target.files[0];
-    // Here we get not converted file, we use that to later send to our storage.
-    setPhotoFile(file);
+    try {
+      const compressedFile = await imageCompression(file, options);
+      await setPhotoFile(compressedFile);
+    } catch (error) {
+      console.log(error);
+    }
     if (file) {
       setNewProfilePhoto(URL.createObjectURL(file));
       setConfirmPhoto(true);

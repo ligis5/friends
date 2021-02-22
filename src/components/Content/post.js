@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import LikeDislike from "./LikeDislike";
 import { Card, Image } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link, Route } from "react-router-dom";
 import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
 import ReactPlayer from "react-player/lazy";
@@ -10,11 +12,11 @@ const Post = ({ postData }) => {
   const ref = useRef();
   const [postImage, setPostImage] = useState();
   const [userPhoto, setUserPhoto] = useState();
-  const { storageRef } = useData();
+  const { storageRef, deletePost } = useData();
   const onScreen = useObserver(ref);
   const { postPhoto, aboutPost, createdAt, video, user, likes, id } = postData;
 
-  const publishDate = createdAt.toDate().toDateString();
+  const publishDate = createdAt.toDate().toDateString().substring(4);
 
   if (postPhoto) {
     storageRef
@@ -32,13 +34,12 @@ const Post = ({ postData }) => {
       setUserPhoto(url);
     });
 
-
   return (
     <Card
       ref={ref}
       className="text-center"
       style={{
-        maxWidth: "600px",
+        width: "600px",
         minWidth: "400px",
         marginTop: "20px",
         color: "aliceblue",
@@ -60,27 +61,32 @@ const Post = ({ postData }) => {
           Posted by {user.UserName}
         </h5>
       </Card.Title>
-      {postImage ? <Card.Img variant="top" src={onScreen ? postImage : <></>}/> : <></>}
-      {video ? <ReactPlayer controls={true} width="598px" url={video} /> : <></>}
+      {postImage && onScreen ? <Card.Img variant="top" src={postImage}/> : <></>}
+      {video && onScreen ? <ReactPlayer controls={true} width="598px" url={video} /> : <></>}
 
       <Card.Body style={{ padding: "0" }}>
         <Card.Title style={{ marginTop: "20px" }}>{aboutPost}</Card.Title>
         <Card.Body
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, auto)",
+            gridTemplateColumns: "repeat(3, auto)",
             padding: "0",
             marginTop: "70px",
             justifyContent: "space-between",
           }}
         >
+          <button style={{backgroundColor:'aliceblue'}} onClick={() => deletePost(id, postPhoto)}>
+             <FontAwesomeIcon icon={faTrash}
+           style={{backgroundColor:'aliceblue'}}
+            color='rgb(79, 59, 120)'/>
+            </button>
           <Card.Body style={{ border: "none", padding: "0" }}>
             <LikeDislike postId={id} likes={likes} />
           </Card.Body>
           <Card.Text
             style={{ display: "flex", padding: "0", paddingRight: "10px" }}
           >
-            Date: {publishDate.substring(4)}
+            Date: {publishDate}
           </Card.Text>
         </Card.Body>
       </Card.Body>

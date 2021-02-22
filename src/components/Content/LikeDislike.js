@@ -39,9 +39,10 @@ const LikeDislike = ({ likes, postId }) => {
 
   return (
     <Card.Text as="div" style={{ display: "flex", gap: "10px" }}>
-      <FontAwesomeIcon icon={faThumbsUp} color={color} onClick={likeButton} />
+      <FontAwesomeIcon style={{cursor:'pointer'}}
+       icon={faThumbsUp} color={color} onClick={likeButton} />
       <h6>Likes: {like}</h6>
-      <FontAwesomeIcon
+      <FontAwesomeIcon style={{cursor:'pointer'}}
         icon={faThumbsDown}
         color={color1}
         onClick={dislikeButton}
