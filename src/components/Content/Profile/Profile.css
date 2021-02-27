@@ -13,6 +13,8 @@
 }
 .profileImage{
     cursor: pointer;
+    max-height:500px;
+    object-fit:cover;
 }
 .profilePhoto-button{
     background-color: rgb(56, 41, 84);

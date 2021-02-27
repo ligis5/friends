@@ -8,7 +8,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 import ReactPlayer from "react-player/lazy";
-import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
+import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 
 const YoutubePost = ({ cancelPlayer }) => {
   const { createPostV } = useData();

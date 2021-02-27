@@ -51,7 +51,6 @@ const FirebaseFunctionsFiles = ({ children }) => {
 
   const updateUserProfile = (y) => {
     const { Age, Hobby, UserName, Job, Country, Name } = y;
-
     return firestore.collection("users").doc(`${currentUser.uid}`).update({
       UserName: UserName,
       Hobby: Hobby,
@@ -63,14 +62,30 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
 
   const createUserProfilePhoto = (profilePhoto, newProfilePhoto) => {
+    
     if (newProfilePhoto) {
       // if user puts new profile photo, newProfilePhoto is used until rerender.
       setUserPhoto(newProfilePhoto);
     }
+    
     // not converted profilePhoto file is sent to storage and will be used as profilePhoto after render.
     return storageRef
       .child(`${currentUser.uid}/profilePhoto/profilePic`)
-      .put(profilePhoto);
+      .put(profilePhoto)
+      .on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          if(progress === 100){
+            getUsers();
+          }
+        },
+        (error) => {
+          console.log(error, "error at uploading user photo")
+        }
+      );
   };
 
   const setUserProfile = async () => {
@@ -79,7 +94,8 @@ const FirebaseFunctionsFiles = ({ children }) => {
         const docRef = await firestore.collection("users").doc(currentUser.uid);
         docRef.onSnapshot((doc) => {
           if (doc && doc.exists) {
-            setUserData(doc.data());
+           const x = Object.assign(doc.data(), {'userId': doc.id})
+            setUserData(x);
             storageRef
               .child(doc.data().profilePhoto)
               .getDownloadURL()
@@ -93,25 +109,31 @@ const FirebaseFunctionsFiles = ({ children }) => {
       }
     }
   };
+  
 
   const getUsers = async () => {
- await firestore.collection("users").get().then((querySnapshot) => {
-  setAllUsers(querySnapshot.docs)
+    let y = [];
+return await firestore.collection("users").get().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+    const x = Object.assign(doc.data(),{'userId':doc.id})
+    y.push(x)
+});
+setAllUsers(y)
 });
   }
 
 
   const retrievePosts = async () => {
-   await firestore.collection("posts").get().then((querySnapshot) => {
+     await firestore.collection("posts").get().then((querySnapshot) => {
         setUserPosts(querySnapshot.docs)
-        setNewPost(false)
+        setNewPost(false);
   });
   }
 
   // used to create text post.
   const createPostT = (postText) => {
     if(postText){
-      setNewPost(true)
+      setNewPost(true);
       return firestore.collection("posts").doc().set({
           aboutPost: postText,
           likes: 0,
@@ -125,6 +147,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     const x = storage.ref(
       `${currentUser.uid}/PostPhotos/${y}${photoFile.name}`
     ).fullPath
+    setNewPost(true);
       return firestore.collection("posts").doc().set({
           aboutPost: postText,
           randomKey:y,
@@ -137,7 +160,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
 // used to create video post, using youtube url.
   const createPostV = (postText, sendUrl) => {
     if(sendUrl){
-      setNewPost(true)
+      setNewPost(true);
       return firestore.collection("posts").doc().set({
           aboutPost: postText,
           video: sendUrl,
@@ -162,9 +185,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
           );
           if(progress === 100){
             createPostP( postText, photoFile, y)
-            setTimeout(() => {
-              setNewPost(true)
-            }, 500);
+              setNewPost(true);
           }
         },
         (error) => {
@@ -184,20 +205,23 @@ const deletePost =async (postId, postPhoto) => {
   if(postPhoto){
     storageRef.child(postPhoto).delete()
   }
-  setTimeout(() => {
     retrievePosts()
-  }, 500);
 }
 
   useEffect(() => {
     if(newPost){
       retrievePosts()
     }
+    return () => {
+      setNewPost(false);
+    }
   }, [newPost]);
 
   useEffect(() => {
-    getUsers();
+      getUsers();
   },[])
+
+
 
   useEffect(() => {
     setUserProfile();
@@ -214,6 +238,7 @@ const deletePost =async (postId, postPhoto) => {
     createPostV,
     getLikeDislike,
     deletePost,
+    getUsers,
     // functions
     // data
     userData,

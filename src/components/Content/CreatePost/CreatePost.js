@@ -90,6 +90,7 @@ let choosePost = <h4 style={{ color: "aliceblue", textAlign: "center" }}>
         width: "500px",
         height: "max-content",
         marginLeft: "60px",
+        marginTop:'20px'
       }}
     >
     { !hideButtons ?

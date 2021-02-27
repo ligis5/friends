@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
-import Header from "./components/header";
+import Header from "./components/Header/header";
 import { Container, Row, Col } from "react-bootstrap";
-import { Switch, Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import Login from "./components/UserAuth/Login";
 import Register from "./components/UserAuth/Register";
 import ForgotPassword from "./components/UserAuth/ForgotPassword";
@@ -11,15 +11,15 @@ import PrivateRoutingIn from "./components/Routing/PrivateRoutingIn";
 import PrivateRoutingOut from "./components/Routing/PrivateRoutingOut";
 import PrivateRoutingReg from "./components/Routing/PrivateRoutingReg";
 import PrivateRoutingUserData from './components/Routing/PrivateRoutingUserData';
-import ProfilePage from './components/Content/ProfilePage';
-import Posts from './components/Content/Posts';
-import CreatePost from './components/Content/CreatePost';
+import ProfilePage from './components/Content/Profile/ProfilePage';
+import Posts from './components/Content/Posts/Posts';
+import CreatePost from './components/Content/CreatePost/CreatePost';
+import PostProfilePage from './components/Content/PostProfile/PostProfilePage';
 
 
 
 const App = () => {
-
-
+  
   return (
     <Container fluid className="App" style={{minWidth:'600px'}}>
       <Row>
@@ -32,7 +32,7 @@ const App = () => {
           <Row>
           <CreatePost />
           <Col className='posts' style={{display:'grid', justifyContent:'center'}}>
-          <Posts />
+          <Posts/>
           </Col>
           </Row>
           <Row>
@@ -66,6 +66,9 @@ const App = () => {
         <PrivateRoutingUserData exact path="/name-photo">
           <NameAndPhoto />
         </PrivateRoutingUserData>
+        <PrivateRoutingIn exact path="/profile/:user">
+          <PostProfilePage />
+        </PrivateRoutingIn>
         <PrivateRoutingIn exact path="/profile">
           <ProfilePage />
         </PrivateRoutingIn>

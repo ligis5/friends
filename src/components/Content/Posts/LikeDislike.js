@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "react-bootstrap";
-import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
+import { useData } from '../../FirebaseComponents/firebaseFunctionsFiles';
 
 const LikeDislike = ({ likes, postId }) => {
   const { getLikeDislike } = useData();

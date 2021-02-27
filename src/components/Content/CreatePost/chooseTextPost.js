@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Form, Row, Button } from "react-bootstrap";
-import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
+import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 
 const ChooseTextPost = ({textFalse, text}) => {
     const postText = useRef();

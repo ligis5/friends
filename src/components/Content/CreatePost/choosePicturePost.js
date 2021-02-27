@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Form, Row, Button, Image, Container } from "react-bootstrap";
-import { useData } from '../FirebaseComponents/firebaseFunctionsFiles';
+import { useData } from '../../FirebaseComponents/firebaseFunctionsFiles';
 
 const ChoosePicturePost = ({ photoFile, newProfilePhoto, showButtons }) => {
     const { uploadPostPhoto } = useData();

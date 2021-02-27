@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Image, Col, Row, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
-import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
+import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import "./Profile.css";
 import AboutMe from "./AboutMe";
 import imageCompression from 'browser-image-compression';
@@ -12,7 +12,6 @@ const Profile = () => {
     userPhoto,
     userData,
     createUserProfilePhoto,
-    updateUserProfile,
   } = useData();
   const [newProfilePhoto, setNewProfilePhoto] = useState();
   const [confirmPhoto, setConfirmPhoto] = useState(false);
@@ -45,9 +44,10 @@ const Profile = () => {
   };
   const cancelPhoto = () => {
     setConfirmPhoto(false);
+    setNewProfilePhoto();
   };
 // Destructure userData and take off what will not be needed in "About Me"
-  const { profilePhoto, createdAt, email, ...otherData } = userData || {};
+  const { profilePhoto, createdAt, email, userId, ...otherData } = userData || {};
 
   let joinedAt;
   if (createdAt) {
@@ -55,7 +55,7 @@ const Profile = () => {
   }
 
   return (
-    <Container style={{ maxWidth: "100%" }}>
+    <Container style={{ maxWidth: "100%", marginTop:'20px' }}>
       <Card bsPrefix="Profile">
         <Col bsPrefix="userName">
           <h3 style={{ margin: "auto" }}>
@@ -63,10 +63,10 @@ const Profile = () => {
           </h3>
         </Col>
         <Card.Body bsPrefix="user">
-          <a href={userPhoto} target="_blank">
-            <Card.Img
+          <a href={userPhoto} target="_blank" rel='noreferrer'>
+            <Card.Img loading='lazy'
               className="profileImage"
-              src={userPhoto}
+              src={newProfilePhoto ? newProfilePhoto : userPhoto}
             />
           </a>
           <Container>
@@ -127,7 +127,7 @@ const Profile = () => {
               )}
             </Row>
             <Row style={{ marginLeft: "auto", width: "max-content" }}>
-              {joinedAt ? joinedAt.substring(4) : <></>}
+              {joinedAt ? <>Joined at : {joinedAt.substring(4)}</> : <></>}
             </Row>
           </Container>
         </Card.Body>
@@ -137,3 +137,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

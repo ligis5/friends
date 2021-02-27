@@ -13,11 +13,11 @@ import imageCompression from 'browser-image-compression';
 
 const NameAndPhoto = () => {
   const history = useHistory();
-  const { createUserProfilePhoto, createUserProfile, setUserProfile } = useData();
+  const { createUserProfilePhoto, createUserProfile, setUserProfile, userData } = useData();
   const userName = useRef();
   const [profilePhoto, setProfilePhoto] = useState();
   const [photoFile, setPhotoFile] = useState();
- 
+
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 1920,
@@ -51,6 +51,8 @@ const NameAndPhoto = () => {
 
   return (
     <Card bsPrefix="Card">
+      {!userData ?
+        <>
       <Col className="cardTitle">
         <h3>Profile Photo</h3>
       </Col>
@@ -98,6 +100,10 @@ const NameAndPhoto = () => {
           </button>
         </Card.Body>
       </Card.Body>
+      </>
+      :
+      <h1>Loading...</h1>
+      }
     </Card>
   );
 };
