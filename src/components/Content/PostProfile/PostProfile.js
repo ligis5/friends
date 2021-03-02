@@ -6,7 +6,7 @@ import "../Profile/Profile.css";
 const Profile = ({user}) => {
   const [clickedUserData, setClickedUserData] = useState();
   const [userPhoto, setUserPhoto] = useState();
-  const { allUsers, storageRef, userData } = useData();
+  const { allUsers, storageRef } = useData();
 
 
   useEffect(() => {

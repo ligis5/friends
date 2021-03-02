@@ -64,32 +64,29 @@ const Post = ({ postData }) => {
         <Image
           onClick={() => history.push(`/profile/${user.userId}`)}
           src={userPhoto}
-          loading='lazy'
+          loading="lazy"
           roundedCircle
           style={{
             cursor: "pointer",
             backgroundColor: "rgb(79,59,120)",
             width: "60px",
             height: "60px",
-            objectFit:'cover',
+            objectFit: "cover",
             border: "1px solid aliceblue",
             boxShadow: "2px 2px aliceblue",
           }}
         />
-        <h5 style={{ margin: "auto", paddingRight: "60px"}}>
+        <h5 style={{ margin: "auto", paddingRight: "60px" }}>
           Posted by {user.UserName}
         </h5>
       </Card.Title>
       {postImage && onScreen ? (
-        <a href={postImage} target="_blank" rel='noreferrer'>
-        <Card.Img
-        loading='lazy'
-        style={{float:'left',
-          maxHeight:'600px',
-          objectFit:'cover'}}
-          variant="top"
-          src={postImage}
-        />
+        <a href={postImage} target="_blank" rel="noreferrer">
+          <Card.Img
+            style={{ float: "left", maxHeight: "600px", objectFit: "cover" }}
+            variant="top"
+            src={postImage}
+          />
         </a>
       ) : (
         <></>

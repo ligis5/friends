@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../FirebaseComponents/firebaseFunctionsAuth";
 import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
 
-
 const Header = () => {
   const { currentUser } = useAuth();
   const { userData, userPhoto } = useData();
@@ -36,7 +35,12 @@ const Header = () => {
   return (
     <Col className="header">
       <Link to="/">
-        <Image style={{marginTop:'10px'}} src={Logo} width="80" height="80"/>
+        <Image
+          style={{ marginTop: "10px" }}
+          src={Logo}
+          width="80"
+          height="80"
+        />
       </Link>
       <div className="regLog">
         {currentUser ? (
@@ -45,10 +49,10 @@ const Header = () => {
               src={userPhoto ? userPhoto : basicUser}
               roundedCircle
               style={{
-                marginTop:'5px',
+                marginTop: "5px",
                 width: "60px",
-                height: '60px',
-                objectFit:'cover',
+                height: "60px",
+                objectFit: "cover",
                 border: "1px solid aliceblue",
                 backgroundColor: "rgb(79,59,120)",
                 boxShadow: "2px 2px aliceblue",
@@ -58,8 +62,8 @@ const Header = () => {
               <Dropdown.Toggle
                 style={{
                   minWidth: "150px",
-                  maxWidth: '250px',
-                  overflow:'hidden',
+                  maxWidth: "250px",
+                  overflow: "hidden",
                   backgroundColor: "rgb(56, 41, 84)",
                   border: "1px solid aliceblue",
                   boxShadow: "1px 1px aliceblue",

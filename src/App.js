@@ -10,18 +10,15 @@ import NameAndPhoto from "./components/UserAuth/NameAndPhoto";
 import PrivateRoutingIn from "./components/Routing/PrivateRoutingIn";
 import PrivateRoutingOut from "./components/Routing/PrivateRoutingOut";
 import PrivateRoutingReg from "./components/Routing/PrivateRoutingReg";
-import PrivateRoutingUserData from './components/Routing/PrivateRoutingUserData';
-import ProfilePage from './components/Content/Profile/ProfilePage';
-import Posts from './components/Content/Posts/Posts';
-import CreatePost from './components/Content/CreatePost/CreatePost';
-import PostProfilePage from './components/Content/PostProfile/PostProfilePage';
-
-
+import PrivateRoutingUserData from "./components/Routing/PrivateRoutingUserData";
+import ProfilePage from "./components/Content/Profile/ProfilePage";
+import Posts from "./components/Content/Posts/Posts";
+import CreatePost from "./components/Content/CreatePost/CreatePost";
+import PostProfilePage from "./components/Content/PostProfile/PostProfilePage";
 
 const App = () => {
-  
   return (
-    <Container fluid className="App" style={{minWidth:'600px'}}>
+    <Container fluid className="App" style={{ minWidth: "600px" }}>
       <Row>
         <Col style={{ padding: "0" }}>
           <Header />
@@ -30,10 +27,13 @@ const App = () => {
       <Switch>
         <PrivateRoutingIn exact path="/">
           <Row>
-          <CreatePost />
-          <Col className='posts' style={{display:'grid', justifyContent:'center'}}>
-          <Posts/>
-          </Col>
+            <CreatePost />
+            <Col
+              className="posts"
+              style={{ display: "grid", justifyContent: "center" }}
+            >
+              <Posts />
+            </Col>
           </Row>
           <Row>
             <Col style={{ padding: "0" }}>

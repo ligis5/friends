@@ -2,36 +2,31 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "react-bootstrap";
-import { useData } from '../../FirebaseComponents/firebaseFunctionsFiles';
+import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 
 const LikeDislike = ({ likes, postId }) => {
   const { getLikeDislike } = useData();
-  const [like, setLike] = useState(likes);
   const [color, setColor] = useState("white");
   const [color1, setColor1] = useState("white");
 
   const likeButton = () => {
-    if (like === likes) {
-      setLike(like + 1);
-      getLikeDislike(like + 1, postId)
+    if (color === "white" && color1 === "white") {
+      getLikeDislike(likes + 1, postId);
       setColor("green");
+    } else if (color === "white" && color1 === "red") {
+      getLikeDislike(likes + 1, postId);
       setColor1("white");
-    } else if (like < likes) {
-      setLike(like + 1);
-      getLikeDislike(like + 1, postId)
       setColor("white");
-      setColor1("white");
+    } else {
+      return;
     }
   };
   const dislikeButton = () => {
-    if (like === likes) {
-      setLike(like - 1);
-      getLikeDislike(like - 1, postId)
+    if (color1 === "white" && color === "white") {
+      getLikeDislike(likes - 1, postId);
       setColor1("red");
-      setColor("white");
-    } else if (like > likes) {
-      setLike(like - 1);
-      getLikeDislike(like - 1, postId)
+    } else if (color1 === "white" && color === "green") {
+      getLikeDislike(likes - 1, postId);
       setColor1("white");
       setColor("white");
     }
@@ -39,10 +34,15 @@ const LikeDislike = ({ likes, postId }) => {
 
   return (
     <Card.Text as="div" style={{ display: "flex", gap: "10px" }}>
-      <FontAwesomeIcon style={{cursor:'pointer'}}
-       icon={faThumbsUp} color={color} onClick={likeButton} />
-      <h6>Likes: {like}</h6>
-      <FontAwesomeIcon style={{cursor:'pointer'}}
+      <FontAwesomeIcon
+        style={{ cursor: "pointer" }}
+        icon={faThumbsUp}
+        color={color}
+        onClick={likeButton}
+      />
+      <h6>Likes: {likes}</h6>
+      <FontAwesomeIcon
+        style={{ cursor: "pointer" }}
         icon={faThumbsDown}
         color={color1}
         onClick={dislikeButton}

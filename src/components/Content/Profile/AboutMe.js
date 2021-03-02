@@ -11,24 +11,22 @@ const AboutMe = ({ value, name }) => {
   const [data, setData] = useState({ [name]: value });
   const [upload, setUpload] = useState(false);
 
-  
-
   // Here unchanged userData is combined with new userData.
   const x = userData;
   const y = Object.assign(x, data);
 
   // If user confirms his edit of data user profile gets updated.
-  const updateUser =async () => {
-      await updateUserProfile(y);
+  const updateUser = async () => {
+    await updateUserProfile(y);
     setUpload(false);
-    if(data.UserName)
-    if(userData.UserName !== typeof data.UserName){
-      getUsers()
-    }
-    }
+    if (data.UserName)
+      if (userData.UserName !== typeof data.UserName) {
+        getUsers();
+      }
+  };
 
-  useEffect( () => {
-    if(upload){
+  useEffect(() => {
+    if (upload) {
       updateUser();
     }
   }, [upload]);
@@ -44,7 +42,6 @@ const AboutMe = ({ value, name }) => {
   const cancelEdit = () => {
     setEdit(true);
   };
-
 
   return (
     <Container
