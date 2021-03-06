@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { Form, Button, Row, Container } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 import { useAuth } from "../FirebaseComponents/firebaseFunctionsAuth";
 
 const Register = () => {

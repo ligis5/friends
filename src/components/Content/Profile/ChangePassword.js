@@ -11,7 +11,8 @@ const ChangePassword = ({ handleClose, show }) => {
   const [visible, setVisible] = useState("none");
   const [visible1, setVisible1] = useState("none");
 
-  const submitNewPassword = async () => {
+  const submitNewPassword = async (e) => {
+    e.preventDefault();
     if (newPassword.current.value.length >= 8) {
       if (newPassword.current.value !== newPassword1.current.value) {
         setVisible("");
@@ -63,7 +64,7 @@ const ChangePassword = ({ handleClose, show }) => {
           <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onChange={submitNewPassword}>
             <Form.Group controlId="formGroupPassword">
               <Form.Label>
                 Old Password{" "}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Card, Image, Col } from "react-bootstrap";
 import addPhoto from "./addPhoto.png";
 import "./NameAndPhoto.css";
@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
 import Tilt from "react-tilt";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 
 const NameAndPhoto = () => {
@@ -20,6 +20,8 @@ const NameAndPhoto = () => {
   const userName = useRef();
   const [profilePhoto, setProfilePhoto] = useState();
   const [photoFile, setPhotoFile] = useState();
+  const [loading, setLoading] = useState(true);
+  const isMounted = useRef(false);
 
   const options = {
     maxSizeMB: 1,
@@ -41,7 +43,7 @@ const NameAndPhoto = () => {
   };
 
   const userProfileButton = async () => {
-    await createUserProfilePhoto(photoFile);
+    await createUserProfilePhoto(photoFile, profilePhoto);
     if (!userName.current.value) {
       alert("Add profile photo and user name.");
     } else {
@@ -50,10 +52,21 @@ const NameAndPhoto = () => {
       history.push("/");
     }
   };
+  useEffect(() => {
+    isMounted.current = true;
+    if (isMounted === true) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+    return () => (isMounted.current = false);
+  }, []);
 
   return (
     <Card bsPrefix="Card">
-      {!userData ? (
+      {userData || loading ? (
+        <h1>Loading...</h1>
+      ) : (
         <>
           <Col className="cardTitle">
             <h3>Profile Photo</h3>
@@ -105,8 +118,6 @@ const NameAndPhoto = () => {
             </Card.Body>
           </Card.Body>
         </>
-      ) : (
-        <h1>Loading...</h1>
       )}
     </Card>
   );

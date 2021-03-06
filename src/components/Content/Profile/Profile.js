@@ -1,17 +1,8 @@
 import React, { useState } from "react";
-import {
-  Card,
-  Button,
-  Col,
-  Row,
-  Container,
-  Modal,
-  Form,
-} from "react-bootstrap";
+import { Card, Button, Col, Row, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
-import { useAuth } from "../../FirebaseComponents/firebaseFunctionsAuth";
 import "./Profile.css";
 import AboutMe from "./AboutMe";
 import imageCompression from "browser-image-compression";
@@ -64,6 +55,10 @@ const Profile = () => {
   // Destructure userData and take off what will not be needed in "About Me"
   const { profilePhoto, createdAt, email, userId, ...otherData } =
     userData || {};
+
+  const sortedOtherData = Object.entries({ ...otherData }).sort(
+    (a, b) => a[0].length - b[0].length
+  );
 
   let joinedAt;
   if (createdAt) {
@@ -136,7 +131,7 @@ const Profile = () => {
             <Row style={{ marginBottom: "20px" }}>
               {userData ? (
                 // If user exists map users inforamtion and put in "About Me"
-                Object.entries({ ...otherData }).map(([key, value]) => (
+                sortedOtherData.map(([key, value]) => (
                   <AboutMe key={key} name={key} value={value} />
                 ))
               ) : (

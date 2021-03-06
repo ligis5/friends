@@ -1,19 +1,23 @@
 import React from "react";
-import AllPostsAssign from '../../../AllPostsAssign';
+import AllPostsAssign from "../../../AllPostsAssign";
 import Post from "./post";
-
+import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 
 const Posts = () => {
- 
-   return(
-           <div>
-               {
-                AllPostsAssign().map((postData) => (
-                   <Post key={postData.id} postData={postData}
-                />
-                ))}
-           </div>
-   )
-}
-       
+  const { userPosts, allUsers } = useData();
+  return (
+    <div>
+      {userPosts && allUsers ? (
+        <>
+          {AllPostsAssign().map((postData) => (
+            <Post key={postData.id} postData={postData} />
+          ))}
+        </>
+      ) : (
+        <></>
+      )}
+    </div>
+  );
+};
+
 export default Posts;

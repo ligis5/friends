@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { Form, Button, Row, Container } from "react-bootstrap";
 import { useAuth } from "../FirebaseComponents/firebaseFunctionsAuth";
 import { useHistory } from "react-router-dom";
@@ -7,11 +7,9 @@ const ForgotPassword = () => {
   const { forgotPassword } = useAuth();
   const history = useHistory();
   const Email = useRef();
-  const [loading, setLoading] = useState(false);
 
   const userLogin = async () => {
     try {
-      setLoading(true);
       await forgotPassword(Email.current.value);
       alert("Email has been sent check your inbox");
       history.push("/login");
@@ -27,7 +25,6 @@ const ForgotPassword = () => {
     e.preventDefault();
     userLogin();
     e.target.reset();
-    setLoading(false);
   };
 
   return (

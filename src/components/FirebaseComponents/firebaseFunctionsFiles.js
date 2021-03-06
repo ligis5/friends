@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { storage, firestore } from "./firebase";
 import { useAuth } from "./firebaseFunctionsAuth";
 
@@ -11,12 +11,13 @@ export const useData = () => {
 export const storageRef = storage.ref();
 
 const FirebaseFunctionsFiles = ({ children }) => {
-  const { currentUser } = useAuth();
+  const { currentUser, deleteUser } = useAuth();
   const [userData, setUserData] = useState();
   const [userPhoto, setUserPhoto] = useState();
   const [userPosts, setUserPosts] = useState();
-  const [newPost, setNewPost] = useState(true);
+  const newPost = useRef(true);
   const [allUsers, setAllUsers] = useState();
+  const isMounted = useRef(false);
 
   // random id generator for naming post photos.
   const uuidv4 = () => {
@@ -96,12 +97,14 @@ const FirebaseFunctionsFiles = ({ children }) => {
           if (doc && doc.exists) {
             const x = Object.assign(doc.data(), { userId: doc.id });
             setUserData(x);
-            storageRef
-              .child(doc.data().profilePhoto)
-              .getDownloadURL()
-              .then((url) => {
-                setUserPhoto(url);
-              });
+            setTimeout(() => {
+              storageRef
+                .child(`${currentUser.uid}/profilePhoto/profilePic`)
+                .getDownloadURL()
+                .then((url) => {
+                  setUserPhoto(url);
+                });
+            }, 500);
           }
         });
       } catch (error) {
@@ -127,16 +130,17 @@ const FirebaseFunctionsFiles = ({ children }) => {
 
   // Getting all posts.
   const retrievePosts = async () => {
-    await firestore.collection("posts").onSnapshot((querySnapshot) => {
-      setUserPosts(querySnapshot.docs);
-      setNewPost(false);
-    });
+    if (newPost) {
+      await firestore.collection("posts").onSnapshot((querySnapshot) => {
+        setUserPosts(querySnapshot.docs);
+      });
+    }
   };
 
   // used to create text post.
   const createPostT = (postText) => {
     if (postText) {
-      setNewPost(true);
+      newPost.current = true;
       return firestore.collection("posts").doc().set({
         aboutPost: postText,
         likes: 0,
@@ -149,7 +153,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const createPostP = (postText, photoFile, y) => {
     const x = storage.ref(`${currentUser.uid}/PostPhotos/${y}${photoFile.name}`)
       .fullPath;
-    setNewPost(true);
+    newPost.current = true;
     return firestore.collection("posts").doc().set({
       aboutPost: postText,
       randomKey: y,
@@ -162,7 +166,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   // used to create video post, using youtube or soundcloud url.
   const createPostV = (postText, sendUrl) => {
     if (sendUrl) {
-      setNewPost(true);
+      newPost.current = true;
       return firestore.collection("posts").doc().set({
         aboutPost: postText,
         video: sendUrl,
@@ -186,8 +190,10 @@ const FirebaseFunctionsFiles = ({ children }) => {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
           if (progress === 100) {
-            createPostP(postText, photoFile, y);
-            setNewPost(true);
+            setTimeout(() => {
+              createPostP(postText, photoFile, y);
+              newPost.current = true;
+            }, 500);
           }
         },
         (error) => {
@@ -208,23 +214,47 @@ const FirebaseFunctionsFiles = ({ children }) => {
       storageRef.child(postPhoto).delete();
     }
   };
+  // hapens when user does byeBye :(
+  const deleteUserData = () => {
+    firestore
+      .collection("posts")
+      .where("userId", "==", currentUser.uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          deletePost(doc.id, doc.data().postPhoto);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(() => {
+        storageRef.child(`${currentUser.uid}/profilePhoto/profilePic`).delete();
+      })
+      .catch((error) => console.log(error))
+      .then(() => {
+        firestore.collection("users").doc(currentUser.uid).delete();
+        setTimeout(() => {
+          deleteUser();
+        }, 1000);
+      })
+      .catch((error) => console.log(error));
+    setUserData();
+    setUserPhoto();
+  };
 
   // Every time new post is created use Effect updates posts, that are shown.
   useEffect(() => {
     if (newPost) {
       retrievePosts();
     }
-    return () => {
-      setNewPost(false);
-    };
-  }, [newPost]);
-
-  // onMount get all users data.
+    return () => (newPost.current = false);
+  }, [newPost, currentUser]);
+  // get all users data.
   useEffect(() => {
     getUsers();
-  }, []);
-
-  // Every time user updates his data this is run.
+  }, [currentUser]);
+  // Every time user updates his data, this is ran.
   useEffect(() => {
     setUserProfile();
   }, [currentUser]);
@@ -242,6 +272,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     getLikeDislike,
     deletePost,
     getUsers,
+    deleteUserData,
     // functions
     // data
     userData,

@@ -4,7 +4,6 @@ import "./Login.css";
 import { googleAuth } from "../FirebaseComponents/firebase";
 import { useAuth } from "../FirebaseComponents/firebaseFunctionsAuth";
 import { Link } from "react-router-dom";
-import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
 
 const Login = () => {
   const { login } = useAuth();

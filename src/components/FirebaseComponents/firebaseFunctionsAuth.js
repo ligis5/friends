@@ -10,6 +10,7 @@ export const useAuth = () => {
 
 export const FirebaseFunctionsAuth = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
+  const [updated, setUpdated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const register = (email, password) => {
@@ -38,44 +39,55 @@ export const FirebaseFunctionsAuth = ({ children }) => {
       currentUser
         .updatePassword(newPassword)
         .then(() => {
-          console.log("sucess");
+          // if psw got changed text appears for 5 seconds that tells about successful update.
+          setUpdated(true);
+          setTimeout(() => {
+            setUpdated(false);
+          }, 5000);
         })
         .catch((error) => {
           console.log(error);
         })
     );
   };
-
-  const deleteUser = async (password) => {
-    var credential = firebase.auth.EmailAuthProvider.credential(
+  const reuthenticateUser = (password) => {
+    const credential = firebase.auth.EmailAuthProvider.credential(
       currentUser.email,
       password
     );
-    return await currentUser.reauthenticateWithCredential(credential).then(() =>
-      currentUser
-        .delete()
-        .then(() => {})
-        .catch((error) => {
-          console.log(error);
-        })
-    );
+    return currentUser.reauthenticateWithCredential(credential);
+  };
+  const deleteUser = async () => {
+    return currentUser
+      .delete()
+      .then(() => {
+        setLoading(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
-      setLoading(false);
     });
-    return unsubscribe, setLoading(true);
-  }, []);
+    setLoading(false);
+    return () => {
+      unsubscribe();
+      setLoading(true);
+    };
+  }, [currentUser]);
   const functions = {
     currentUser,
+    updated,
     register,
     login,
     forgotPassword,
     SignOut,
     changePassword,
     deleteUser,
+    reuthenticateUser,
   };
   return (
     <AuthContext.Provider value={functions}>
