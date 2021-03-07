@@ -15,6 +15,7 @@ import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import { useAuth } from "../../FirebaseComponents/firebaseFunctionsAuth";
 import ReactPlayer from "react-player/lazy";
 import useObserver from "../../../Observer";
+import ReactLoading from "react-loading";
 
 const Post = ({ postData }) => {
   const history = useHistory();
@@ -25,6 +26,7 @@ const Post = ({ postData }) => {
   const [postImage, setPostImage] = useState();
   const [userPhoto, setUserPhoto] = useState();
   const [hidePopup, setHidePopup] = useState();
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(true);
   const { storageRef, deletePost } = useData();
   const onScreen = useObserver(ref);
@@ -33,31 +35,38 @@ const Post = ({ postData }) => {
 
   const publishDate = createdAt.toDate().toDateString().substring(4);
 
+  if (onScreen) {
+    setTimeout(() => {
+      setLoading(true);
+    }, 1000);
+  } else {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }
+
   useEffect(() => {
     if (postPhoto) {
-      if (pathname === "/profile" || pathname === `/profile/${params.user}`) {
-        setShow(false);
-      } else {
-        setShow(true);
-      }
       storageRef
         .child(postPhoto)
         .getDownloadURL()
         .then((url) => {
-          storageRef
-            .child(user.profilePhoto)
-            .getDownloadURL()
-            .then((url) => {
-              setUserPhoto(url);
-            });
           setPostImage(url);
         });
     }
-    return () => {
-      setPostImage();
-      setUserPhoto();
-    };
-  }, [postPhoto]);
+    if (pathname === "/profile" || pathname === `/profile/${params.user}`) {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
+  }, [postData]);
+
+  storageRef
+    .child(user.profilePhoto)
+    .getDownloadURL()
+    .then((url) => {
+      setUserPhoto(url);
+    });
 
   const deletePostClick = () => {
     deletePost(id, postPhoto);
@@ -66,7 +75,7 @@ const Post = ({ postData }) => {
 
   return (
     <div ref={ref}>
-      {onScreen ? (
+      {loading ? (
         <Card
           className="text-center"
           style={{
@@ -76,25 +85,30 @@ const Post = ({ postData }) => {
             color: "aliceblue",
           }}
         >
-          <Card.Title style={{ margin: "0", display: "flex" }}>
-            <Image
-              onClick={() => history.push(`/profile/${user.userId}`)}
-              src={userPhoto}
-              roundedCircle
-              style={{
-                cursor: "pointer",
-                backgroundColor: "rgb(79,59,120)",
-                width: "60px",
-                height: "60px",
-                objectFit: "cover",
-                border: "1px solid aliceblue",
-                boxShadow: "2px 2px aliceblue",
-              }}
-            />
-            <h5 style={{ margin: "auto", paddingRight: "60px" }}>
-              Posted by {user.UserName}
-            </h5>
-          </Card.Title>
+          {" "}
+          {show ? (
+            <Card.Title style={{ margin: "0", display: "flex" }}>
+              <Image
+                onClick={() => history.push(`/profile/${user.userId}`)}
+                src={userPhoto}
+                roundedCircle
+                style={{
+                  cursor: "pointer",
+                  backgroundColor: "rgb(79,59,120)",
+                  width: "60px",
+                  height: "60px",
+                  objectFit: "cover",
+                  border: "1px solid aliceblue",
+                  boxShadow: "2px 2px aliceblue",
+                }}
+              />
+              <h5 style={{ margin: "auto", paddingRight: "60px" }}>
+                Posted by {user.UserName}
+              </h5>
+            </Card.Title>
+          ) : (
+            <></>
+          )}
           {postImage ? (
             <a href={postImage} target="_blank" rel="noreferrer">
               <Card.Img
@@ -111,7 +125,6 @@ const Post = ({ postData }) => {
           ) : (
             <></>
           )}
-
           <Card.Body style={{ padding: "0" }}>
             <Card.Title style={{ marginTop: "20px" }}>{aboutPost}</Card.Title>
             <Card.Body
@@ -128,10 +141,10 @@ const Post = ({ postData }) => {
                 <OverlayTrigger
                   show={hidePopup}
                   trigger="click"
-                  key="left"
-                  placement="left"
+                  key="right"
+                  placement="right"
                   overlay={
-                    <Popover id={"popover-positioned-left"}>
+                    <Popover id={"popover-positioned-right"}>
                       <Popover.Title
                         style={{ fontSize: "large", color: "rgb(79, 59, 120)" }}
                         as="h3"
@@ -188,9 +201,7 @@ const Post = ({ postData }) => {
           </Card.Body>
         </Card>
       ) : (
-        <div style={{ height: "600px" }}>
-          <h1>...Loading</h1>
-        </div>
+        <ReactLoading type="spin" color="aliceblue" height={150} width={150} />
       )}
     </div>
   );

@@ -151,17 +151,20 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
   // used to create photo post, using chosen photo from users device.
   const createPostP = (postText, photoFile, y) => {
-    const x = storage.ref(`${currentUser.uid}/PostPhotos/${y}${photoFile.name}`)
-      .fullPath;
-    newPost.current = true;
-    return firestore.collection("posts").doc().set({
-      aboutPost: postText,
-      randomKey: y,
-      postPhoto: x,
-      likes: 0,
-      createdAt: currentTime,
-      userId: currentUser.uid,
-    });
+    if (photoFile) {
+      const x = storage.ref(
+        `${currentUser.uid}/PostPhotos/${y}${photoFile.name}`
+      ).fullPath;
+      newPost.current = true;
+      return firestore.collection("posts").doc().set({
+        aboutPost: postText,
+        randomKey: y,
+        postPhoto: x,
+        likes: 0,
+        createdAt: currentTime,
+        userId: currentUser.uid,
+      });
+    }
   };
   // used to create video post, using youtube or soundcloud url.
   const createPostV = (postText, sendUrl) => {

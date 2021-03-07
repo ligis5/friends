@@ -31,6 +31,18 @@ const ProfilePage = () => {
             <Post key={postData.id} postData={postData} />
           ))}
         </Col>
+        <button
+          onClick={() => window.scrollTo(0, 0)}
+          style={{
+            position: "fixed",
+            bottom: "0vw",
+            right: "0vw",
+            color: "whitesmoke",
+            backgroundColor: "rgb(79,59,120)",
+          }}
+        >
+          Go Top
+        </button>
       </Row>
     </Container>
   );

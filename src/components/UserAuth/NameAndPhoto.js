@@ -8,6 +8,7 @@ import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
 import Tilt from "react-tilt";
 import { useHistory } from "react-router-dom";
 import imageCompression from "browser-image-compression";
+import ReactLoading from "react-loading";
 
 const NameAndPhoto = () => {
   const history = useHistory();
@@ -21,7 +22,6 @@ const NameAndPhoto = () => {
   const [profilePhoto, setProfilePhoto] = useState();
   const [photoFile, setPhotoFile] = useState();
   const [loading, setLoading] = useState(true);
-  const isMounted = useRef(false);
 
   const options = {
     maxSizeMB: 1,
@@ -53,19 +53,16 @@ const NameAndPhoto = () => {
     }
   };
   useEffect(() => {
-    isMounted.current = true;
-    if (isMounted === true) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-    return () => (isMounted.current = false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => setLoading(true);
   }, []);
 
   return (
     <Card bsPrefix="Card">
-      {userData || loading ? (
-        <h1>Loading...</h1>
+      {loading ? (
+        <ReactLoading type="bars" color="aliceblue" height={667} width={667} />
       ) : (
         <>
           <Col className="cardTitle">

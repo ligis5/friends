@@ -6,7 +6,7 @@ import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 const Posts = () => {
   const { userPosts, allUsers } = useData();
   return (
-    <div>
+    <div style={{ marginRight: "20px" }}>
       {userPosts && allUsers ? (
         <>
           {AllPostsAssign().map((postData) => (

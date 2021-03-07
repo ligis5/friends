@@ -4,7 +4,7 @@ const useObserver = (ref) => {
   const [Intersecting, setIntersecting] = useState(false);
 
   const options = {
-    rootMargin: "500px",
+    rootMargin: "0px 0px 500px",
   };
 
   const observer = new IntersectionObserver(([entry]) => {
