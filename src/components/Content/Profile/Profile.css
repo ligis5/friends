@@ -1,0 +1,53 @@
+.Profile {
+  display: grid;
+  justify-content: center;
+  max-width: 500px;
+  min-width: 300px;
+  height: auto;
+  border: 1px solid aliceblue;
+  color: aliceblue;
+}
+.userName {
+  display: flex;
+  justify-content: space-between;
+}
+.profileImage {
+  cursor: pointer;
+  max-height: 500px;
+  object-fit: cover;
+}
+.profilePhoto-button {
+  background-color: rgb(56, 41, 84);
+  margin-left: auto;
+}
+.file-upload {
+  display: inline-block;
+  margin-left: auto;
+  justify-self: center;
+  cursor: pointer;
+}
+.awesomeAboutPhoto {
+  background-color: rgb(56, 41, 84);
+}
+.fileUploadButton {
+  background-color: rgb(56, 41, 84);
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  width: 34px;
+  height: 30px;
+  border-left: 2px solid rgba(255, 255, 255, 0.384);
+  border-top: 2px solid rgba(255, 255, 255, 0.384);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.384);
+  border-right: 2px solid rgba(0, 0, 0, 0.384);
+}
+
+.aboutMe-buttonGroup {
+  margin-left: auto;
+}
+.aboutMe-button {
+  background-color: rgb(56, 41, 84);
+}
+.awesomeAbout {
+  background-color: rgb(56, 41, 84);
+}

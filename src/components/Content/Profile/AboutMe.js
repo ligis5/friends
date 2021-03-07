@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
-import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
+import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 
 const AboutMe = ({ value, name }) => {
   const [edit, setEdit] = useState(true);
   const inputValue = useRef("");
-  const { updateUserProfile, userData } = useData();
+  const { updateUserProfile, userData, getUsers } = useData();
   const [data, setData] = useState({ [name]: value });
   const [upload, setUpload] = useState(false);
 
@@ -16,12 +16,22 @@ const AboutMe = ({ value, name }) => {
   const y = Object.assign(x, data);
 
   // If user confirms his edit of data user profile gets updated.
-  useEffect(async () => {
+  const updateUser = async () => {
     await updateUserProfile(y);
     setUpload(false);
+    if (data.UserName)
+      if (userData.UserName !== typeof data.UserName) {
+        getUsers();
+      }
+  };
+
+  useEffect(() => {
+    if (upload) {
+      updateUser();
+    }
   }, [upload]);
   const editAboutMe = () => {
-    setEdit(edit ? false : true);
+    setEdit(false);
   };
 
   const confirmEdit = () => {

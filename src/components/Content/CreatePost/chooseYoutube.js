@@ -8,7 +8,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 import ReactPlayer from "react-player/lazy";
-import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
+import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 
 const YoutubePost = ({ cancelPlayer }) => {
   const { createPostV } = useData();
@@ -20,12 +20,13 @@ const YoutubePost = ({ cancelPlayer }) => {
 
   // if url is correct user gets to post creation screen.
   const writePost = () => {
-    if (videoUrl.current.value.substring(0, 23) === "https://www.youtube.com" ||
-        videoUrl.current.value.substring(0, 22) === "https://soundcloud.com") {
+    if (
+      videoUrl.current.value.substring(0, 23) === "https://www.youtube.com" ||
+      videoUrl.current.value.substring(0, 22) === "https://soundcloud.com"
+    ) {
       setPlayer(true);
       setSendUrl(videoUrl.current.value);
-    }
-    {
+    } else {
       setCustomError("Bad Url, use only youtube full url's.");
     }
   };

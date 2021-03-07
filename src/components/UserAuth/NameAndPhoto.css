@@ -1,76 +1,70 @@
-
-.Card{
-    display: grid;
-    justify-content: center;
-    max-width:400px;
-    min-width: 300px;
-    height:auto;
-    margin: auto;
-    border: 1px solid aliceblue;
-    color: aliceblue;
+.Card {
+  display: grid;
+  justify-content: center;
+  max-width: 400px;
+  min-width: 300px;
+  height: auto;
+  margin: auto;
+  border: 1px solid aliceblue;
+  color: aliceblue;
 }
-.cardTitle{
-    text-align: center;
-    
+.cardTitle {
+  text-align: center;
 }
-.cardBody{
-padding:0;
-display:grid;
+.cardBody {
+  padding: 0;
+  display: grid;
 }
 
-.userImage{
-        width:100%;
-        height:auto;
+.userImage {
+  width: 100%;
+  height: auto;
 }
-.Tilt{
-    width:100%;
-    height:auto; 
+.Tilt {
+  width: 100%;
+  height: auto;
 }
-.addUserImage{
-width: 60px;
-height: 60px;
-background-color: rgb(79,59,120);
+.addUserImage {
+  width: 60px;
+  height: 60px;
+  background-color: rgb(79, 59, 120);
 }
 
 input[type="file"] {
-    display: none;
+  display: none;
 }
 .custom-file-upload {
-    display: inline-block;
-    justify-self: center;
-    cursor: pointer;
+  display: inline-block;
+  justify-self: center;
+  cursor: pointer;
 }
-.nameInput{
-    border-color: rgb(79,59,120);
-    color:aliceblue;
-    text-align: center;
-}
-
-.nameInput::placeholder{
-    width: 70%;
-    color:aliceblue;
-    
+.nameInput {
+  border-color: rgb(79, 59, 120);
+  color: aliceblue;
+  text-align: center;
 }
 
-.cardBottom{
-    justify-self: center;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: nowrap;
-    width: 300px;
-}
-.confirm{
-padding: 0;
-background-color: rgb(29, 161, 29);
-border-radius: 50%;
-width: 30px;
-}
-.cancel{
-    padding: 0;
-    background-color: rgb(207, 55, 55);
-    border-radius: 50%;
-    width: 30px;
+.nameInput::placeholder {
+  width: 70%;
+  color: aliceblue;
 }
 
-
-
+.cardBottom {
+  justify-self: center;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  width: 300px;
+}
+.confirm {
+  padding: 0;
+  background-color: rgb(29, 161, 29);
+  border-radius: 50%;
+  width: 30px;
+}
+.cancel {
+  padding: 0;
+  background-color: rgb(207, 55, 55);
+  border-radius: 50%;
+  width: 30px;
+}

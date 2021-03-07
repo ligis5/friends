@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "./firebase";
+import firebase from "firebase/app";
 
 const AuthContext = React.createContext();
 
@@ -9,6 +10,7 @@ export const useAuth = () => {
 
 export const FirebaseFunctionsAuth = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
+  const [updated, setUpdated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const register = (email, password) => {
@@ -24,22 +26,68 @@ export const FirebaseFunctionsAuth = ({ children }) => {
   };
 
   const SignOut = () => {
-    return auth.signOut(), setLoading(true);
+    setLoading(true);
+    auth.signOut();
+  };
+
+  const changePassword = async (oldPassword, newPassword) => {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      oldPassword
+    );
+    return await currentUser.reauthenticateWithCredential(credential).then(() =>
+      currentUser
+        .updatePassword(newPassword)
+        .then(() => {
+          // if psw got changed text appears for 5 seconds that tells about successful update.
+          setUpdated(true);
+          setTimeout(() => {
+            setUpdated(false);
+          }, 5000);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
+  const reuthenticateUser = (password) => {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      password
+    );
+    return currentUser.reauthenticateWithCredential(credential);
+  };
+  const deleteUser = async () => {
+    return currentUser
+      .delete()
+      .then(() => {
+        setLoading(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
-      setLoading(false);
     });
-    return unsubscribe;
-  }, []);
+    setLoading(false);
+    return () => {
+      unsubscribe();
+      setLoading(true);
+    };
+  }, [currentUser]);
   const functions = {
     currentUser,
+    updated,
     register,
     login,
     forgotPassword,
     SignOut,
+    changePassword,
+    deleteUser,
+    reuthenticateUser,
   };
   return (
     <AuthContext.Provider value={functions}>
