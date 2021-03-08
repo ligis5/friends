@@ -115,19 +115,21 @@ const FirebaseFunctionsFiles = ({ children }) => {
 
   // Getting all existing users.
   const getUsers = async () => {
-    let y = [];
-    return await firestore
-      .collection("users")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const x = Object.assign(doc.data(), { userId: doc.id });
-          y.push(x);
-        });
-        setAllUsers(y);
+    const y = [];
+    return await firestore.collection("users").onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const x = Object.assign(doc.data(), { userId: doc.id });
+        y.push(x);
       });
+      const filterY = y.filter(
+        (v, i, a) =>
+          a.findIndex(
+            (t) => JSON.stringify(t.userId) === JSON.stringify(v.userId)
+          ) === i
+      );
+      setAllUsers(filterY);
+    });
   };
-
   // Getting all posts.
   const retrievePosts = async () => {
     if (newPost) {
@@ -248,18 +250,24 @@ const FirebaseFunctionsFiles = ({ children }) => {
 
   // Every time new post is created use Effect updates posts, that are shown.
   useEffect(() => {
-    if (newPost) {
-      retrievePosts();
+    if (currentUser) {
+      if (newPost) {
+        retrievePosts();
+      }
     }
     return () => (newPost.current = false);
   }, [newPost, currentUser]);
   // get all users data.
   useEffect(() => {
-    getUsers();
+    if (currentUser) {
+      getUsers();
+    }
   }, [currentUser]);
   // Every time user updates his data, this is ran.
   useEffect(() => {
-    setUserProfile();
+    if (currentUser) {
+      setUserProfile();
+    }
   }, [currentUser]);
 
   // functions and data for exporting.

@@ -31,14 +31,14 @@ const Profile = () => {
 
   const handleAddPhoto = async (e) => {
     const file = e.target.files[0];
+    const compressedFile = await imageCompression(file, options);
     try {
-      const compressedFile = await imageCompression(file, options);
       await setPhotoFile(compressedFile);
     } catch (error) {
       console.log(error);
     }
-    if (file) {
-      setNewProfilePhoto(URL.createObjectURL(file));
+    if (compressedFile) {
+      setNewProfilePhoto(URL.createObjectURL(compressedFile));
       setConfirmPhoto(true);
     }
   };
@@ -105,6 +105,7 @@ const Profile = () => {
                 <>
                   <button className="aboutMe-button">
                     <FontAwesomeIcon
+                      style={{ color: "red" }}
                       className="awesomeAbout"
                       icon={faBan}
                       color="aliceblue"
@@ -118,6 +119,7 @@ const Profile = () => {
                     onClick={uploadPhoto}
                   >
                     <FontAwesomeIcon
+                      style={{ color: "green" }}
                       className="awesomeAbout"
                       icon={faCheck}
                       color="aliceblue"

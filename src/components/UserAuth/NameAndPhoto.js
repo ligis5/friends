@@ -16,7 +16,6 @@ const NameAndPhoto = () => {
     createUserProfilePhoto,
     createUserProfile,
     setUserProfile,
-    userData,
   } = useData();
   const userName = useRef();
   const [profilePhoto, setProfilePhoto] = useState();
@@ -44,7 +43,7 @@ const NameAndPhoto = () => {
 
   const userProfileButton = async () => {
     await createUserProfilePhoto(photoFile, profilePhoto);
-    if (!userName.current.value) {
+    if (!userName.current.value || !profilePhoto) {
       alert("Add profile photo and user name.");
     } else {
       setUserProfile();
@@ -78,6 +77,7 @@ const NameAndPhoto = () => {
                 <Image className="addUserImage" src={addPhoto} />
               )}
             </label>
+            <p style={{ textAlign: "center" }}>Click + to choose photo</p>
             <input
               id="file-upload"
               type="file"

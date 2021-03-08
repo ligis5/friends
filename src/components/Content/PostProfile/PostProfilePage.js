@@ -16,7 +16,7 @@ const PostProfilePage = () => {
         <Col>
           <PostProfile user={user} />
         </Col>
-        <Col>
+        <Col style={{ marginRight: "20px", padding: "0" }}>
           {filterPosts.map((postData) => (
             <Post key={postData.id} postData={postData} />
           ))}

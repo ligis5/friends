@@ -48,14 +48,14 @@ const CreatePost = () => {
 
   const handleAddPhoto = async (e) => {
     const file = e.target.files[0];
+    const compressedFile = await imageCompression(file, options);
     try {
-      const compressedFile = await imageCompression(file, options);
       await setPhotoFile(compressedFile);
     } catch (error) {
       console.log(error);
     }
-    if (file) {
-      setNewProfilePhoto(URL.createObjectURL(file));
+    if (compressedFile) {
+      setNewProfilePhoto(URL.createObjectURL(compressedFile));
       setConfirmPhoto(true);
       setHideButtons(true);
     }

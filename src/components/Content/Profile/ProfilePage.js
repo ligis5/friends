@@ -4,7 +4,6 @@ import Profile from "./Profile";
 import Post from "../Posts/post";
 import { useAuth } from "../../FirebaseComponents/firebaseFunctionsAuth";
 import AllPostsAssign from "../../../AllPostsAssign";
-import { faHtml5 } from "@fortawesome/free-brands-svg-icons";
 
 const ProfilePage = () => {
   const { currentUser, updated } = useAuth();
@@ -26,7 +25,7 @@ const ProfilePage = () => {
             <></>
           )}
         </Col>
-        <Col>
+        <Col style={{ padding: "0", marginRight: "20" }}>
           {filterPosts.map((postData) => (
             <Post key={postData.id} postData={postData} />
           ))}

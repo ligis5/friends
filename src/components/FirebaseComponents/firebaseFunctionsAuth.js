@@ -69,10 +69,14 @@ export const FirebaseFunctionsAuth = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-    });
     setLoading(false);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser();
+      }
+    });
     return () => {
       unsubscribe();
       setLoading(true);
