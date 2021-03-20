@@ -25,7 +25,7 @@ const ProfilePage = () => {
             <></>
           )}
         </Col>
-        <Col style={{ padding: "0", marginRight: "20" }}>
+        <Col>
           {filterPosts.map((postData) => (
             <Post key={postData.id} postData={postData} />
           ))}

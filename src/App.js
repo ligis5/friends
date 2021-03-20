@@ -18,7 +18,7 @@ import PostProfilePage from "./components/Content/PostProfile/PostProfilePage";
 
 const App = () => {
   return (
-    <Container fluid className="App" style={{ minWidth: "600px" }}>
+    <Container fluid className="App" style={{ minWidth: "800px" }}>
       <Row>
         <Col style={{ padding: "0" }}>
           <Header />

@@ -17,11 +17,12 @@
   background: rgb(174, 11, 11);
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 800px) {
   .posts {
     margin-left: 20px;
   }
 }
+
 .cancel-confirm {
   background-color: rgb(33, 27, 28);
   cursor: pointer;

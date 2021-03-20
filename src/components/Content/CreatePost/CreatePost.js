@@ -91,6 +91,7 @@ const CreatePost = () => {
 
   return (
     <Container
+      className="createPost"
       style={{
         border: "solid aliceblue 1px",
         width: "500px",

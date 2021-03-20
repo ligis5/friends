@@ -24,11 +24,13 @@ const Profile = () => {
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
 
+  // options for big photo of user profile
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 1920,
     useWebWorker: true,
   };
+  // options for user photo user in comments.
   const optionsComment = {
     maxSizeMB: 0.2,
     maxWidthOrHeight: 60,
@@ -37,7 +39,9 @@ const Profile = () => {
 
   const handleAddPhoto = async (e) => {
     const file = e.target.files[0];
+    // file gets compressed into userProfile photo
     const compressedFile = await imageCompression(file, options);
+    // file gets compressed into userProfile comment photo
     const compressedFileComment = await imageCompression(file, optionsComment);
     try {
       setPhotoFile(compressedFile);
@@ -52,7 +56,7 @@ const Profile = () => {
   };
 
   const uploadPhoto = () => {
-    // photoFile is sent to storage, while newProfilePhoto is used as userPhoto until rerender.
+    // photoFile and commentPhotoFile is sent to storage, while newProfilePhoto is used as userPhoto until rerender.
     createUserProfilePhoto(photoFile, newProfilePhoto, commentPhotoFile);
     setConfirmPhoto(false);
   };
@@ -74,7 +78,7 @@ const Profile = () => {
   }
 
   return (
-    <Container style={{ maxWidth: "100%", marginTop: "20px" }}>
+    <Container style={{ marginTop: "20px" }}>
       <Card bsPrefix="Profile">
         <Col bsPrefix="userName">
           <h3 style={{ margin: "auto" }}>
@@ -180,6 +184,7 @@ const Profile = () => {
               </Button>
               <DeleteUser handleClose1={handleClose1} show1={show1} />
               <div style={{ alignSelf: "flex-end", marginLeft: "auto" }}>
+                <p style={{ textAlign: "end", marginBottom: "0" }}>{email}</p>
                 {joinedAt ? <>Joined at : {joinedAt.substring(4)}</> : <></>}
               </div>
             </Row>

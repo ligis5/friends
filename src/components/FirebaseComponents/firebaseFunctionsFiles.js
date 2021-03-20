@@ -247,6 +247,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     await firestore.collection("comments").doc(commentId).delete();
   };
   // delete post and run retrievePosts to update what user sees.
+  // every comment that has postId of post that is being deleted will get deleted as well.
   const deletePost = async (postId, postPhoto) => {
     await firestore.collection("posts").doc(postId).delete();
     firestore
@@ -267,6 +268,18 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
   // hapens when user does byeBye :(
   const deleteUserData = () => {
+    firestore
+      .collection("comments")
+      .where("userId", "==", currentUser.uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          deleteComment(doc.id);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     firestore
       .collection("posts")
       .where("userId", "==", currentUser.uid)

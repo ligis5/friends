@@ -4,11 +4,13 @@ import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import LikeDislike from "../../LikeDislike";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 const SingleComment = ({ comment, id }) => {
   const { storageRef, userData, deleteComment } = useData();
   const [commentPhoto, setCommentPhoto] = useState();
   const [trashColor, setTrashColor] = useState("aliceblue");
+  const history = useHistory();
 
   if (comment.userPhoto) {
     storageRef
@@ -18,7 +20,8 @@ const SingleComment = ({ comment, id }) => {
         setCommentPhoto(url);
       });
   }
-
+  // When delete comment is clicked it will make it color red and if it clicked again whithin 5seconds
+  // it will delete comment, other wise it will turn back to white.
   const mightDeleteComment = async () => {
     if (trashColor === "red") {
       await deleteComment(id);
@@ -44,7 +47,13 @@ const SingleComment = ({ comment, id }) => {
         <Row style={{ display: "flex", justifyContent: "space-between" }}>
           <Row style={{ marginLeft: "5px" }}>
             {commentPhoto ? (
-              <img alt={comment.UserName} src={commentPhoto} width="30px" />
+              <img
+                onClick={() => history.push(`/profile/${comment.userId}`)}
+                style={{ cursor: "pointer" }}
+                alt={comment.UserName}
+                src={commentPhoto}
+                width="30px"
+              />
             ) : (
               <></>
             )}

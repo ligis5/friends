@@ -35,9 +35,8 @@ const Profile = ({ user }) => {
   if (createdAt) {
     joinedAt = createdAt.toDate().toDateString();
   }
-
   return (
-    <Container style={{ maxWidth: "100%", marginTop: "20px" }}>
+    <Container style={{ marginTop: "20px" }}>
       {loading ? (
         <Card bsPrefix="Profile">
           <Col bsPrefix="userName">
@@ -69,7 +68,7 @@ const Profile = ({ user }) => {
           </Card.Body>
         </Card>
       ) : (
-        <h1>...Loading</h1>
+        <h1 style={{ color: "aliceblue", textAlign: "center" }}>...Loading</h1>
       )}
     </Container>
   );

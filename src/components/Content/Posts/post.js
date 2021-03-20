@@ -79,7 +79,7 @@ const Post = ({ postData }) => {
         <Card
           className="text-center"
           style={{
-            width: "800px",
+            width: "770px",
             minWidth: "400px",
             marginTop: "20px",
             color: "aliceblue",
@@ -112,7 +112,10 @@ const Post = ({ postData }) => {
           {postImage ? (
             <a href={postImage} target="_blank" rel="noreferrer">
               <Card.Img
-                style={{ maxHeight: "600px", objectFit: "cover" }}
+                style={{
+                  maxHeight: "600px",
+                  objectFit: "cover",
+                }}
                 variant="top"
                 src={postImage}
               />
@@ -121,7 +124,7 @@ const Post = ({ postData }) => {
             <></>
           )}
           {video ? (
-            <ReactPlayer controls={true} width="798px" url={video} />
+            <ReactPlayer controls={true} width="768px" url={video} />
           ) : (
             <></>
           )}

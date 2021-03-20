@@ -46,8 +46,8 @@ input[type="file"] {
 }
 
 .nameInput::placeholder {
-  width: 70%;
-  color: aliceblue;
+  color: rgba(240, 248, 255, 0.39);
+  text-align: center;
 }
 
 .cardBottom {
