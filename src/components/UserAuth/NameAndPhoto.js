@@ -12,14 +12,11 @@ import ReactLoading from "react-loading";
 
 const NameAndPhoto = () => {
   const history = useHistory();
-  const {
-    createUserProfilePhoto,
-    createUserProfile,
-    setUserProfile,
-  } = useData();
+  const { createUserProfilePhoto, createUserProfile, UserProfile } = useData();
   const userName = useRef();
   const [profilePhoto, setProfilePhoto] = useState();
   const [photoFile, setPhotoFile] = useState();
+  const [commentPhotoFile, setCommentPhotoFile] = useState();
   const [loading, setLoading] = useState(true);
 
   const options = {
@@ -27,12 +24,22 @@ const NameAndPhoto = () => {
     maxWidthOrHeight: 1920,
     useWebWorker: true,
   };
+  const optionsComment = {
+    maxSizeMB: 0.2,
+    maxWidthOrHeight: 60,
+    useWebWorker: true,
+  };
 
   const handleAddPhoto = async (e) => {
     const file = e.target.files[0];
     try {
       const compressedFile = await imageCompression(file, options);
-      await setPhotoFile(compressedFile);
+      const compressedFileComment = await imageCompression(
+        file,
+        optionsComment
+      );
+      setPhotoFile(compressedFile);
+      setCommentPhotoFile(compressedFileComment);
     } catch (error) {
       console.log(error);
     }
@@ -42,11 +49,11 @@ const NameAndPhoto = () => {
   };
 
   const userProfileButton = async () => {
-    await createUserProfilePhoto(photoFile, profilePhoto);
+    await createUserProfilePhoto(photoFile, profilePhoto, commentPhotoFile);
     if (!userName.current.value || !profilePhoto) {
       alert("Add profile photo and user name.");
     } else {
-      setUserProfile();
+      UserProfile();
       createUserProfile(userName.current.value);
       history.push("/");
     }

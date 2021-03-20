@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import LikeDislike from "./LikeDislike";
+import LikeDislike from "../../LikeDislike";
 import {
   Card,
   Image,
@@ -16,6 +16,7 @@ import { useAuth } from "../../FirebaseComponents/firebaseFunctionsAuth";
 import ReactPlayer from "react-player/lazy";
 import useObserver from "../../../Observer";
 import ReactLoading from "react-loading";
+import Comments from "../Comments/Comments";
 
 const Post = ({ postData }) => {
   const history = useHistory();
@@ -34,7 +35,6 @@ const Post = ({ postData }) => {
   const { postPhoto, aboutPost, createdAt, video, user, likes, id } = postData;
 
   const publishDate = createdAt.toDate().toDateString().substring(4);
-
   if (onScreen) {
     setTimeout(() => {
       setLoading(true);
@@ -79,7 +79,7 @@ const Post = ({ postData }) => {
         <Card
           className="text-center"
           style={{
-            width: "600px",
+            width: "800px",
             minWidth: "400px",
             marginTop: "20px",
             color: "aliceblue",
@@ -121,7 +121,7 @@ const Post = ({ postData }) => {
             <></>
           )}
           {video ? (
-            <ReactPlayer controls={true} width="598px" url={video} />
+            <ReactPlayer controls={true} width="798px" url={video} />
           ) : (
             <></>
           )}
@@ -176,13 +176,16 @@ const Post = ({ postData }) => {
                   }
                 >
                   <button
-                    style={{ backgroundColor: "aliceblue" }}
-                    onClick={() => setHidePopup(true)}
+                    style={{
+                      backgroundColor: "rgb(33, 27, 28)",
+                      border: "none",
+                      cursor: "default",
+                    }}
                   >
                     <FontAwesomeIcon
+                      onClick={() => setHidePopup(true)}
                       icon={faTrash}
-                      style={{ backgroundColor: "aliceblue" }}
-                      color="rgb(79, 59, 120)"
+                      style={{ color: "aliceblue", cursor: "pointer" }}
                     />
                   </button>
                 </OverlayTrigger>
@@ -190,7 +193,12 @@ const Post = ({ postData }) => {
                 <div></div>
               )}
               <Card.Body style={{ border: "none", padding: "0" }}>
-                <LikeDislike postId={id} likes={likes} />
+                <LikeDislike
+                  id={id}
+                  likes={likes}
+                  size={false}
+                  collection="posts"
+                />
               </Card.Body>
               <Card.Text
                 style={{ display: "flex", padding: "0", paddingRight: "10px" }}
@@ -199,9 +207,10 @@ const Post = ({ postData }) => {
               </Card.Text>
             </Card.Body>
           </Card.Body>
+          <Comments userPhoto={userPhoto} id={id} />
         </Card>
       ) : (
-        <ReactLoading type="spin" color="aliceblue" height={150} width={150} />
+        <ReactLoading type="spin" height={150} width={150} />
       )}
     </div>
   );

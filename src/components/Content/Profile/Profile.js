@@ -14,6 +14,7 @@ const Profile = () => {
   const [newProfilePhoto, setNewProfilePhoto] = useState();
   const [confirmPhoto, setConfirmPhoto] = useState(false);
   const [photoFile, setPhotoFile] = useState();
+  const [commentPhotoFile, setCommentPhotoFile] = useState();
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
 
@@ -28,12 +29,19 @@ const Profile = () => {
     maxWidthOrHeight: 1920,
     useWebWorker: true,
   };
+  const optionsComment = {
+    maxSizeMB: 0.2,
+    maxWidthOrHeight: 60,
+    useWebWorker: true,
+  };
 
   const handleAddPhoto = async (e) => {
     const file = e.target.files[0];
     const compressedFile = await imageCompression(file, options);
+    const compressedFileComment = await imageCompression(file, optionsComment);
     try {
-      await setPhotoFile(compressedFile);
+      setPhotoFile(compressedFile);
+      setCommentPhotoFile(compressedFileComment);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +53,7 @@ const Profile = () => {
 
   const uploadPhoto = () => {
     // photoFile is sent to storage, while newProfilePhoto is used as userPhoto until rerender.
-    createUserProfilePhoto(photoFile, newProfilePhoto);
+    createUserProfilePhoto(photoFile, newProfilePhoto, commentPhotoFile);
     setConfirmPhoto(false);
   };
   const cancelPhoto = () => {
@@ -103,28 +111,20 @@ const Profile = () => {
                 </>
               ) : (
                 <>
-                  <button className="aboutMe-button">
-                    <FontAwesomeIcon
-                      style={{ color: "red" }}
-                      className="awesomeAbout"
-                      icon={faBan}
-                      color="aliceblue"
-                      onClick={cancelPhoto}
-                    />
-                  </button>
-                  <button
+                  <FontAwesomeIcon
+                    className="cancel-confirm"
+                    style={{ margin: "5px 0 0 10px" }}
+                    icon={faBan}
+                    color="aliceblue"
+                    onClick={cancelPhoto}
+                  />
+                  <FontAwesomeIcon
+                    className="cancel-confirm"
                     style={{ marginLeft: "auto" }}
-                    className="aboutMe-button"
-                    id="onOff1"
+                    icon={faCheck}
+                    color="aliceblue"
                     onClick={uploadPhoto}
-                  >
-                    <FontAwesomeIcon
-                      style={{ color: "green" }}
-                      className="awesomeAbout"
-                      icon={faCheck}
-                      color="aliceblue"
-                    />
-                  </button>
+                  />
                 </>
               )}
             </Row>

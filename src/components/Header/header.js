@@ -44,7 +44,9 @@ const Header = () => {
       </Link>
       <div className="regLog">
         {currentUser ? (
-          <Row style={{ display: "flex", flexWrap: "nowrap" }}>
+          <Row
+            style={{ display: "flex", flexWrap: "nowrap", marginRight: "10px" }}
+          >
             <Image
               src={userPhoto ? userPhoto : basicUser}
               roundedCircle
@@ -58,7 +60,7 @@ const Header = () => {
                 boxShadow: "2px 2px aliceblue",
               }}
             />
-            <Dropdown style={{ margin: "10px", marginTop: "15px" }}>
+            <Dropdown style={{ marginTop: "15px" }}>
               <Dropdown.Toggle
                 style={{
                   minWidth: "150px",

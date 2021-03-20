@@ -18,6 +18,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const newPost = useRef(true);
   const [allUsers, setAllUsers] = useState();
   const isMounted = useRef(false);
+  const [comments, setComments] = useState();
 
   // random id generator for naming post photos.
   const uuidv4 = () => {
@@ -62,12 +63,18 @@ const FirebaseFunctionsFiles = ({ children }) => {
     });
   };
   // For adding and updating user profile photo.
-  const createUserProfilePhoto = (profilePhoto, newProfilePhoto) => {
+  const createUserProfilePhoto = (
+    profilePhoto,
+    newProfilePhoto,
+    commentPhoto
+  ) => {
     if (newProfilePhoto) {
       // if user puts new profile photo, newProfilePhoto is used until rerender.
       setUserPhoto(newProfilePhoto);
     }
-
+    storageRef
+      .child(`${currentUser.uid}/commentPhoto/commentPic`)
+      .put(commentPhoto);
     // not converted profilePhoto file is sent to storage and will be used as profilePhoto after render.
     // And getUsers are run to update everything with new profile photo.
     return storageRef
@@ -89,7 +96,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       );
   };
   // Getting data of currently logged in user.
-  const setUserProfile = async () => {
+  const UserProfile = async () => {
     if (currentUser) {
       try {
         const docRef = await firestore.collection("users").doc(currentUser.uid);
@@ -207,14 +214,53 @@ const FirebaseFunctionsFiles = ({ children }) => {
       );
   };
 
-  const getLikeDislike = (like, postId) => {
-    return firestore.collection("posts").doc(postId).update({
+  const getLikeDislike = (like, postId, collection) => {
+    return firestore.collection(collection).doc(postId).update({
       likes: like,
     });
+  };
+
+  // Getting all Comments.
+  const retrieveComments = async () => {
+    await firestore
+      .collection("comments")
+      .orderBy("createdAt")
+      .onSnapshot((querySnapshot) => {
+        setComments(querySnapshot.docs.reverse());
+      });
+  };
+
+  const createComment = (commentText, postId) => {
+    const x = storage.ref(`${currentUser.uid}/commentPhoto/commentPic`)
+      .fullPath;
+    return firestore.collection("comments").doc().set({
+      UserName: userData.UserName,
+      userPhoto: x,
+      comment: commentText,
+      likes: 0,
+      createdAt: currentTime,
+      userId: currentUser.uid,
+      postId: postId,
+    });
+  };
+  const deleteComment = async (commentId) => {
+    await firestore.collection("comments").doc(commentId).delete();
   };
   // delete post and run retrievePosts to update what user sees.
   const deletePost = async (postId, postPhoto) => {
     await firestore.collection("posts").doc(postId).delete();
+    firestore
+      .collection("comments")
+      .where("postId", "==", postId)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          deleteComment(doc.id);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     if (postPhoto) {
       storageRef.child(postPhoto).delete();
     }
@@ -247,6 +293,9 @@ const FirebaseFunctionsFiles = ({ children }) => {
     setUserData();
     setUserPhoto();
   };
+  useEffect(() => {
+    retrieveComments();
+  }, []);
 
   // Every time new post is created use Effect updates posts, that are shown.
   useEffect(() => {
@@ -261,12 +310,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   useEffect(() => {
     if (currentUser) {
       getUsers();
-    }
-  }, [currentUser]);
-  // Every time user updates his data, this is ran.
-  useEffect(() => {
-    if (currentUser) {
-      setUserProfile();
+      UserProfile();
     }
   }, [currentUser]);
 
@@ -275,7 +319,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     // functions
     createUserProfilePhoto,
     createUserProfile,
-    setUserProfile,
+    UserProfile,
     updateUserProfile,
     uploadPostPhoto,
     createPostT,
@@ -284,6 +328,8 @@ const FirebaseFunctionsFiles = ({ children }) => {
     deletePost,
     getUsers,
     deleteUserData,
+    createComment,
+    deleteComment,
     // functions
     // data
     userData,
@@ -291,6 +337,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     userPosts,
     storageRef,
     allUsers,
+    comments,
     // data
   };
   return (

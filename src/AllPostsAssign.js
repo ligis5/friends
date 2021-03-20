@@ -1,4 +1,3 @@
-import React from "react";
 import { useData } from "./components/FirebaseComponents/firebaseFunctionsFiles";
 
 // here we map over all posts and all users and for every post we assign a user that created said post.

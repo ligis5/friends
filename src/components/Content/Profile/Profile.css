@@ -30,7 +30,6 @@
   background-color: rgb(56, 41, 84);
 }
 .fileUploadButton {
-  background-color: rgb(56, 41, 84);
   display: grid;
   justify-content: center;
   align-content: center;
@@ -44,10 +43,4 @@
 
 .aboutMe-buttonGroup {
   margin-left: auto;
-}
-.aboutMe-button {
-  background-color: rgb(56, 41, 84);
-}
-.awesomeAbout {
-  background-color: rgb(56, 41, 84);
 }

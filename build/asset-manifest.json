@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.91f0d0e3.chunk.css",
-    "main.js": "/static/js/main.492b6a34.chunk.js",
-    "main.js.map": "/static/js/main.492b6a34.chunk.js.map",
+    "main.css": "/static/css/main.69030ac8.chunk.css",
+    "main.js": "/static/js/main.37ab90a6.chunk.js",
+    "main.js.map": "/static/js/main.37ab90a6.chunk.js.map",
     "reactPlayerDailyMotion.js": "/static/js/reactPlayerDailyMotion.87064568.chunk.js",
     "reactPlayerDailyMotion.js.map": "/static/js/reactPlayerDailyMotion.87064568.chunk.js.map",
     "reactPlayerFacebook.js": "/static/js/reactPlayerFacebook.0047af54.chunk.js",
@@ -32,14 +32,14 @@
     "runtime-main.js": "/static/js/runtime-main.80c8987d.js",
     "runtime-main.js.map": "/static/js/runtime-main.80c8987d.js.map",
     "static/css/15.325dfaf0.chunk.css": "/static/css/15.325dfaf0.chunk.css",
-    "static/js/15.98e94d6e.chunk.js": "/static/js/15.98e94d6e.chunk.js",
-    "static/js/15.98e94d6e.chunk.js.map": "/static/js/15.98e94d6e.chunk.js.map",
+    "static/js/15.f383dfb5.chunk.js": "/static/js/15.f383dfb5.chunk.js",
+    "static/js/15.f383dfb5.chunk.js.map": "/static/js/15.f383dfb5.chunk.js.map",
     "static/js/16.5416ee23.chunk.js": "/static/js/16.5416ee23.chunk.js",
     "static/js/16.5416ee23.chunk.js.map": "/static/js/16.5416ee23.chunk.js.map",
     "index.html": "/index.html",
     "static/css/15.325dfaf0.chunk.css.map": "/static/css/15.325dfaf0.chunk.css.map",
-    "static/css/main.91f0d0e3.chunk.css.map": "/static/css/main.91f0d0e3.chunk.css.map",
-    "static/js/15.98e94d6e.chunk.js.LICENSE.txt": "/static/js/15.98e94d6e.chunk.js.LICENSE.txt",
+    "static/css/main.69030ac8.chunk.css.map": "/static/css/main.69030ac8.chunk.css.map",
+    "static/js/15.f383dfb5.chunk.js.LICENSE.txt": "/static/js/15.f383dfb5.chunk.js.LICENSE.txt",
     "static/media/Logo.f935bc88.png": "/static/media/Logo.f935bc88.png",
     "static/media/addPhoto.a990822d.png": "/static/media/addPhoto.a990822d.png",
     "static/media/basicUser.2a907e6b.png": "/static/media/basicUser.2a907e6b.png",
@@ -48,8 +48,8 @@
   "entrypoints": [
     "static/js/runtime-main.80c8987d.js",
     "static/css/15.325dfaf0.chunk.css",
-    "static/js/15.98e94d6e.chunk.js",
-    "static/css/main.91f0d0e3.chunk.css",
-    "static/js/main.492b6a34.chunk.js"
+    "static/js/15.f383dfb5.chunk.js",
+    "static/css/main.69030ac8.chunk.css",
+    "static/js/main.37ab90a6.chunk.js"
   ]
 }
