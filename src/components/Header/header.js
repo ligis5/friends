@@ -63,7 +63,7 @@ const Header = () => {
             <Dropdown style={{ marginTop: "15px" }}>
               <Dropdown.Toggle
                 style={{
-                  minWidth: "150px",
+                  minWidth: "160px",
                   maxWidth: "250px",
                   overflow: "hidden",
                   backgroundColor: "rgb(56, 41, 84)",
@@ -76,49 +76,33 @@ const Header = () => {
               >
                 {userData ? userData.UserName : currentUser.email}
               </Dropdown.Toggle>
-              <Dropdown.Menu
-                style={{
-                  backgroundColor: "rgb(79,59,120)",
-                  border: "1px solid aliceblue",
-                  marginRight: "5px",
-                }}
-              >
-                <Dropdown.Item as="div" href="#/action-1" bsPrefix="item1">
-                  <Link
-                    style={{
-                      textDecoration: "none",
-                      height: "min-content",
-                      width: "max-content",
-                    }}
-                    to="/profile"
-                  >
-                    <p className="yes">Profile</p>
-                  </Link>
+              <Dropdown.Menu className="dropDownMenu">
+                <Dropdown.Item
+                  style={{ textDecoration: "none" }}
+                  as={Link}
+                  to="/profile"
+                  href="#/action-1"
+                  bsPrefix="item1"
+                >
+                  <h3 className="yes">Profile</h3>
                 </Dropdown.Item>
-                <Dropdown.Item as="div" href="#/action-1" bsPrefix="item1">
-                  <Link
-                    style={{
-                      textDecoration: "none",
-                      height: "min-content",
-                      width: "max-content",
-                    }}
-                    to="/"
-                  >
-                    <p className="yes">Home</p>
-                  </Link>
+                <Dropdown.Item
+                  style={{ textDecoration: "none" }}
+                  as={Link}
+                  to="/"
+                  href="#/action-1"
+                  bsPrefix="item1"
+                >
+                  <h3 className="yes">Home</h3>
                 </Dropdown.Item>
-                <Dropdown.Item as="div" href="#/action-2" bsPrefix="item2">
-                  <Link
-                    onClick={SignOut}
-                    style={{
-                      textDecoration: "none",
-                      height: "min-content",
-                      width: "min-content",
-                    }}
-                    to="/login"
-                  >
-                    <p className="signOut">Sign-out</p>
-                  </Link>
+                <Dropdown.Item
+                  style={{ textDecoration: "none" }}
+                  as={Link}
+                  to="/login"
+                  href="#/action-2"
+                  bsPrefix="item1"
+                >
+                  <h3 className="signOut">Sign-out</h3>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

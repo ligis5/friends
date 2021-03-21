@@ -4,7 +4,8 @@ import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import LikeDislike from "../../LikeDislike";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import "./SingleComment.css";
 
 const SingleComment = ({ comment, id }) => {
   const { storageRef, userData, deleteComment } = useData();
@@ -49,10 +50,11 @@ const SingleComment = ({ comment, id }) => {
             {commentPhoto ? (
               <img
                 onClick={() => history.push(`/profile/${comment.userId}`)}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", objectFit: "cover" }}
                 alt={comment.UserName}
                 src={commentPhoto}
                 width="30px"
+                height="30px"
               />
             ) : (
               <></>
@@ -110,7 +112,7 @@ const SingleComment = ({ comment, id }) => {
               marginTop: "auto",
             }}
           >
-            posted at {comment.createdAt.toDate().toLocaleTimeString("en-US")}
+            {comment.createdAt.toDate().toLocaleTimeString("en-US")}
           </p>
         </Row>
       </Container>

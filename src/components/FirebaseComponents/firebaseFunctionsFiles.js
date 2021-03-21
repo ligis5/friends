@@ -17,7 +17,6 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const [userPosts, setUserPosts] = useState();
   const newPost = useRef(true);
   const [allUsers, setAllUsers] = useState();
-  const isMounted = useRef(false);
   const [comments, setComments] = useState();
 
   // random id generator for naming post photos.
@@ -306,10 +305,6 @@ const FirebaseFunctionsFiles = ({ children }) => {
     setUserData();
     setUserPhoto();
   };
-  useEffect(() => {
-    retrieveComments();
-  }, []);
-
   // Every time new post is created use Effect updates posts, that are shown.
   useEffect(() => {
     if (currentUser) {
@@ -324,6 +319,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     if (currentUser) {
       getUsers();
       UserProfile();
+      retrieveComments();
     }
   }, [currentUser]);
 

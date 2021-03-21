@@ -96,7 +96,7 @@ const CreatePost = () => {
         border: "solid aliceblue 1px",
         width: "500px",
         height: "max-content",
-        marginLeft: "60px",
+        marginLeft: "20px",
         marginTop: "20px",
       }}
     >
