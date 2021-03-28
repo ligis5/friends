@@ -96,6 +96,7 @@ const Header = () => {
                   <h3 className="yes">Home</h3>
                 </Dropdown.Item>
                 <Dropdown.Item
+                  onClick={SignOut}
                   style={{ textDecoration: "none" }}
                   as={Link}
                   to="/login"
