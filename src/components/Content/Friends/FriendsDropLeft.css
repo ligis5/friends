@@ -1,0 +1,132 @@
+.dropLeft {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+}
+.dropLeftIcon {
+  color: rgb(79, 59, 120);
+  background-color: rgba(240, 248, 255);
+  font-size: 180%;
+}
+.friendsButton {
+  box-shadow: 2px 2px rgba(33, 27, 28, 0.45);
+  height: 200px;
+}
+
+.friends {
+  background-color: rgba(189, 171, 231, 0.2);
+}
+.show {
+  background: rgba(33, 27, 28, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.userName {
+  background-color: rgba(189, 171, 231, 0);
+  cursor: pointer;
+}
+.friend {
+  display: flex;
+  color: aliceblue;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 3px black;
+  background: rgba(255, 255, 255, 0);
+  justify-content: space-between;
+  width: 150px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.offline {
+  background-color: aliceblue;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  align-self: center;
+  font-size: 80%;
+}
+.online {
+  background-color: rgb(3, 182, 3);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: rgb(3, 182, 3) 0px 0px 5px 2px;
+  align-self: center;
+  font-size: 80%;
+}
+
+button.close {
+  display: none;
+}
+
+.chatRoom {
+  background: rgba(33, 27, 28, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.chatRoom .modal-dialog {
+  height: 90%;
+}
+.chatRoom .modal-content {
+  height: 100%;
+}
+.chatRoom div .modal-body {
+  width: 100%;
+  overflow-y: auto;
+  display: grid;
+  align-content: flex-end;
+}
+.allMessages {
+  overflow-y: auto;
+}
+.chatRoom .modal-footer {
+  width: 100%;
+}
+.chatRoom form {
+  display: flex;
+  gap: 70px;
+  justify-content: center;
+  margin: auto;
+}
+.chatRoom .chooseButton {
+  align-self: center;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.chatRoom {
+  color: aliceblue;
+}
+.modal-body .toast {
+  align-self: flex-end;
+}
+div .toast-header {
+  padding-left: 6px;
+  background-color: aliceblue;
+}
+.messageOwner {
+  margin-right: auto;
+  margin-bottom: 0;
+  background-color: aliceblue;
+  color: rgb(79, 59, 120);
+}
+.messageTime {
+  background-color: aliceblue;
+  color: rgb(79, 59, 120);
+}
+div .toast-body {
+  background-color: aliceblue;
+  color: rgb(79, 59, 120);
+}
+.messageImg {
+  border-radius: 10%;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}

@@ -1,6 +1,7 @@
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/database";
 import firebase from "firebase/app";
 
 const firebaseConfig = {
@@ -10,6 +11,8 @@ const firebaseConfig = {
   storageBucket: "friends-6f994.appspot.com",
   messagingSenderId: "472178657516",
   appId: "1:472178657516:web:b503468f35c111b5e1bdc9",
+  databaseURL:
+    "https://friends-6f994-default-rtdb.europe-west1.firebasedatabase.app/",
   measurementId: "G-9HVB9M7BJV",
 };
 

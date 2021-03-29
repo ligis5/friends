@@ -3,7 +3,9 @@
   justify-content: start;
   color: aliceblue;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 ::-webkit-scrollbar {
   width: 15px;
 }

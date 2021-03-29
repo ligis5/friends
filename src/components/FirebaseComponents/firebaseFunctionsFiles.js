@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { storage, firestore } from "./firebase";
 import { useAuth } from "./firebaseFunctionsAuth";
+import firebase from "firebase/app";
 
 const FileContext = React.createContext();
 
@@ -18,6 +19,8 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const newPost = useRef(true);
   const [allUsers, setAllUsers] = useState();
   const [comments, setComments] = useState();
+  const [recipientMessages, setRecipientMessages] = useState();
+  const [senderMessages, setSenderMessages] = useState();
 
   // random id generator for naming post photos.
   const uuidv4 = () => {
@@ -218,7 +221,6 @@ const FirebaseFunctionsFiles = ({ children }) => {
       likes: like,
     });
   };
-
   // Getting all Comments.
   const retrieveComments = async () => {
     await firestore
@@ -242,6 +244,36 @@ const FirebaseFunctionsFiles = ({ children }) => {
       postId: postId,
     });
   };
+
+  const getMessages = async () => {
+    await firestore
+      .collection("messages")
+      .where("recipient", "==", currentUser.uid)
+      .orderBy("createdAt")
+      .onSnapshot((querySnapshot) => {
+        setRecipientMessages(querySnapshot.docs);
+      });
+    await firestore
+      .collection("messages")
+      .where("sender", "==", currentUser.uid)
+      .orderBy("createdAt")
+      .onSnapshot((querySnapshot) => {
+        setSenderMessages(querySnapshot.docs);
+      });
+  };
+
+  const writeMessage = (message, recipient) => {
+    const x = storage.ref(`${currentUser.uid}/commentPhoto/commentPic`)
+      .fullPath;
+    return firestore.collection("messages").doc().set({
+      userPhoto: x,
+      message: message,
+      createdAt: currentTime,
+      sender: currentUser.uid,
+      recipient: recipient,
+    });
+  };
+
   const deleteComment = async (commentId) => {
     await firestore.collection("comments").doc(commentId).delete();
   };
@@ -320,6 +352,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       getUsers();
       UserProfile();
       retrieveComments();
+      getMessages();
     }
   }, [currentUser]);
 
@@ -339,6 +372,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     deleteUserData,
     createComment,
     deleteComment,
+    writeMessage,
     // functions
     // data
     userData,
@@ -347,6 +381,8 @@ const FirebaseFunctionsFiles = ({ children }) => {
     storageRef,
     allUsers,
     comments,
+    senderMessages,
+    recipientMessages,
     // data
   };
   return (

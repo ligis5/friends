@@ -1,16 +1,12 @@
-*{
+* {
   background-color: rgb(33, 27, 28);
   margin: 0;
-  font-family: 'Do Hyeon', sans-serif ;
+  font-family: "Do Hyeon", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
-
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
- 

@@ -64,7 +64,7 @@ const ChangePassword = ({ handleClose, show }) => {
           <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onChange={submitNewPassword}>
+          <Form onSubmit={submitNewPassword}>
             <Form.Group controlId="formGroupPassword">
               <Form.Label>
                 Old Password{" "}
@@ -124,7 +124,7 @@ const ChangePassword = ({ handleClose, show }) => {
                   backgroundColor: "rgb(79, 59, 120)",
                   border: "1px solid aliceblue",
                 }}
-                onClick={submitNewPassword}
+                type="submit"
               >
                 Save Changes
               </Button>

@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import LikeDislike from "../../LikeDislike";
 import { useHistory } from "react-router-dom";
-import "./SingleComment.css";
 
 const SingleComment = ({ comment, id }) => {
   const { storageRef, userData, deleteComment } = useData();

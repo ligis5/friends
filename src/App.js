@@ -15,10 +15,11 @@ import ProfilePage from "./components/Content/Profile/ProfilePage";
 import Posts from "./components/Content/Posts/Posts";
 import CreatePost from "./components/Content/CreatePost/CreatePost";
 import PostProfilePage from "./components/Content/PostProfile/PostProfilePage";
+import FriendsDropLeft from "./components/Content/Friends/FriendsDropLeft";
 
 const App = () => {
   return (
-    <Container fluid className="App" style={{ minWidth: "800px" }}>
+    <Container fluid className="App" style={{ minWidth: "820px" }}>
       <Row>
         <Col style={{ padding: "0" }}>
           <Header />
@@ -36,6 +37,7 @@ const App = () => {
             </Col>
           </Row>
           <Row>
+            <FriendsDropLeft />
             <Col style={{ padding: "0" }}>
               <Container style={{ padding: "0" }}>
                 <button
