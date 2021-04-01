@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { FireDatabase } from "../../FirebaseComponents/FirebaseDatabase";
 import ChatRoom from "./ChatRoom";
+import "./Friend.css";
 
 const Friend = ({ user }) => {
   const { allUsersStatus } = FireDatabase();
   const [modalShow, setModalShow] = useState(false);
 
   let isOnline;
-  Object.entries(allUsersStatus).filter((x) => {
-    if (x[0] === user.userId) {
-      isOnline = x[1].online;
-    }
-  });
+  if (allUsersStatus) {
+    Object.entries(allUsersStatus).filter((x) => {
+      if (x[0] === user.userId) {
+        isOnline = x[1].online;
+      }
+    });
+  }
   return (
     <div className="friend">
       <ChatRoom

@@ -1,0 +1,36 @@
+.chatRoom .modal-dialog {
+  height: 90%;
+}
+.chatRoom .modal-content {
+  height: 100%;
+}
+.chatRoom div .modal-body {
+  width: 100%;
+  height: 95%;
+  padding-bottom: 0;
+  display: grid;
+  align-content: flex-end;
+}
+.allMessages {
+  overflow-y: auto;
+}
+.chatRoom .modal-footer {
+  width: 100%;
+}
+.chatRoom form {
+  display: flex;
+  gap: 70px;
+  justify-content: center;
+  margin: auto;
+}
+.chatRoom .chooseButton {
+  align-self: center;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.chatRoom {
+  color: aliceblue;
+}
+button.close {
+  display: none;
+}

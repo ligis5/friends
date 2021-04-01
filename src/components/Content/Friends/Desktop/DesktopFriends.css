@@ -1,0 +1,13 @@
+div .deskFriends {
+  max-width: 200px;
+  max-height: 700px;
+  width: max-content;
+  position: fixed;
+  top: 300px;
+  background: rgba(33, 27, 28, 0.45);
+  box-shadow: 8px 8px 8px 0 rgba(189, 171, 231, 0.466);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}

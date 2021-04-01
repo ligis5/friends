@@ -9,8 +9,8 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import Friend from "./Friend";
-import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
+import Friend from "../Friend";
+import { useData } from "../../../FirebaseComponents/firebaseFunctionsFiles";
 
 import "./FriendsDropLeft.css";
 

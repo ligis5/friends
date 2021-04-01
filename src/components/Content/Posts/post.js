@@ -18,6 +18,11 @@ import useObserver from "../../../Observer";
 import ReactLoading from "react-loading";
 import Comments from "../Comments/Comments";
 
+// for observer
+const options = {
+  rootMargin: "0px 0px 500px",
+};
+
 const Post = ({ postData }) => {
   const history = useHistory();
   const { pathname } = useLocation();
@@ -30,7 +35,7 @@ const Post = ({ postData }) => {
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(true);
   const { storageRef, deletePost } = useData();
-  const onScreen = useObserver(ref);
+  const onScreen = useObserver(ref, options);
 
   const { postPhoto, aboutPost, createdAt, video, user, likes, id } = postData;
 

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-const useObserver = (ref) => {
+const useObserver = (ref, options) => {
   const [Intersecting, setIntersecting] = useState(false);
-
-  const options = {
-    rootMargin: "0px 0px 500px",
-  };
 
   const observer = new IntersectionObserver(([entry]) => {
     if (!entry.isIntersecting) {

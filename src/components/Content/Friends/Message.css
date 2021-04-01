@@ -1,0 +1,27 @@
+.modal-body .toast {
+  align-self: flex-end;
+}
+div .toast-header {
+  padding-left: 6px;
+  background-color: aliceblue;
+}
+.messageOwner {
+  margin-right: auto;
+  margin-bottom: 0;
+  background-color: aliceblue;
+  color: rgb(79, 59, 120);
+}
+.messageTime {
+  background-color: aliceblue;
+  color: rgb(79, 59, 120);
+}
+div .toast-body {
+  background-color: aliceblue;
+  color: rgb(79, 59, 120);
+}
+.messageImg {
+  border-radius: 10%;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}

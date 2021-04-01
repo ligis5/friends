@@ -1,11 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Modal, Form, Container } from "react-bootstrap";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import Message from "./Message";
+import "./ChatRoom.css";
 
 const ChatRoom = ({ onHide, show, user }) => {
   const writtenMessage = useRef();
   const messagesEndRef = useRef(null);
+  const [load, setLoad] = useState(false);
   const {
     userData,
     senderMessages,
@@ -13,11 +15,13 @@ const ChatRoom = ({ onHide, show, user }) => {
     writeMessage,
   } = useData();
 
-  const messages = [...senderMessages, ...recipientMessages];
-  messages.sort((a, b) => {
-    return a.data().createdAt.seconds - b.data().createdAt.seconds;
-  });
-
+  let messages = [];
+  if (senderMessages) {
+    messages = [...recipientMessages, ...senderMessages];
+    messages.sort((a, b) => {
+      return a.data().createdAt.seconds - b.data().createdAt.seconds;
+    });
+  }
   const filteredMessages = messages.filter(
     (m) => m.data().sender === user.userId || m.data().recipient === user.userId
   );
@@ -30,13 +34,19 @@ const ChatRoom = ({ onHide, show, user }) => {
     }
   };
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView();
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+    });
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
+    if (show) {
+      scrollToBottom();
+      setLoad(true);
+    }
+    return () => setLoad(false);
+  }, [show]);
   return (
     <Modal
       className="chatRoom"
@@ -51,12 +61,12 @@ const ChatRoom = ({ onHide, show, user }) => {
         <h1>{user.UserName}</h1>
         <h1 style={{ marginLeft: "auto" }}>{userData.UserName}</h1>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{ overflowY: "auto" }}>
         <Container className="allMessages">
           {filteredMessages.map((m) => (
             <Message user={user} key={m.id} messages={m.data()} />
           ))}
-          <div ref={messagesEndRef} />
+          <div style={{ alignSelf: "end" }} ref={messagesEndRef} />
         </Container>
       </Modal.Body>
       <Modal.Footer>

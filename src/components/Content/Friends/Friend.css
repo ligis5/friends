@@ -1,0 +1,29 @@
+.friend {
+  display: flex;
+  color: aliceblue;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 3px black;
+  background: rgba(255, 255, 255, 0);
+  justify-content: space-between;
+  width: 150px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.offline {
+  background-color: aliceblue;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  align-self: center;
+  font-size: 80%;
+}
+.online {
+  background-color: rgb(3, 182, 3);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: rgb(3, 182, 3) 0px 0px 5px 2px;
+  align-self: center;
+  font-size: 80%;
+}
