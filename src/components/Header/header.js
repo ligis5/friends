@@ -6,6 +6,7 @@ import { Col, Image, Dropdown, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuth } from "../FirebaseComponents/firebaseFunctionsAuth";
 import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
+import SearchBar from "../Content/SearchBar/SearchBar";
 
 const Header = () => {
   const { currentUser } = useAuth();
@@ -42,6 +43,8 @@ const Header = () => {
           height="80"
         />
       </Link>
+      {userData ? <SearchBar /> : <></>}
+
       <div className="regLog">
         {currentUser ? (
           <Row

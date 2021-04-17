@@ -1,0 +1,43 @@
+.search-form::placeholder {
+  text-align: center;
+}
+.searchBar {
+  position: absolute;
+  z-index: 99;
+  top: 100%;
+  left: 29%;
+  right: 0;
+}
+.user-list {
+  width: 500px;
+  min-height: max-content;
+  max-height: 200px;
+  overflow-y: auto;
+  display: grid;
+  z-index: 99;
+  position: absolute;
+  border: 1px aliceblue solid;
+  border-radius: 0 0 2% 2%;
+  box-shadow: 2px 2px aliceblue;
+}
+.foundUser {
+  display: flex;
+}
+.requestFriend {
+  height: fit-content;
+  color: aliceblue;
+  margin-left: auto;
+  background-color: rgb(79, 59, 120);
+}
+.user-list::-webkit-scrollbar {
+  width: 5px;
+}
+.user-list::-webkit-scrollbar-track {
+  background: rgb(79, 59, 120);
+}
+.user-list::-webkit-scrollbar-thumb {
+  background: rgb(33, 27, 28);
+}
+.user-list::-webkit-scrollbar-thumb:hover {
+  background: rgb(174, 11, 11);
+}

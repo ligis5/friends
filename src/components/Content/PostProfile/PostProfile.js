@@ -28,8 +28,14 @@ const Profile = ({ user }) => {
     });
     return () => (isMounted.current = false);
   }, [user]);
-  const { createdAt, email, profilePhoto, userId, ...otherData } =
-    clickedUserData || {};
+  const {
+    createdAt,
+    email,
+    profilePhoto,
+    userId,
+    smallProfilePhoto,
+    ...otherData
+  } = clickedUserData || {};
 
   let joinedAt;
   if (createdAt) {

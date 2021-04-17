@@ -16,8 +16,8 @@ import Posts from "./components/Content/Posts/Posts";
 import CreatePost from "./components/Content/CreatePost/CreatePost";
 import PostProfilePage from "./components/Content/PostProfile/PostProfilePage";
 import FriendsDropLeft from "./components/Content/Friends/Mobile/FriendsDropLeft";
-import {BrowserView, MobileView} from 'react-device-detect';
-import DesktopFriends from './components/Content/Friends/Desktop/DesktopFriends';
+import { BrowserView, MobileView } from "react-device-detect";
+import DesktopFriends from "./components/Content/Friends/Desktop/DesktopFriends";
 
 const App = () => {
   return (
@@ -39,11 +39,11 @@ const App = () => {
             </Col>
           </Row>
           <Row>
-          <MobileView>
-            <FriendsDropLeft />
+            <MobileView>
+              <FriendsDropLeft />
             </MobileView>
             <BrowserView>
-            <DesktopFriends/>
+              <DesktopFriends />
             </BrowserView>
             <Col style={{ padding: "0" }}>
               <Container style={{ padding: "0" }}>

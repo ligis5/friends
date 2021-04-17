@@ -15,6 +15,20 @@
 
 .friends {
   background-color: rgba(189, 171, 231, 0.2);
+  max-height: 400px;
+  overflow-y: auto;
+}
+.friends::-webkit-scrollbar {
+  width: 5px;
+}
+.friends::-webkit-scrollbar-track {
+  background: rgb(79, 59, 120);
+}
+.friends::-webkit-scrollbar-thumb {
+  background: rgb(33, 27, 28);
+}
+.friends::-webkit-scrollbar-thumb:hover {
+  background: rgb(174, 11, 11);
 }
 .show {
   background: rgba(33, 27, 28, 0.45);

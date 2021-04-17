@@ -35,17 +35,14 @@ const ChatRoom = ({ onHide, show, user }) => {
   };
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
+      inline: "start",
     });
   };
 
   useEffect(() => {
     if (show) {
       scrollToBottom();
-      setLoad(true);
     }
-    return () => setLoad(false);
   }, [show]);
   return (
     <Modal

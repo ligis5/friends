@@ -17,6 +17,7 @@ import ReactPlayer from "react-player/lazy";
 import useObserver from "../../../Observer";
 import ReactLoading from "react-loading";
 import Comments from "../Comments/Comments";
+import UserPhoto from "../userPhoto";
 
 // for observer
 const options = {
@@ -30,7 +31,6 @@ const Post = ({ postData }) => {
   const ref = useRef();
   const { currentUser } = useAuth();
   const [postImage, setPostImage] = useState();
-  const [userPhoto, setUserPhoto] = useState();
   const [hidePopup, setHidePopup] = useState();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(true);
@@ -66,13 +66,6 @@ const Post = ({ postData }) => {
     }
   }, [postData]);
 
-  storageRef
-    .child(user.profilePhoto)
-    .getDownloadURL()
-    .then((url) => {
-      setUserPhoto(url);
-    });
-
   const deletePostClick = () => {
     deletePost(id, postPhoto);
     setHidePopup(false);
@@ -93,19 +86,10 @@ const Post = ({ postData }) => {
           {" "}
           {show ? (
             <Card.Title style={{ margin: "0", display: "flex" }}>
-              <Image
-                onClick={() => history.push(`/profile/${user.userId}`)}
-                src={userPhoto}
-                roundedCircle
-                style={{
-                  cursor: "pointer",
-                  backgroundColor: "rgb(79,59,120)",
-                  width: "60px",
-                  height: "60px",
-                  objectFit: "cover",
-                  border: "1px solid aliceblue",
-                  boxShadow: "2px 2px aliceblue",
-                }}
+              <UserPhoto
+                size="60px"
+                userPhoto={user.smallProfilePhoto}
+                user={user.userId}
               />
               <h5 style={{ margin: "auto", paddingRight: "60px" }}>
                 Posted by {user.UserName}
@@ -215,7 +199,7 @@ const Post = ({ postData }) => {
               </Card.Text>
             </Card.Body>
           </Card.Body>
-          <Comments userPhoto={userPhoto} id={id} />
+          <Comments id={id} />
         </Card>
       ) : (
         <ReactLoading type="spin" height={150} width={150} />

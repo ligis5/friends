@@ -40,17 +40,21 @@ const FirebaseFunctionsFiles = ({ children }) => {
       `${currentUser.uid}/profilePhoto/profilePic`
     ).fullPath;
 
-    return firestore.collection("users").doc(`${currentUser.uid}`).set({
-      email: email,
-      createdAt: currentTime,
-      profilePhoto: profilePhoto,
-      UserName: userName,
-      Name: "Name",
-      Hobby: "Hobby",
-      Age: "Age",
-      Country: "Country",
-      Job: "Job",
-    });
+    return firestore
+      .collection("users")
+      .doc(`${currentUser.uid}`)
+      .set({
+        email: email,
+        createdAt: currentTime,
+        profilePhoto: profilePhoto,
+        smallProfilePhoto: `${currentUser.uid}/commentPhoto/commentPic`,
+        UserName: userName,
+        Name: "Name",
+        Hobby: "Hobby",
+        Age: "Age",
+        Country: "Country",
+        Job: "Job",
+      });
   };
 
   const updateUserProfile = (y) => {
@@ -232,11 +236,8 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
 
   const createComment = (commentText, postId) => {
-    const x = storage.ref(`${currentUser.uid}/commentPhoto/commentPic`)
-      .fullPath;
     return firestore.collection("comments").doc().set({
       UserName: userData.UserName,
-      userPhoto: x,
       comment: commentText,
       likes: 0,
       createdAt: currentTime,
@@ -263,10 +264,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
 
   const writeMessage = (message, recipient) => {
-    const x = storage.ref(`${currentUser.uid}/commentPhoto/commentPic`)
-      .fullPath;
     return firestore.collection("messages").doc().set({
-      userPhoto: x,
       message: message,
       createdAt: currentTime,
       sender: currentUser.uid,

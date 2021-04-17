@@ -65,8 +65,14 @@ const Profile = () => {
     setNewProfilePhoto();
   };
   // Destructure userData and take off what will not be needed in "About Me"
-  const { profilePhoto, createdAt, email, userId, ...otherData } =
-    userData || {};
+  const {
+    profilePhoto,
+    createdAt,
+    email,
+    userId,
+    smallProfilePhoto,
+    ...otherData
+  } = userData || {};
 
   const sortedOtherData = Object.entries({ ...otherData }).sort(
     (a, b) => a[0].length - b[0].length
