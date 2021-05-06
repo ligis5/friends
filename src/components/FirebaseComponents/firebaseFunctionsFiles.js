@@ -16,6 +16,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const [userData, setUserData] = useState();
   const [userPhoto, setUserPhoto] = useState();
   const [userPosts, setUserPosts] = useState();
+  const [peopleFound, setPeopleFound] = useState();
   const newPost = useRef(true);
   const [allUsers, setAllUsers] = useState();
   const [comments, setComments] = useState();
@@ -272,6 +273,30 @@ const FirebaseFunctionsFiles = ({ children }) => {
     });
   };
 
+  const findFriends = async () => {
+    await firestore
+      .collection("friends")
+      .where(
+        firebase.firestore.FieldPath.documentId(),
+        "==",
+        `${currentUser.uid}`
+      )
+      .onSnapshot((snapshot) => {
+        setPeopleFound(snapshot.docs);
+      });
+  };
+
+  const addFriend = (pendingFriend) => {
+    let requestingUserId = { [currentUser.uid]: "pending" };
+    let recieverUserID = { [pendingFriend]: "sent" };
+    const setFriends = () => {
+      firestore.collection("friends").doc(pendingFriend).set(requestingUserId);
+      firestore.collection("friends").doc(currentUser.uid).set(recieverUserID);
+    };
+
+    return setFriends();
+  };
+
   const deleteComment = async (commentId) => {
     await firestore.collection("comments").doc(commentId).delete();
   };
@@ -351,6 +376,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       UserProfile();
       retrieveComments();
       getMessages();
+      findFriends();
     }
   }, [currentUser]);
 
@@ -371,6 +397,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     createComment,
     deleteComment,
     writeMessage,
+    addFriend,
     // functions
     // data
     userData,
@@ -381,6 +408,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     comments,
     senderMessages,
     recipientMessages,
+    peopleFound,
     // data
   };
   return (

@@ -4,7 +4,7 @@ import ChatRoom from "./ChatRoom";
 import "./Friend.css";
 
 const Friend = ({ user }) => {
-  const { allUsersStatus } = FireDatabase();
+  const { allUsersStatus } = FireDatabase() || {};
   const [modalShow, setModalShow] = useState(false);
 
   let isOnline;

@@ -6,17 +6,24 @@ import { Col, Image, Dropdown, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuth } from "../FirebaseComponents/firebaseFunctionsAuth";
 import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
+import { FireDatabase } from "../FirebaseComponents/FirebaseDatabase";
 import SearchBar from "../Content/SearchBar/SearchBar";
 
 const Header = () => {
   const { currentUser } = useAuth();
   const { userData, userPhoto } = useData();
   const { SignOut } = useAuth();
+  const { logOff } = FireDatabase();
 
   let loggedIn = "yes";
   if (!userData) {
     loggedIn = "no";
   }
+
+  const seeYaLater = () => {
+    logOff();
+    SignOut();
+  };
 
   const LoginPath = () => {
     return (
@@ -63,7 +70,7 @@ const Header = () => {
                 boxShadow: "2px 2px aliceblue",
               }}
             />
-            <Dropdown style={{ marginTop: "15px" }}>
+            <Dropdown style={{ marginTop: "15px", zIndex: "999" }}>
               <Dropdown.Toggle
                 style={{
                   minWidth: "160px",
@@ -99,7 +106,7 @@ const Header = () => {
                   <h3 className="yes">Home</h3>
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={SignOut}
+                  onClick={seeYaLater}
                   style={{ textDecoration: "none" }}
                   as={Link}
                   to="/login"

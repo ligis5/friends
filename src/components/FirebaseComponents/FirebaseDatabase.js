@@ -20,28 +20,33 @@ const FirebaseDatabase = ({ children }) => {
         online: false,
       });
   };
+  const logOff = () => {
+    return firebase.database().ref(`users/${currentUser.uid}`).set({
+      online: false,
+    });
+  };
   const userOnline = () => {
     return firebase.database().ref(`users/${currentUser.uid}`).set({
       online: true,
     });
   };
-  const getData = () => {
-    const dataRef = firebase.database().ref("users");
+  const getData = async () => {
+    const dataRef = await firebase.database().ref("users");
     dataRef.on("value", (snapshot) => {
       setAllUsersStatus(snapshot.val());
     });
+    userOffline();
+    userOnline();
   };
-
   useEffect(() => {
     if (currentUser) {
       getData();
-      userOffline();
-      userOnline();
     }
   }, [currentUser]);
 
   const functions = {
     allUsersStatus,
+    logOff,
   };
   return (
     <FileContext.Provider value={functions}>{children}</FileContext.Provider>

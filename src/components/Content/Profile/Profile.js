@@ -33,7 +33,7 @@ const Profile = () => {
   // options for user photo user in comments.
   const optionsComment = {
     maxSizeMB: 0.2,
-    maxWidthOrHeight: 60,
+    maxWidthOrHeight: 120,
     useWebWorker: true,
   };
 

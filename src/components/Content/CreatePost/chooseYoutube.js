@@ -20,14 +20,15 @@ const YoutubePost = ({ cancelPlayer }) => {
 
   // if url is correct user gets to post creation screen.
   const writePost = () => {
+    let youtubeURL = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
     if (
-      videoUrl.current.value.substring(0, 23) === "https://www.youtube.com" ||
-      videoUrl.current.value.substring(0, 22) === "https://soundcloud.com"
+      videoUrl.current.value.match(youtubeURL) ||
+      videoUrl.current.value.includes("soundcloud")
     ) {
       setPlayer(true);
       setSendUrl(videoUrl.current.value);
     } else {
-      setCustomError("Bad Url, use only youtube full url's.");
+      setCustomError("Bad Url, use only youtube or soundcloud links.");
     }
   };
   const cancelPost = () => {

@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import { useAuth } from "../../FirebaseComponents/firebaseFunctionsAuth";
 import ReactPlayer from "react-player/lazy";
@@ -25,7 +25,6 @@ const options = {
 };
 
 const Post = ({ postData }) => {
-  const history = useHistory();
   const { pathname } = useLocation();
   const params = useParams();
   const ref = useRef();

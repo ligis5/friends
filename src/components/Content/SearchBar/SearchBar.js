@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import FoundUser from "./foundUser";
 
 const SearchBar = () => {
-  const { allUsers, userData } = useData();
+  const { allUsers, userData, peopleFound } = useData();
   const [findUser, setFindUser] = useState("");
   const { pathname } = useLocation();
 
@@ -15,13 +15,21 @@ const SearchBar = () => {
       ? allUsers.filter((u) => u.userId !== userData.userId)
       : null;
 
+  //if user is friend give him his status pending/friend.
+  const usersStatus = excludeOwner.map((user) => {
+    peopleFound.map((person) => {
+      if (Object.keys(person.data())[0] === user.userId) {
+        Object.assign(user, { status: Object.values(person.data())[0] });
+      }
+    });
+    return user;
+  });
   const usersFound =
     allUsers && userData
-      ? excludeOwner.filter(
+      ? usersStatus.filter(
           (u) => u.UserName.toLowerCase() === findUser.toLowerCase()
         )
       : null;
-
   useEffect(() => {
     setFindUser("");
   }, [pathname]);
