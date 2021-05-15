@@ -26,7 +26,6 @@
 .requestFriend {
   height: fit-content;
   color: aliceblue;
-  margin-left: auto;
   background-color: rgb(79, 59, 120);
 }
 .user-list::-webkit-scrollbar {
@@ -40,4 +39,10 @@
 }
 .user-list::-webkit-scrollbar-thumb:hover {
   background: rgb(174, 11, 11);
+}
+
+.button-info {
+  background-color: rgb(79, 59, 120, 0);
+  color: aliceblue;
+  z-index: 1000;
 }

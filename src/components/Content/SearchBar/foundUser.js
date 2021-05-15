@@ -1,45 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UserPhoto from "../userPhoto";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
-
-import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import "./SearchBar.css";
 
 const FoundUser = ({ user }) => {
-  const { addFriend } = useData();
+  const { addFriend, peopleFound } = useData();
+  const [status, setStatus] = useState("Add Friend");
 
-  const renderTooltip = (props) => {
-    return (
-      <Tooltip id="button-tooltip" {...props}>
-        {user.status === "pending" &&
-          `${user.UserName} sent friend request, click pending to accept`}
-        {user.status === "sent" && `friend request was sent, click to undo`}
-      </Tooltip>
-    );
+  //fix else setStatus
+  // if any data is found in peopleFound and coresponds to usersId that was searched for, it will set data in status state.
+  useEffect(() => {
+    peopleFound.forEach((u) => {
+      if (user.userId === Object.keys(u.data())[0]) {
+        setStatus(Object.values(u.data())[0]);
+        if (Object.values(u.data())[0] === "declined") {
+          addFriend(user.userId, "declined");
+          setStatus("Add Friend");
+        }
+      }
+    });
+  }, [peopleFound]);
+
+  const changeStatus = () => {
+    switch (status) {
+      case "Add Friend":
+        setStatus("cancel");
+        addFriend(user.userId, "Add Friend");
+        break;
+      case "cancel":
+        setStatus("Add Friend");
+        addFriend(user.userId, "cancel");
+        break;
+      case "confirm":
+        setStatus("friends");
+        addFriend(user.userId, "friends");
+        break;
+      case "friends":
+        return;
+    }
   };
-  // Create cancel friend request. Added friend should appear in friends list.
+
   return (
     <div className="foundUser">
       <div className="foundUser">
         <UserPhoto size="30px" userPhoto={user.smallProfilePhoto} />
         <h5>{user.UserName}</h5>
       </div>
-      <Tooltip id="button-tooltip">Simple tooltip</Tooltip>
-      {user.status ? (
-        <OverlayTrigger
-          placement="right"
-          delay={{ show: 250, hide: 400 }}
-          overlay={renderTooltip}
-        >
-          <button className="requestFriend">{user.status}</button>
-        </OverlayTrigger>
-      ) : (
-        <button
-          onClick={() => addFriend(user.userId)}
-          className="requestFriend"
-        >
-          Send friend request
+      <div style={{ width: "max-content", marginLeft: "auto" }}>
+        {status === "confirm" ? (
+          <button
+            className="requestFriend"
+            onClick={() => {
+              addFriend(user.userId, "cancel");
+              setStatus("Add Friend");
+            }}
+          >
+            Cancel
+          </button>
+        ) : (
+          <></>
+        )}
+        <button onClick={changeStatus} className="requestFriend">
+          {status}
         </button>
-      )}
+      </div>
     </div>
   );
 };

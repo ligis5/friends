@@ -286,12 +286,76 @@ const FirebaseFunctionsFiles = ({ children }) => {
       });
   };
 
-  const addFriend = (pendingFriend) => {
-    let requestingUserId = { [currentUser.uid]: "pending" };
-    let recieverUserID = { [pendingFriend]: "sent" };
+  const addFriend = (pendingFriend, doWhat) => {
     const setFriends = () => {
-      firestore.collection("friends").doc(pendingFriend).set(requestingUserId);
-      firestore.collection("friends").doc(currentUser.uid).set(recieverUserID);
+      switch (doWhat) {
+        case "friends":
+          firestore
+            .collection("friends")
+            .doc(pendingFriend)
+            .set(
+              {
+                [currentUser.uid]: "friends",
+              },
+              { merge: true }
+            );
+          firestore
+            .collection("friends")
+            .doc(currentUser.uid)
+            .set(
+              {
+                [pendingFriend]: "friends",
+              },
+              { merge: true }
+            );
+          break;
+        case "cancel":
+          firestore
+            .collection("friends")
+            .doc(pendingFriend)
+            .set(
+              {
+                [currentUser.uid]: "declined",
+              },
+              { merge: true }
+            );
+          firestore
+            .collection("friends")
+            .doc(currentUser.uid)
+            .set(
+              {
+                [pendingFriend]: "declined",
+              },
+              { merge: true }
+            );
+          break;
+        case "declined":
+          firestore
+            .collection("friends")
+            .doc(pendingFriend)
+            .update({
+              [currentUser.uid]: firebase.firestore.FieldValue.delete(),
+            });
+          firestore
+            .collection("friends")
+            .doc(currentUser.uid)
+            .update({
+              [pendingFriend]: firebase.firestore.FieldValue.delete(),
+            });
+          break;
+        case "Add Friend":
+          firestore
+            .collection("friends")
+            .doc(pendingFriend)
+            .set({ [currentUser.uid]: "confirm" }, { merge: true });
+          firestore
+            .collection("friends")
+            .doc(currentUser.uid)
+            .set({ [pendingFriend]: "cancel" }, { merge: true });
+
+        default:
+          return;
+      }
     };
 
     return setFriends();
