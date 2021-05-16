@@ -275,12 +275,9 @@ const FirebaseFunctionsFiles = ({ children }) => {
 
   const findFriends = async () => {
     await firestore
+      .collection("users")
+      .doc(currentUser.uid)
       .collection("friends")
-      .where(
-        firebase.firestore.FieldPath.documentId(),
-        "==",
-        `${currentUser.uid}`
-      )
       .onSnapshot((snapshot) => {
         setPeopleFound(snapshot.docs);
       });
@@ -291,67 +288,69 @@ const FirebaseFunctionsFiles = ({ children }) => {
       switch (doWhat) {
         case "friends":
           firestore
+            .collection("users")
+            .doc(currentUser.uid)
             .collection("friends")
             .doc(pendingFriend)
-            .set(
-              {
-                [currentUser.uid]: "friends",
-              },
-              { merge: true }
-            );
+            .set({
+              status: "friends",
+            });
           firestore
+            .collection("users")
+            .doc(pendingFriend)
             .collection("friends")
             .doc(currentUser.uid)
-            .set(
-              {
-                [pendingFriend]: "friends",
-              },
-              { merge: true }
-            );
+            .set({
+              status: "friends",
+            });
           break;
         case "cancel":
           firestore
+            .collection("users")
+            .doc(currentUser.uid)
             .collection("friends")
             .doc(pendingFriend)
-            .set(
-              {
-                [currentUser.uid]: "declined",
-              },
-              { merge: true }
-            );
+            .set({
+              status: "declined",
+            });
           firestore
+            .collection("users")
+            .doc(pendingFriend)
             .collection("friends")
             .doc(currentUser.uid)
-            .set(
-              {
-                [pendingFriend]: "declined",
-              },
-              { merge: true }
-            );
+            .set({
+              status: "declined",
+            });
           break;
         case "declined":
           firestore
+            .collection("users")
+            .doc(currentUser.uid)
             .collection("friends")
             .doc(pendingFriend)
-            .update({
-              [currentUser.uid]: firebase.firestore.FieldValue.delete(),
-            });
+            .delete();
+
           firestore
+            .collection("users")
+            .doc(pendingFriend)
             .collection("friends")
             .doc(currentUser.uid)
-            .update({
-              [pendingFriend]: firebase.firestore.FieldValue.delete(),
-            });
+            .delete();
           break;
         case "Add Friend":
           firestore
-            .collection("friends")
+            .collection("users")
             .doc(pendingFriend)
-            .set({ [currentUser.uid]: "confirm" }, { merge: true });
-          firestore
             .collection("friends")
             .doc(currentUser.uid)
-            .set({ [pendingFriend]: "cancel" }, { merge: true });
+            .set({ status: "confirm" });
+
+          firestore
+            .collection("users")
+            .doc(currentUser.uid)
+            .collection("friends")
+            .doc(pendingFriend)
+            .set({ status: "cancel" });
 
         default:
           return;

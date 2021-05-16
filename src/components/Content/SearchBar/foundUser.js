@@ -5,34 +5,34 @@ import "./SearchBar.css";
 
 const FoundUser = ({ user }) => {
   const { addFriend, peopleFound } = useData();
-  const [status, setStatus] = useState("Add Friend");
+  const [currentStatus, setCurrentStatus] = useState("Add Friend");
 
   //fix else setStatus
   // if any data is found in peopleFound and coresponds to usersId that was searched for, it will set data in status state.
   useEffect(() => {
     peopleFound.forEach((u) => {
-      if (user.userId === Object.keys(u.data())[0]) {
-        setStatus(Object.values(u.data())[0]);
-        if (Object.values(u.data())[0] === "declined") {
+      if (user.userId === u.id) {
+        setCurrentStatus(u.data().status);
+        if (u.data().status === "declined") {
           addFriend(user.userId, "declined");
-          setStatus("Add Friend");
+          setCurrentStatus("Add Friend");
         }
       }
     });
   }, [peopleFound]);
 
   const changeStatus = () => {
-    switch (status) {
+    switch (currentStatus) {
       case "Add Friend":
-        setStatus("cancel");
+        setCurrentStatus("cancel");
         addFriend(user.userId, "Add Friend");
         break;
       case "cancel":
-        setStatus("Add Friend");
+        setCurrentStatus("Add Friend");
         addFriend(user.userId, "cancel");
         break;
       case "confirm":
-        setStatus("friends");
+        setCurrentStatus("friends");
         addFriend(user.userId, "friends");
         break;
       case "friends":
@@ -47,12 +47,12 @@ const FoundUser = ({ user }) => {
         <h5>{user.UserName}</h5>
       </div>
       <div style={{ width: "max-content", marginLeft: "auto" }}>
-        {status === "confirm" ? (
+        {currentStatus === "confirm" ? (
           <button
             className="requestFriend"
             onClick={() => {
               addFriend(user.userId, "cancel");
-              setStatus("Add Friend");
+              setCurrentStatus("Add Friend");
             }}
           >
             Cancel
@@ -61,7 +61,7 @@ const FoundUser = ({ user }) => {
           <></>
         )}
         <button onClick={changeStatus} className="requestFriend">
-          {status}
+          {currentStatus}
         </button>
       </div>
     </div>
