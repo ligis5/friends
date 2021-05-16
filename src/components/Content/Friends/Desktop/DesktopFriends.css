@@ -10,6 +10,10 @@ div .deskFriends {
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+.friends-title {
+  background-color: rgb(79, 59, 120, 0);
+  color: aliceblue;
+}
 
 .deskFriends::-webkit-scrollbar {
   width: 5px;

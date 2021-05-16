@@ -15,9 +15,20 @@ import { useData } from "../../../FirebaseComponents/firebaseFunctionsFiles";
 import "./FriendsDropLeft.css";
 
 const FriendsDropLeft = () => {
-  const { allUsers, userData } = useData();
+  const { allUsers, userData, peopleFound } = useData();
 
-  const excludeOwner = allUsers.filter((u) => u.userId !== userData.userId);
+  const excludeOwner =
+    allUsers && userData
+      ? allUsers.filter((u) => u.userId !== userData.userId)
+      : null;
+
+  const myFriends = peopleFound.map((p) => {
+    const filterToFriends = excludeOwner.filter(
+      (u) => u.userId === p.id && p.data().status === "friends"
+    );
+    return filterToFriends;
+  });
+
   return (
     <Container bsPrefix="dropLeft">
       <OverlayTrigger
@@ -37,7 +48,7 @@ const FriendsDropLeft = () => {
               Friends
             </Popover.Title>
             <Popover.Content className="friends">
-              {excludeOwner.map((user) => (
+              {myFriends.flat().map((user) => (
                 <Friend key={user.userId} user={user} />
               ))}
             </Popover.Content>
