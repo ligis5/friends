@@ -23,9 +23,12 @@ const FriendsDropLeft = () => {
       : null;
 
   const myFriends = peopleFound.map((p) => {
-    const filterToFriends = excludeOwner.filter(
-      (u) => u.userId === p.id && p.data().status === "friends"
-    );
+    const filterToFriends = excludeOwner.filter((u) => {
+      if (u.userId === p.id) {
+        const y = Object.assign(u, p.data());
+        return y;
+      }
+    });
     return filterToFriends;
   });
 
@@ -49,7 +52,7 @@ const FriendsDropLeft = () => {
             </Popover.Title>
             <Popover.Content className="friends">
               {myFriends.flat().map((user) => (
-                <Friend key={user.userId} user={user} />
+                <Friend position={"left"} key={user.userId} user={user} />
               ))}
             </Popover.Content>
           </Popover>

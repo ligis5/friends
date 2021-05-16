@@ -13,18 +13,24 @@ const DesktopFriends = () => {
       : null;
 
   const myFriends = peopleFound.map((p) => {
-    const filterToFriends = excludeOwner.filter(
-      (u) => u.userId === p.id && p.data().status === "friends"
-    );
+    const filterToFriends = excludeOwner.filter((u) => {
+      if (u.userId === p.id) {
+        const y = Object.assign(u, p.data());
+        return y;
+      }
+    });
     return filterToFriends;
   });
 
   return (
     <Container className="deskFriends">
-      <h4 className="friends-title">My Friends</h4>
-      {myFriends.flat().map((user) => (
-        <Friend key={user.userId} user={user} />
-      ))}
+      <h5 className="friends-title">My Friends</h5>
+      {myFriends
+        .flat()
+        .map(
+          (user) =>
+            user && <Friend position={"right"} key={user.userId} user={user} />
+        )}
     </Container>
   );
 };

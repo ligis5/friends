@@ -41,9 +41,13 @@ const DeleteUser = ({ handleClose1, show1 }) => {
       <Modal.Header>
         <Modal.Title>Delete account ?</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{ display: "grid" }}>
         <Image
-          style={{ marginLeft: "8px", marginBottom: "16px" }}
+          style={{
+            marginLeft: "8px",
+            marginBottom: "16px",
+            justifySelf: "center",
+          }}
           width="450px"
           src={leaving}
         />

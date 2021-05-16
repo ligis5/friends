@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { storage, firestore } from "./firebase";
 import { useAuth } from "./firebaseFunctionsAuth";
-import firebase from "firebase/app";
 
 const FileContext = React.createContext();
 
@@ -351,7 +350,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
             .collection("friends")
             .doc(pendingFriend)
             .set({ status: "cancel" });
-
+          break;
         default:
           return;
       }

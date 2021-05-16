@@ -12,18 +12,37 @@
 }
 .offline {
   background-color: aliceblue;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   align-self: center;
   font-size: 80%;
 }
 .online {
   background-color: rgb(3, 182, 3);
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   box-shadow: rgb(3, 182, 3) 0px 0px 5px 2px;
   align-self: center;
   font-size: 80%;
+}
+.userName {
+  background-color: rgba(189, 171, 231, 0);
+  cursor: pointer;
+}
+.accept-deny {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0);
+  margin-left: 5px;
+}
+.accept-deny-left {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0);
+  margin-left: 20px;
+  font-size: larger;
+}
+
+.my-tooltip > .tooltip-inner {
+  background-color: rgba(255, 255, 255, 0);
 }

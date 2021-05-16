@@ -61,7 +61,7 @@ const Header = () => {
               src={userPhoto ? userPhoto : basicUser}
               roundedCircle
               style={{
-                marginTop: "5px",
+                marginTop: "10px",
                 width: "60px",
                 height: "60px",
                 objectFit: "cover",
@@ -70,7 +70,7 @@ const Header = () => {
                 boxShadow: "2px 2px aliceblue",
               }}
             />
-            <Dropdown style={{ marginTop: "15px", zIndex: "999" }}>
+            <Dropdown style={{ marginTop: "20px", zIndex: "999" }}>
               <Dropdown.Toggle
                 style={{
                   minWidth: "160px",
