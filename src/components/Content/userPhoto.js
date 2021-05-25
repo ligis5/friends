@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Image } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
@@ -6,6 +6,7 @@ import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
 const UserPhoto = ({ user, userPhoto, size }) => {
   const { storageRef } = useData();
   const history = useHistory();
+  const mounted = useRef(true);
   const [photo, setPhoto] = useState();
 
   useEffect(() => {
@@ -13,8 +14,9 @@ const UserPhoto = ({ user, userPhoto, size }) => {
       .child(userPhoto)
       .getDownloadURL()
       .then((url) => {
-        setPhoto(url);
+        mounted.current && setPhoto(url);
       });
+    return () => (mounted.current = false);
   }, [user]);
   return (
     <Image

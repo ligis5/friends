@@ -29,7 +29,9 @@ const AboutMe = ({ value, name }) => {
     if (upload) {
       updateUser();
     }
+    return () => setUpload(false);
   }, [upload]);
+
   const editAboutMe = () => {
     setEdit(false);
   };

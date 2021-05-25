@@ -1,13 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import LikeDislike from "../../LikeDislike";
-import {
-  Card,
-  Image,
-  OverlayTrigger,
-  Popover,
-  Row,
-  Button,
-} from "react-bootstrap";
+import { Card, OverlayTrigger, Popover, Row, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useParams } from "react-router-dom";
@@ -27,6 +20,7 @@ const options = {
 const Post = ({ postData }) => {
   const { pathname } = useLocation();
   const params = useParams();
+  const mounted = useRef(true);
   const ref = useRef();
   const { currentUser } = useAuth();
   const [postImage, setPostImage] = useState();
@@ -55,14 +49,16 @@ const Post = ({ postData }) => {
         .child(postPhoto)
         .getDownloadURL()
         .then((url) => {
-          setPostImage(url);
+          if (mounted.current) setPostImage(url);
         });
     }
+
     if (pathname === "/profile" || pathname === `/profile/${params.user}`) {
       setShow(false);
     } else {
       setShow(true);
     }
+    return () => (mounted.current = false);
   }, [postData]);
 
   const deletePostClick = () => {

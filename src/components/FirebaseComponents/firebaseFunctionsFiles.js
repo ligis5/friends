@@ -144,6 +144,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     });
   };
   // Getting all posts.
+  // change so only certain amount would be gotten at time.
   const retrievePosts = async () => {
     if (newPost) {
       await firestore.collection("posts").onSnapshot((querySnapshot) => {
@@ -271,7 +272,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       recipient: recipient,
     });
   };
-
+  // fetch all friends of logged in user.
   const findFriends = async () => {
     await firestore
       .collection("users")
@@ -281,7 +282,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
         setPeopleFound(snapshot.docs);
       });
   };
-
+  // depending on the action of the user, different action is ran.
   const addFriend = (pendingFriend, doWhat) => {
     const setFriends = () => {
       switch (doWhat) {
@@ -359,6 +360,25 @@ const FirebaseFunctionsFiles = ({ children }) => {
     return setFriends();
   };
 
+  const deleteFriend = (friend) => {
+    const doThis = () => {
+      firestore
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("friends")
+        .doc(friend)
+        .delete();
+
+      firestore
+        .collection("users")
+        .doc(friend)
+        .collection("friends")
+        .doc(currentUser.uid)
+        .delete();
+    };
+    return doThis();
+  };
+
   const deleteComment = async (commentId) => {
     await firestore.collection("comments").doc(commentId).delete();
   };
@@ -391,6 +411,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           deleteComment(doc.id);
+          // deleteFriend(doc.id)
         });
       })
       .catch((error) => {
@@ -460,6 +481,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     deleteComment,
     writeMessage,
     addFriend,
+    deleteFriend,
     // functions
     // data
     userData,

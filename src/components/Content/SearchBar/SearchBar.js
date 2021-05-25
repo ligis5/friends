@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import FoundUser from "./foundUser";
 
 const SearchBar = () => {
-  const { allUsers, userData, peopleFound } = useData();
+  const { allUsers, userData } = useData();
   const [findUser, setFindUser] = useState("");
   const { pathname } = useLocation();
 

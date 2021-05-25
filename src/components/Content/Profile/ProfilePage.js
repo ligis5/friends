@@ -7,10 +7,10 @@ import AllPostsAssign from "../../../AllPostsAssign";
 
 const ProfilePage = () => {
   const { currentUser, updated } = useAuth();
+  const allPosts = AllPostsAssign();
 
-  const filterPosts = AllPostsAssign().filter(
-    (x) => x.user.userId === currentUser.uid
-  );
+  const filterPosts =
+    allPosts && allPosts.filter((x) => x.user.userId === currentUser.uid);
 
   return (
     <Container fluid style={{ padding: "0", margin: "0" }}>
@@ -26,9 +26,10 @@ const ProfilePage = () => {
           )}
         </Col>
         <Col>
-          {filterPosts.map((postData) => (
-            <Post key={postData.id} postData={postData} />
-          ))}
+          {filterPosts &&
+            filterPosts.map((postData) => (
+              <Post key={postData.id} postData={postData} />
+            ))}
         </Col>
         <button
           onClick={() => window.scrollTo(0, 0)}

@@ -7,8 +7,10 @@ import { Container, Row, Col } from "react-bootstrap";
 
 const PostProfilePage = () => {
   const { user } = useParams();
+  const allPosts = AllPostsAssign();
 
-  const filterPosts = AllPostsAssign().filter((x) => x.user.userId === user);
+  const filterPosts =
+    allPosts && allPosts.filter((x) => x.user.userId === user);
 
   return (
     <Container fluid style={{ padding: "0", margin: "0" }}>
@@ -17,9 +19,10 @@ const PostProfilePage = () => {
           <PostProfile user={user} />
         </Col>
         <Col>
-          {filterPosts.map((postData) => (
-            <Post key={postData.id} postData={postData} />
-          ))}
+          {filterPosts &&
+            filterPosts.map((postData) => (
+              <Post key={postData.id} postData={postData} />
+            ))}
         </Col>
       </Row>
     </Container>

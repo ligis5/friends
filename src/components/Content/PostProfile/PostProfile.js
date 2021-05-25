@@ -8,25 +8,22 @@ const Profile = ({ user }) => {
   const [userPhoto, setUserPhoto] = useState();
   const [loading, setLoading] = useState(false);
   const { allUsers, storageRef } = useData();
-  const isMounted = useRef(false);
+  const mounted = useRef(true);
 
   useEffect(() => {
-    isMounted.current = true;
     allUsers.forEach((x) => {
       if (user === x.userId) {
         storageRef
           .child(x.profilePhoto)
           .getDownloadURL()
           .then((url) => {
-            setUserPhoto(url);
-            if (isMounted) {
-              setLoading(true);
-            }
+            mounted.current && setUserPhoto(url);
+            setLoading(true);
           });
-        setClickedUserData(x);
+        mounted.current && setClickedUserData(x);
       }
     });
-    return () => (isMounted.current = false);
+    return () => (mounted.current = false);
   }, [user]);
   const {
     createdAt,

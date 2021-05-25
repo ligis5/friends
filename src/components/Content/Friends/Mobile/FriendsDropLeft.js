@@ -1,36 +1,14 @@
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Popover,
-  OverlayTrigger,
-  Button,
-} from "react-bootstrap";
+import { Container, Popover, OverlayTrigger, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Friend from "../Friend";
-import { useData } from "../../../FirebaseComponents/firebaseFunctionsFiles";
+import AllFriendsAssign from "../../../../AllFriendsAssign";
 
 import "./FriendsDropLeft.css";
 
 const FriendsDropLeft = () => {
-  const { allUsers, userData, peopleFound } = useData();
-
-  const excludeOwner =
-    allUsers && userData
-      ? allUsers.filter((u) => u.userId !== userData.userId)
-      : null;
-
-  const myFriends = peopleFound.map((p) => {
-    const filterToFriends = excludeOwner.filter((u) => {
-      if (u.userId === p.id) {
-        const y = Object.assign(u, p.data());
-        return y;
-      }
-    });
-    return filterToFriends;
-  });
+  const myFriends = AllFriendsAssign();
 
   return (
     <Container bsPrefix="dropLeft">
@@ -51,7 +29,7 @@ const FriendsDropLeft = () => {
               Friends
             </Popover.Title>
             <Popover.Content className="friends">
-              {myFriends.flat().map((user) => (
+              {myFriends.map((user) => (
                 <Friend position={"left"} key={user.userId} user={user} />
               ))}
             </Popover.Content>

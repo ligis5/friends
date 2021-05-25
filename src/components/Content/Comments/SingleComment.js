@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, Container, Row } from "react-bootstrap";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,23 +11,22 @@ const SingleComment = ({ comment, id }) => {
   const [commentPhoto, setCommentPhoto] = useState();
   const [trashColor, setTrashColor] = useState("aliceblue");
   const history = useHistory();
+  const mounted = useRef(true);
 
-  const getProfilePhotos = () => {
+  useEffect(() => {
     allUsers.map((user) => {
       if (user.userId === comment.userId) {
         storageRef
           .child(user.smallProfilePhoto)
           .getDownloadURL()
           .then((url) => {
-            setCommentPhoto(url);
+            mounted.current && setCommentPhoto(url);
           });
       }
     });
-  };
 
-  useEffect(() => {
-    getProfilePhotos();
-  }, []);
+    return () => (mounted.current = false);
+  }, [allUsers]);
 
   // When delete comment is clicked it will make it color red and if it clicked again whithin 5seconds
   // it will delete comment, other wise it will turn back to white.

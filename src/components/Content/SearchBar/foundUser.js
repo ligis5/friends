@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import UserPhoto from "../userPhoto";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import "./SearchBar.css";
 
 const FoundUser = ({ user }) => {
   const { addFriend, peopleFound } = useData();
+  const mounted = useRef(true);
   const [currentStatus, setCurrentStatus] = useState("Add Friend");
 
   //fix else setStatus
@@ -12,13 +13,13 @@ const FoundUser = ({ user }) => {
   useEffect(() => {
     peopleFound.forEach((u) => {
       if (user.userId === u.id) {
-        setCurrentStatus(u.data().status);
+        mounted.current && setCurrentStatus(u.data().status);
         if (u.data().status === "declined") {
-          addFriend(user.userId, "declined");
-          setCurrentStatus("Add Friend");
+          mounted.current && setCurrentStatus("Add Friend");
         }
       }
     });
+    return () => (mounted.current = false);
   }, [peopleFound]);
 
   const changeStatus = () => {
