@@ -1,13 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Col, Row, Container } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import {
+  Card,
+  Col,
+  Row,
+  Container,
+  OverlayTrigger,
+  Button,
+  Popover,
+} from "react-bootstrap";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import "../Profile/Profile.css";
 
 const Profile = ({ user }) => {
+  const history = useHistory();
   const [clickedUserData, setClickedUserData] = useState();
   const [userPhoto, setUserPhoto] = useState();
+  const [hidePopup, setHidePopup] = useState();
   const [loading, setLoading] = useState(false);
-  const { allUsers, storageRef } = useData();
+  const { allUsers, storageRef, deleteFriend } = useData();
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -38,8 +49,15 @@ const Profile = ({ user }) => {
   if (createdAt) {
     joinedAt = createdAt.toDate().toDateString();
   }
+
+  const unfriend = () => {
+    deleteFriend(userId);
+    setHidePopup(false);
+    history.push("/");
+  };
+
   return (
-    <Container style={{ marginTop: "20px" }}>
+    <Container style={{ marginTop: "10px" }}>
       {loading ? (
         <Card bsPrefix="Profile">
           <Col bsPrefix="userName">
@@ -64,8 +82,64 @@ const Profile = ({ user }) => {
                   </p>
                 ))}
               </Row>
-              <Row style={{ marginLeft: "auto", width: "max-content" }}>
-                {joinedAt ? <>Joined at : {joinedAt.substring(4)}</> : <></>}
+              <Row
+                style={{
+                  display: "flex",
+                }}
+              >
+                {otherData.status && (
+                  <OverlayTrigger
+                    show={hidePopup}
+                    trigger="click"
+                    key="right"
+                    placement="right"
+                    overlay={
+                      <Popover id={"popover-positioned-right"}>
+                        <Popover.Title
+                          style={{
+                            fontSize: "large",
+                            color: "rgb(79, 59, 120)",
+                          }}
+                          as="h3"
+                        >
+                          Unfriend this user?
+                        </Popover.Title>
+                        <Popover.Content>
+                          <Row
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                            }}
+                          >
+                            <Button
+                              bsPrefix="chooseButton"
+                              onClick={() => setHidePopup(false)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button onClick={unfriend} bsPrefix="chooseButton">
+                              Confirm
+                            </Button>
+                          </Row>
+                        </Popover.Content>
+                      </Popover>
+                    }
+                  >
+                    <button
+                      onClick={() => setHidePopup(true)}
+                      style={{
+                        backgroundColor: "rgb(79, 59, 120)",
+                        color: "aliceblue",
+                      }}
+                    >
+                      Unfriend
+                    </button>
+                  </OverlayTrigger>
+                )}
+
+                <div style={{ marginLeft: "auto" }}>
+                  {joinedAt ? <>Joined at : {joinedAt.substring(4)}</> : <></>}
+                </div>
               </Row>
             </Container>
           </Card.Body>

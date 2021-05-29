@@ -19,6 +19,7 @@ import FriendsDropLeft from "./components/Content/Friends/Mobile/FriendsDropLeft
 import { BrowserView, MobileView } from "react-device-detect";
 import DesktopFriends from "./components/Content/Friends/Desktop/DesktopFriends";
 
+// if http or www in chat or comments add <a>
 const App = () => {
   return (
     <Container fluid className="App" style={{ minWidth: "820px" }}>

@@ -2,22 +2,27 @@ import { useData } from "./components/FirebaseComponents/firebaseFunctionsFiles"
 import { useEffect, useState } from "react";
 import AllFriendsAssign from "./AllFriendsAssign";
 
-// here we map over all posts and all users and for every post we assign a user that created said post.
+// here we map over all posts and friends and for every post we assign a user that created said post.
+// only friends and owners posts will be shown.
 const AllPostsAssign = () => {
   const allFriends = AllFriendsAssign();
-  const { userPosts, allUsers, userData } = useData();
+  const { userPosts, userData } = useData();
   const [posts, setPosts] = useState();
 
+  if (allFriends) {
+    let ownerExists = allFriends.some(
+      (user) => user.userId === userData.userId
+    );
+
+    !ownerExists && allFriends.push(userData);
+  }
+
   // map existing posts and add user object and post id into post object.
-  // if (allFriends) {
-  //   const x = allFriends.push(userData);
-  //   console.log(x);
-  // }
-  // console.log(allFriends);
   useEffect(() => {
     let mounted = true;
+
     if (allFriends) {
-      const postsWithUsers = allUsers.map((y) => {
+      const postsWithUsers = allFriends.map((y) => {
         const usersAssignedToPosts = userPosts.map((x) => {
           if (y.userId === x.data().userId) {
             const q = Object.assign(x.data(), { id: x.id });

@@ -84,7 +84,7 @@ const Profile = () => {
   }
 
   return (
-    <Container style={{ marginTop: "20px", padding: "0" }}>
+    <Container style={{ marginTop: "10px", padding: "0" }}>
       <Card bsPrefix="Profile">
         <Col bsPrefix="userName">
           <h3 style={{ margin: "auto" }}>

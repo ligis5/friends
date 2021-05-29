@@ -1,9 +1,18 @@
 .chatRoom .modal-dialog {
   height: 90%;
 }
+
 .chatRoom .modal-content {
+  border: 1px solid aliceblue;
   height: 100%;
 }
+.modal-backdrop {
+  opacity: 0 !important;
+}
+.chatRoom .modal-header {
+  border: 1px solid aliceblue;
+}
+
 .chatRoom div .modal-body {
   width: 100%;
   height: 95%;
@@ -15,6 +24,7 @@
   overflow-y: auto;
 }
 .chatRoom .modal-footer {
+  border: 1px solid aliceblue;
   width: 100%;
 }
 .chatRoom form {
@@ -29,6 +39,7 @@
   padding-right: 15px;
 }
 .chatRoom {
+  background-color: rgb(33, 27, 28, 0.2);
   color: aliceblue;
 }
 button.close {

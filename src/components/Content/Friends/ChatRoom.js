@@ -1,32 +1,29 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { Modal, Form, Container } from "react-bootstrap";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 import Message from "./Message";
+import UserPhoto from "../userPhoto";
 import "./ChatRoom.css";
 
 const ChatRoom = ({ onHide, show, user }) => {
   const writtenMessage = useRef();
   const messagesEndRef = useRef(null);
-  const [load, setLoad] = useState(false);
-  const {
-    userData,
-    senderMessages,
-    recipientMessages,
-    writeMessage,
-  } = useData();
+  const { userData, messages, writeMessage } = useData();
 
-  let messages = [];
-  if (senderMessages) {
-    messages = [...recipientMessages, ...senderMessages];
+  if (messages) {
     messages.sort((a, b) => {
       return a.data().createdAt.seconds - b.data().createdAt.seconds;
     });
   }
-  const filteredMessages = messages.filter(
-    (m) => m.data().sender === user.userId || m.data().recipient === user.userId
-  );
 
-  const confirmComment = (e) => {
+  const filteredMessages =
+    messages &&
+    messages.filter(
+      (m) =>
+        m.data().sender === user.userId || m.data().recipient === user.userId
+    );
+
+  const confirmMessage = (e) => {
     e.preventDefault();
     if (writtenMessage.current.value.length > 0) {
       writeMessage(writtenMessage.current.value, user.userId);
@@ -39,11 +36,20 @@ const ChatRoom = ({ onHide, show, user }) => {
     });
   };
 
+  const onEnterPress = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      if (writtenMessage.current.value.length > 0) {
+        writeMessage(writtenMessage.current.value, user.userId);
+        e.preventDefault();
+        writtenMessage.current.value = "";
+      }
+    }
+  };
   useEffect(() => {
     if (show) {
       scrollToBottom();
     }
-  }, [show]);
+  }, [show, messages]);
   return (
     <Modal
       className="chatRoom"
@@ -54,25 +60,56 @@ const ChatRoom = ({ onHide, show, user }) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
-        <h1>{user.UserName}</h1>
-        <h1 style={{ marginLeft: "auto" }}>{userData.UserName}</h1>
+      <Modal.Header style={{ height: "80px" }} closeButton>
+        <div
+          style={{
+            display: "flex",
+            height: "60px",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          <UserPhoto
+            size="60px"
+            userPhoto={user.smallProfilePhoto}
+            user={user.userId}
+          />
+          <h1>{user.UserName}</h1>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            height: "60px",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          <UserPhoto
+            size="60px"
+            userPhoto={userData.smallProfilePhoto}
+            user={userData.userId}
+          />
+          <h1 style={{ marginLeft: "auto" }}>{userData.UserName}</h1>
+        </div>
       </Modal.Header>
       <Modal.Body style={{ overflowY: "auto" }}>
         <Container className="allMessages">
-          {filteredMessages.map((m) => (
-            <Message user={user} key={m.id} messages={m.data()} />
-          ))}
+          {filteredMessages &&
+            filteredMessages.map((m) => (
+              <Message user={user} key={m.id} messages={m.data()} />
+            ))}
           <div style={{ alignSelf: "end" }} ref={messagesEndRef} />
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Form className="writeChat" onSubmit={(e) => confirmComment(e)}>
+        <Form className="writeChat" onSubmit={confirmMessage}>
           <button type="button" className="chooseButton" onClick={onHide}>
             Close
           </button>
           <Form.Group style={{ margin: "0px" }}>
             <Form.Control
+              placeholder="shift+enter for new line"
+              onKeyDown={onEnterPress}
               ref={writtenMessage}
               as="textarea"
               rows={9}

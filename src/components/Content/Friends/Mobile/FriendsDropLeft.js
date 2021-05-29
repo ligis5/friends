@@ -29,9 +29,10 @@ const FriendsDropLeft = () => {
               Friends
             </Popover.Title>
             <Popover.Content className="friends">
-              {myFriends.map((user) => (
-                <Friend position={"left"} key={user.userId} user={user} />
-              ))}
+              {myFriends &&
+                myFriends.map((user) => (
+                  <Friend position={"left"} key={user.userId} user={user} />
+                ))}
             </Popover.Content>
           </Popover>
         }

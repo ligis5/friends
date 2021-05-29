@@ -74,7 +74,8 @@ const Post = ({ postData }) => {
           style={{
             width: "770px",
             minWidth: "400px",
-            marginTop: "20px",
+            marginTop: "10px",
+            marginBottom: "10px",
             color: "aliceblue",
           }}
         >

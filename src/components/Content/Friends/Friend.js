@@ -8,7 +8,7 @@ import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import "./Friend.css";
 
 const Friend = ({ user, position }) => {
-  const { addFriend } = useData();
+  const { addFriend, getMessages } = useData();
   const { allUsersStatus } = FireDatabase() || {};
   const [modalShow, setModalShow] = useState(false);
 
@@ -20,6 +20,10 @@ const Friend = ({ user, position }) => {
       }
     });
   }
+  const clickFriend = async () => {
+    await getMessages(user.userId);
+    setModalShow(true);
+  };
 
   return (
     <div className="friend">
@@ -30,7 +34,7 @@ const Friend = ({ user, position }) => {
             show={modalShow}
             onHide={() => setModalShow(false)}
           />
-          <h6 onClick={() => setModalShow(true)} className="userName">
+          <h6 onClick={clickFriend} className="userName">
             {user.UserName}
           </h6>
           <div

@@ -15,8 +15,10 @@ const AllFriendsAssign = () => {
       }
       const filterToFriends = allUsers.filter((u) => {
         if (u.userId === p.id) {
-          const y = Object.assign(u, p.data());
-          return y;
+          if (p.data().status === "friends" || p.data().status === "confirm") {
+            const y = Object.assign(u, p.data());
+            return y;
+          }
         }
       });
       return filterToFriends;

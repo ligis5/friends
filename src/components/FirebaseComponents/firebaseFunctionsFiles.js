@@ -19,8 +19,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const newPost = useRef(true);
   const [allUsers, setAllUsers] = useState();
   const [comments, setComments] = useState();
-  const [recipientMessages, setRecipientMessages] = useState();
-  const [senderMessages, setSenderMessages] = useState();
+  const [messages, setMessages] = useState();
 
   // random id generator for naming post photos.
   const uuidv4 = () => {
@@ -143,6 +142,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       setAllUsers(filterY);
     });
   };
+  // change so only friends posts would be fetched!!!!
   // Getting all posts.
   // change so only certain amount would be gotten at time.
   const retrievePosts = async () => {
@@ -247,30 +247,43 @@ const FirebaseFunctionsFiles = ({ children }) => {
     });
   };
 
-  const getMessages = async () => {
+  const getMessages = async (recipient) => {
     await firestore
+      .collection("users")
+      .doc(currentUser.uid)
       .collection("messages")
-      .where("recipient", "==", currentUser.uid)
       .orderBy("createdAt")
       .onSnapshot((querySnapshot) => {
-        setRecipientMessages(querySnapshot.docs);
-      });
-    await firestore
-      .collection("messages")
-      .where("sender", "==", currentUser.uid)
-      .orderBy("createdAt")
-      .onSnapshot((querySnapshot) => {
-        setSenderMessages(querySnapshot.docs);
+        setMessages(querySnapshot.docs);
       });
   };
-
   const writeMessage = (message, recipient) => {
-    return firestore.collection("messages").doc().set({
-      message: message,
-      createdAt: currentTime,
-      sender: currentUser.uid,
-      recipient: recipient,
-    });
+    const saveMessages = () => {
+      firestore
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("messages")
+        .doc()
+        .set({
+          message: message,
+          createdAt: currentTime,
+          recipient: recipient,
+          sender: currentUser.uid,
+        });
+      firestore
+        .collection("users")
+        .doc(recipient)
+        .collection("messages")
+        .doc()
+        .set({
+          message: message,
+          createdAt: currentTime,
+          sender: currentUser.uid,
+          recipient: recipient,
+        });
+    };
+
+    return saveMessages();
   };
   // fetch all friends of logged in user.
   const findFriends = async () => {
@@ -458,7 +471,6 @@ const FirebaseFunctionsFiles = ({ children }) => {
       getUsers();
       UserProfile();
       retrieveComments();
-      getMessages();
       findFriends();
     }
   }, [currentUser]);
@@ -480,6 +492,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     createComment,
     deleteComment,
     writeMessage,
+    getMessages,
     addFriend,
     deleteFriend,
     // functions
@@ -490,8 +503,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     storageRef,
     allUsers,
     comments,
-    senderMessages,
-    recipientMessages,
+    messages,
     peopleFound,
     // data
   };

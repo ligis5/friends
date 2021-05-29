@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Toast } from "react-bootstrap";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
 
@@ -8,7 +8,6 @@ import UserPhoto from "../userPhoto";
 const Message = ({ messages, user }) => {
   const { userData, allUsers } = useData();
   const { createdAt, message, sender } = messages;
-
   const getMessagePhoto = allUsers.filter((u) => u.userId === sender);
 
   return (
