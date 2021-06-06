@@ -15,12 +15,17 @@ const ChatRoom = ({ onHide, show, user }) => {
       return a.data().createdAt.seconds - b.data().createdAt.seconds;
     });
   }
+  const addMessageIds =
+    messages &&
+    messages.map((m) => {
+      let x = Object.assign(m.data(), { messageId: m.id });
+      return x;
+    });
 
   const filteredMessages =
-    messages &&
-    messages.filter(
-      (m) =>
-        m.data().sender === user.userId || m.data().recipient === user.userId
+    addMessageIds &&
+    addMessageIds.filter(
+      (m) => m.sender === user.userId || m.recipient === user.userId
     );
 
   const confirmMessage = (e) => {
@@ -96,7 +101,12 @@ const ChatRoom = ({ onHide, show, user }) => {
         <Container className="allMessages">
           {filteredMessages &&
             filteredMessages.map((m) => (
-              <Message user={user} key={m.id} messages={m.data()} />
+              <Message
+                user={user}
+                friendId={user.userId}
+                key={m.messageId}
+                messages={m}
+              />
             ))}
           <div style={{ alignSelf: "end" }} ref={messagesEndRef} />
         </Container>

@@ -30,6 +30,11 @@ const FirebaseDatabase = ({ children }) => {
       online: true,
     });
   };
+
+  const deleteData = () => {
+    return firebase.database().ref(`users/${currentUser.uid}`).remove();
+  };
+
   const getData = async () => {
     const dataRef = await firebase.database().ref("users");
     dataRef.on("value", (snapshot) => {
@@ -47,6 +52,7 @@ const FirebaseDatabase = ({ children }) => {
   const functions = {
     allUsersStatus,
     logOff,
+    deleteData,
   };
   return (
     <FileContext.Provider value={functions}>{children}</FileContext.Provider>

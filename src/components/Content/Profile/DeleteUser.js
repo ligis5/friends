@@ -2,15 +2,18 @@ import React, { useRef, useState } from "react";
 import { Button, Modal, Image, InputGroup, Row, Form } from "react-bootstrap";
 import { useAuth } from "../../FirebaseComponents/firebaseFunctionsAuth";
 import { useData } from "../../FirebaseComponents/firebaseFunctionsFiles";
+import { FireDatabase } from "../../FirebaseComponents/FirebaseDatabase";
 import leaving from "./leaving.jpg";
 
 const DeleteUser = ({ handleClose1, show1 }) => {
+  const { deleteData } = FireDatabase();
   const { reuthenticateUser } = useAuth();
   const { deleteUserData } = useData();
   const [wrongPass, setWrongPass] = useState("none");
   const password = useRef();
 
   const byeByeUser = (e) => {
+    deleteData();
     e.preventDefault();
     if (password.current.value.length > 0) {
       reuthenticateUser(password.current.value)
@@ -32,6 +35,7 @@ const DeleteUser = ({ handleClose1, show1 }) => {
   };
   return (
     <Modal
+      className="deleteAccModal"
       centered
       style={{ color: "aliceblue", opacity: "95%" }}
       show={show1}
@@ -41,7 +45,7 @@ const DeleteUser = ({ handleClose1, show1 }) => {
       <Modal.Header>
         <Modal.Title>Delete account ?</Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ display: "grid" }}>
+      <Modal.Body style={{ display: "grid", justifyContent: "center" }}>
         <Image
           style={{
             marginLeft: "8px",
@@ -51,7 +55,14 @@ const DeleteUser = ({ handleClose1, show1 }) => {
           width="450px"
           src={leaving}
         />
-        <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
+        <Modal.Footer
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            maxWidth: "70%",
+            justifySelf: "center",
+          }}
+        >
           <Row style={{ width: "400px" }}>
             <Form.Label>
               Password{" "}

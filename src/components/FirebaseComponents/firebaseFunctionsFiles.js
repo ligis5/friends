@@ -11,7 +11,7 @@ export const useData = () => {
 export const storageRef = storage.ref();
 
 const FirebaseFunctionsFiles = ({ children }) => {
-  const { currentUser, deleteUser } = useAuth();
+  const { currentUser, deleteUser, loading } = useAuth();
   const [userData, setUserData] = useState();
   const [userPhoto, setUserPhoto] = useState();
   const [userPosts, setUserPosts] = useState();
@@ -33,13 +33,12 @@ const FirebaseFunctionsFiles = ({ children }) => {
 
   const currentTime = new Date();
 
-  const createUserProfile = (userName) => {
+  const createUserProfile = async (userName) => {
     const { email } = currentUser;
     const profilePhoto = storage.ref(
       `${currentUser.uid}/profilePhoto/profilePic`
     ).fullPath;
-
-    return firestore
+    const x = await firestore
       .collection("users")
       .doc(`${currentUser.uid}`)
       .set({
@@ -54,6 +53,9 @@ const FirebaseFunctionsFiles = ({ children }) => {
         Country: "Country",
         Job: "Job",
       });
+    addFriend("Zb11i9vqeHN4IYI7ts7yafzzhRS2", "friends");
+
+    return x;
   };
 
   const updateUserProfile = (y) => {
@@ -102,55 +104,64 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
   // Getting data of currently logged in user.
   const UserProfile = async () => {
-    if (currentUser) {
-      try {
-        const docRef = await firestore.collection("users").doc(currentUser.uid);
-        docRef.onSnapshot((doc) => {
-          if (doc && doc.exists) {
-            const x = Object.assign(doc.data(), { userId: doc.id });
-            setUserData(x);
-            setTimeout(() => {
-              storageRef
-                .child(`${currentUser.uid}/profilePhoto/profilePic`)
-                .getDownloadURL()
-                .then((url) => {
-                  setUserPhoto(url);
-                });
-            }, 500);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const docRef = await firestore.collection("users").doc(currentUser.uid);
+      const unsubscribe = docRef.onSnapshot((doc) => {
+        if (doc && doc.exists) {
+          const x = Object.assign(doc.data(), { userId: doc.id });
+          setUserData(x);
+          setTimeout(() => {
+            storageRef
+              .child(`${currentUser.uid}/profilePhoto/profilePic`)
+              .getDownloadURL()
+              .then((url) => {
+                setUserPhoto(url);
+              });
+          }, 500);
+        }
+      });
+
+      if (!currentUser) unsubscribe();
+      return unsubscribe;
+    } catch (error) {
+      console.log(error);
     }
   };
 
   // Getting all existing users.
   const getUsers = async () => {
     const y = [];
-    return await firestore.collection("users").onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const x = Object.assign(doc.data(), { userId: doc.id });
-        y.push(x);
+    const unsubscribe = await firestore
+      .collection("users")
+      .onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const x = Object.assign(doc.data(), { userId: doc.id });
+          y.push(x);
+        });
+        const filterY = y.filter(
+          (v, i, a) =>
+            a.findIndex(
+              (t) => JSON.stringify(t.userId) === JSON.stringify(v.userId)
+            ) === i
+        );
+        setAllUsers(filterY);
       });
-      const filterY = y.filter(
-        (v, i, a) =>
-          a.findIndex(
-            (t) => JSON.stringify(t.userId) === JSON.stringify(v.userId)
-          ) === i
-      );
-      setAllUsers(filterY);
-    });
+
+    if (!currentUser) unsubscribe();
+    return unsubscribe;
   };
   // change so only friends posts would be fetched!!!!
   // Getting all posts.
   // change so only certain amount would be gotten at time.
   const retrievePosts = async () => {
-    if (newPost) {
-      await firestore.collection("posts").onSnapshot((querySnapshot) => {
+    const unsubscribe = await firestore
+      .collection("posts")
+      .onSnapshot((querySnapshot) => {
         setUserPosts(querySnapshot.docs);
       });
-    }
+    console.log(unsubscribe);
+    if (!currentUser) unsubscribe();
+    return unsubscribe;
   };
 
   // used to create text post.
@@ -228,12 +239,14 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
   // Getting all Comments.
   const retrieveComments = async () => {
-    await firestore
+    const unsubscribe = await firestore
       .collection("comments")
       .orderBy("createdAt")
       .onSnapshot((querySnapshot) => {
         setComments(querySnapshot.docs.reverse());
       });
+    if (!currentUser) unsubscribe();
+    return unsubscribe;
   };
 
   const createComment = (commentText, postId) => {
@@ -247,8 +260,8 @@ const FirebaseFunctionsFiles = ({ children }) => {
     });
   };
 
-  const getMessages = async (recipient) => {
-    await firestore
+  const getMessages = async () => {
+    const unsubscribe = await firestore
       .collection("users")
       .doc(currentUser.uid)
       .collection("messages")
@@ -256,14 +269,18 @@ const FirebaseFunctionsFiles = ({ children }) => {
       .onSnapshot((querySnapshot) => {
         setMessages(querySnapshot.docs);
       });
+    if (!currentUser) unsubscribe();
+    return unsubscribe;
   };
+
   const writeMessage = (message, recipient) => {
+    const y = uuidv4();
     const saveMessages = () => {
       firestore
         .collection("users")
         .doc(currentUser.uid)
         .collection("messages")
-        .doc()
+        .doc(y)
         .set({
           message: message,
           createdAt: currentTime,
@@ -274,7 +291,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
         .collection("users")
         .doc(recipient)
         .collection("messages")
-        .doc()
+        .doc(y)
         .set({
           message: message,
           createdAt: currentTime,
@@ -287,14 +304,17 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
   // fetch all friends of logged in user.
   const findFriends = async () => {
-    await firestore
+    const unsubscribe = await firestore
       .collection("users")
       .doc(currentUser.uid)
       .collection("friends")
       .onSnapshot((snapshot) => {
         setPeopleFound(snapshot.docs);
       });
+    if (!currentUser) unsubscribe();
+    return unsubscribe;
   };
+
   // depending on the action of the user, different action is ran.
   const addFriend = (pendingFriend, doWhat) => {
     const setFriends = () => {
@@ -374,7 +394,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
   };
 
   const deleteFriend = (friend) => {
-    const doThis = () => {
+    let doThis = () => {
       firestore
         .collection("users")
         .doc(currentUser.uid)
@@ -395,6 +415,26 @@ const FirebaseFunctionsFiles = ({ children }) => {
   const deleteComment = async (commentId) => {
     await firestore.collection("comments").doc(commentId).delete();
   };
+
+  const deleteMessage = (messageId, friendId) => {
+    let doThis = () => {
+      firestore
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("messages")
+        .doc(messageId)
+        .delete();
+
+      firestore
+        .collection("users")
+        .doc(friendId)
+        .collection("messages")
+        .doc(messageId)
+        .delete();
+    };
+    return doThis();
+  };
+
   // delete post and run retrievePosts to update what user sees.
   // every comment that has postId of post that is being deleted will get deleted as well.
   const deletePost = async (postId, postPhoto) => {
@@ -415,8 +455,52 @@ const FirebaseFunctionsFiles = ({ children }) => {
       storageRef.child(postPhoto).delete();
     }
   };
+
+  const deleteAllMessagesAndFriends = () => {
+    firestore
+      .collection("users")
+      .doc(currentUser.uid)
+      .collection("friends")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((friendDoc) => {
+          deleteFriend(friendDoc.id);
+          //every message where user is sender
+          firestore
+            .collection("users")
+            .doc(friendDoc.id)
+            .collection("messages")
+            .where("sender", "==", currentUser.uid)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                deleteMessage(doc.id, friendDoc.id);
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          // every message where user is recipient
+          firestore
+            .collection("users")
+            .doc(friendDoc.id)
+            .collection("messages")
+            .where("recipient", "==", currentUser.uid)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                deleteMessage(doc.id, friendDoc.id);
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      });
+  };
   // hapens when user does byeBye :(
   const deleteUserData = () => {
+    deleteAllMessagesAndFriends();
     firestore
       .collection("comments")
       .where("userId", "==", currentUser.uid)
@@ -424,7 +508,6 @@ const FirebaseFunctionsFiles = ({ children }) => {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           deleteComment(doc.id);
-          // deleteFriend(doc.id)
         });
       })
       .catch((error) => {
@@ -444,6 +527,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
       })
       .then(() => {
         storageRef.child(`${currentUser.uid}/profilePhoto/profilePic`).delete();
+        storageRef.child(`${currentUser.uid}/commentPhoto/commentPic`).delete();
       })
       .catch((error) => console.log(error))
       .then(() => {
@@ -495,6 +579,7 @@ const FirebaseFunctionsFiles = ({ children }) => {
     getMessages,
     addFriend,
     deleteFriend,
+    deleteMessage,
     // functions
     // data
     userData,
@@ -508,7 +593,9 @@ const FirebaseFunctionsFiles = ({ children }) => {
     // data
   };
   return (
-    <FileContext.Provider value={functions}>{children}</FileContext.Provider>
+    <FileContext.Provider value={functions}>
+      {!loading && children}
+    </FileContext.Provider>
   );
 };
 

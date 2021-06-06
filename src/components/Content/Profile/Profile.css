@@ -39,6 +39,9 @@
   border-bottom: 2px solid rgba(0, 0, 0, 0.384);
   border-right: 2px solid rgba(0, 0, 0, 0.384);
 }
+.deleteAccModal .modal-content {
+  border: 2px solid aliceblue;
+}
 
 .aboutMe-buttonGroup {
   margin-left: auto;

@@ -7,7 +7,6 @@ const FoundUser = ({ user }) => {
   const { addFriend, peopleFound } = useData();
   const mounted = useRef(true);
   const [currentStatus, setCurrentStatus] = useState("Add Friend");
-
   // if any data is found in peopleFound and coresponds to usersId that was searched for, it will set data in status state.
   useEffect(() => {
     peopleFound.forEach((u) => {

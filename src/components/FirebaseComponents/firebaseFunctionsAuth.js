@@ -77,6 +77,7 @@ export const FirebaseFunctionsAuth = ({ children }) => {
         setCurrentUser();
       }
     });
+    console.log(unsubscribe);
     return () => {
       unsubscribe();
       setLoading(true);
@@ -85,6 +86,7 @@ export const FirebaseFunctionsAuth = ({ children }) => {
   const functions = {
     currentUser,
     updated,
+    loading,
     register,
     login,
     forgotPassword,
