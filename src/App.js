@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useRef, useEffect, useState} from "react";
 import "./App.css";
 import Header from "./components/Header/header";
 import { Container, Row, Col } from "react-bootstrap";
@@ -16,36 +16,53 @@ import Posts from "./components/Content/Posts/Posts";
 import CreatePost from "./components/Content/CreatePost/CreatePost";
 import PostProfilePage from "./components/Content/PostProfile/PostProfilePage";
 import FriendsDropLeft from "./components/Content/Friends/Mobile/FriendsDropLeft";
-import { BrowserView, MobileView } from "react-device-detect";
 import DesktopFriends from "./components/Content/Friends/Desktop/DesktopFriends";
 
-// if http or www in chat or comments add <a>
+
 const App = () => {
+  const containerRef = useRef();
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    if(containerRef){
+      window.addEventListener('resize', () => {
+        setWidth(containerRef.current.clientWidth)
+      })
+      
+      
+    }
+  }, [containerRef])
+  
   return (
-    <Container fluid className="App" style={{ minWidth: "820px" }}>
-      <Row>
-        <Col style={{ padding: "0" }}>
-          <Header />
+    <Container fluid='xxl' className="App" ref={containerRef} style={{width:'100%'}}>
+      <Row style={{width:'100%'}}>
+        <Col>
+          <Header parentWidth={width}/>
         </Col>
       </Row>
       <Switch>
         <PrivateRoutingIn exact path="/">
-          <Row>
-            <CreatePost />
-            <Col
+          <Row style={{width:'100%'}}>
+          <Col xl='6' lg="12"
               className="posts"
-              style={{ display: "grid", justifyContent: "center" }}
+              style={{ display: "flex",
+               justifyContent:'flex-start',
+                width:'100%',paddingRight:'0'
+                  }}
             >
-              <Posts />
+            <CreatePost parentWidth={width}/>
+            </Col>
+            <Col xl='6' lg="12"
+              className="posts"
+              style={{ display: "flex",
+               justifyContent:width < 1750 ?'flex-start': "center",
+                width:'100%', paddingRight:'0'
+                  }}
+            >
+              <Posts parentWidth={width}/>
             </Col>
           </Row>
           <Row>
-            <MobileView>
-              <FriendsDropLeft />
-            </MobileView>
-            <BrowserView>
-              <DesktopFriends />
-            </BrowserView>
+            {width < 800 ? <FriendsDropLeft /> :<DesktopFriends />}
             <Col style={{ padding: "0" }}>
               <Container style={{ padding: "0" }}>
                 <button
@@ -77,7 +94,7 @@ const App = () => {
           <NameAndPhoto />
         </PrivateRoutingUserData>
         <PrivateRoutingIn exact path="/profile/:user">
-          <PostProfilePage />
+          <PostProfilePage parentWidth={width}/>
         </PrivateRoutingIn>
         <PrivateRoutingIn exact path="/profile">
           <ProfilePage />

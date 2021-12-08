@@ -1,8 +1,4 @@
-.main {
-  display: grid;
-  justify-content: start;
-  color: aliceblue;
-}
+
 html {
   scroll-behavior: smooth;
 }
@@ -19,11 +15,7 @@ html {
   background: rgb(174, 11, 11);
 }
 
-@media only screen and (max-width: 800px) {
-  .posts {
-    margin-left: 10px;
-  }
-}
+
 
 .cancel-confirm {
   background-color: rgb(33, 27, 28);

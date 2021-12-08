@@ -9,7 +9,7 @@ import YoutubePost from "./chooseYoutube";
 import imageCompression from "browser-image-compression";
 import "./CreatePost.css";
 
-const CreatePost = () => {
+const CreatePost = ({parentWidth}) => {
   const [hideButtons, setHideButtons] = useState(false);
   const [text, setText] = useState(false);
   const [getUrl, setGetUrl] = useState(false);
@@ -61,7 +61,7 @@ const CreatePost = () => {
     }
   };
   let choosePost = (
-    <h4 style={{ color: "aliceblue", textAlign: "center" }}>
+    <h4 style={{ color: "aliceblue", textAlign: "center", fontSize:'calc(100% + 1vw)' }}>
       Choose a type of post you wish to make
     </h4>
   );
@@ -94,16 +94,17 @@ const CreatePost = () => {
       className="createPost"
       style={{
         border: "solid aliceblue 1px",
-        width: "500px",
         height: "max-content",
-        marginLeft: "20px",
-        marginTop: "20px",
+        margin:'0',
+        width:parentWidth < 1175 && parentWidth > 720 ? '65%' : '95%' || parentWidth < 720 ? "100%" : '65%',
+        maxWidth:'650px',
+     marginLeft:parentWidth < 1175 && parentWidth > 800 ? '200px' : '5px'
       }}
     >
       {!hideButtons ? (
         <Row>
           <Col style={{ display: "flex", justifyContent: "space-around" }}>
-            <Button bsPrefix="chooseButton" onClick={changeText}>
+            <Button bsPrefix="chooseButton" onClick={changeText} >
               Text
             </Button>
             <label htmlFor="file-upload" className="custom-file-upload">

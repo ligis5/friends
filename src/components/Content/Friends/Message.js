@@ -13,11 +13,11 @@ const Message = ({ messages, user, friendId }) => {
   const { createdAt, message, sender, messageId } = messages;
   const getMessagePhoto = allUsers.filter((u) => u.userId === sender);
   return (
-    <Toast
+    <Toast 
       style={
         userData.userId === sender
-          ? { height: "max-content", width: "400px", marginLeft: "auto" }
-          : { height: "max-content", width: "400px" }
+          ? {  marginLeft: "auto" }
+          : { marginLeft:'0' }
       }
     >
       <Toast.Header>
@@ -38,7 +38,7 @@ const Message = ({ messages, user, friendId }) => {
           {createdAt.toDate().toLocaleTimeString("en-US")}
         </small>
       </Toast.Header>
-      <Toast.Body>
+      <Toast.Body style={{overflowWrap: 'break-word'}}>
         {message}
         {userData.userId === sender && (
           <OverlayTrigger

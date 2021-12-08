@@ -2,11 +2,12 @@ import React from "react";
 import AllPostsAssign from "../../../AllPostsAssign";
 import Post from "./post";
 
-const Posts = () => {
+const Posts = ({parentWidth}) => {
   const allPosts = AllPostsAssign();
 
   return (
-    <div style={{ marginRight: "60px" }}>
+    <div style={{  width:parentWidth < 1175 ? '100%' : '95%',
+     marginLeft:parentWidth < 1175 && parentWidth > 800 ? '200px' : '5px'}}>
       {allPosts &&
         allPosts.map((postData) => (
           <Post key={postData.id} postData={postData} />

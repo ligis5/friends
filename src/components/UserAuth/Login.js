@@ -16,7 +16,6 @@ const Login = () => {
       await login(email.current.value, password.current.value);
     } catch (error) {
       setVisible("");
-      console.log(error);
     }
   };
 
@@ -28,7 +27,7 @@ const Login = () => {
   };
 
   return (
-    <Container>
+    <Container className='login-container'>
       <h1 style={{ color: "aliceblue", textAlign: "center" }}>Login</h1>
       <Form onSubmit={getLogin}>
         <Form.Group controlId="formBasicEmail">

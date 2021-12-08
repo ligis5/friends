@@ -1,5 +1,6 @@
 .chatRoom .modal-dialog {
   height: 90%;
+  width: 100%;
 }
 
 .chatRoom .modal-content {
@@ -7,7 +8,7 @@
   height: 100%;
 }
 .modal-backdrop {
-  opacity: 0 !important;
+  opacity: 0.5 !important;
 }
 .chatRoom .modal-header {
   border: 1px solid aliceblue;
@@ -26,12 +27,32 @@
 .chatRoom .modal-footer {
   border: 1px solid aliceblue;
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .chatRoom form {
   display: flex;
-  gap: 70px;
-  justify-content: center;
-  margin: auto;
+  justify-content: space-between;
+  width: 100%;
+}
+@media only screen and (max-width: 1000px) {
+  .chatRoom form {
+    flex-wrap: wrap;
+  }
+  #close {
+      order: 2;
+  }
+  #submit{
+    order: 3;
+  }
+}
+@media only screen and (max-width: 575px) {
+  
+  .chatRoom .modal-dialog {
+    width: 98%;
+    height: 90%;
+    margin: auto;
+  }
 }
 .chatRoom .chooseButton {
   align-self: center;

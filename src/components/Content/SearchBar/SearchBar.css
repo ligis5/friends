@@ -1,15 +1,18 @@
 .search-form::placeholder {
   text-align: center;
 }
-.searchBar {
-  position: absolute;
-  z-index: 99;
-  top: 100%;
-  left: 29%;
-  right: 0;
+div .search-bar {
+  width: 50%;
+}
+@media only screen and (max-width: 800px) {
+  div .search-bar {
+      order: 5;
+      margin:auto;
+      width: 90%;
+  }
 }
 .user-list {
-  width: 500px;
+  width: 50vw;
   min-height: max-content;
   max-height: 200px;
   overflow-y: auto;

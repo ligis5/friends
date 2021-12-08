@@ -33,7 +33,7 @@ const LikeDislike = ({ likes, id, size, collection }) => {
   };
 
   return (
-    <Card.Text as="div" style={{ display: "flex", gap: "10px" }}>
+    <Card.Text as="div" style={{ display: "flex", gap: "10px", justifyContent:'center' }}>
       <FontAwesomeIcon
         style={{ cursor: "pointer" }}
         icon={faThumbsUp}

@@ -1,7 +1,8 @@
 .Profile {
   display: grid;
   justify-content: center;
-  max-width: 670px;
+  width: 70%;
+  margin-left: 10px;
   height: auto;
   border: 2px solid aliceblue;
   color: aliceblue;
@@ -12,7 +13,6 @@
 }
 .profileImage {
   cursor: pointer;
-  max-height: 500px;
   object-fit: cover;
 }
 .profilePhoto-button {

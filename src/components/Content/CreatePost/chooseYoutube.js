@@ -67,7 +67,7 @@ const YoutubePost = ({ cancelPlayer }) => {
   if (player) {
     beforeUrl = (
       <>
-        <ReactPlayer controls={true} width="450px" url={sendUrl} />
+        <ReactPlayer controls={true} width="100%" url={sendUrl} />
         <Form.Group
           controlId="exampleForm.ControlTextarea1"
           style={{ marginTop: "20px", marginBottom: "50px" }}
@@ -77,7 +77,7 @@ const YoutubePost = ({ cancelPlayer }) => {
             rows={9}
             style={{
               resize: "none",
-              width: "450px",
+              width: "100%",
               height: "100px",
               color: "rgb(56, 41, 84)",
               fontSize: "120%",

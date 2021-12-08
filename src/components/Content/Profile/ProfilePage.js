@@ -5,7 +5,7 @@ import Post from "../Posts/post";
 import { useAuth } from "../../FirebaseComponents/firebaseFunctionsAuth";
 import AllPostsAssign from "../../../AllPostsAssign";
 
-const ProfilePage = () => {
+const ProfilePage = ({parentWidth}) => {
   const { currentUser, updated } = useAuth();
   const allPosts = AllPostsAssign();
 
@@ -13,9 +13,9 @@ const ProfilePage = () => {
     allPosts && allPosts.filter((x) => x.user.userId === currentUser.uid);
 
   return (
-    <Container fluid style={{ padding: "0", margin: "0" }}>
-      <Row>
-        <Col>
+    <Container fluid='xxl' style={{width:'100%'}}>
+      <Row style={{width:'100%'}}>
+        <Col xl='6' lg="12" style={{width:'100%',paddingRight:'0'}}>
           <Profile />
           {updated ? (
             <h5 style={{ color: "lightGreen", marginLeft: "20px" }}>
@@ -25,7 +25,10 @@ const ProfilePage = () => {
             <></>
           )}
         </Col>
-        <Col>
+        <Col xl='6' lg="12" style={{ display: "grid",
+               justifyContent:'center',
+                width:'100%', paddingRight:'0'
+                  }}>
           {filterPosts &&
             filterPosts.map((postData) => (
               <Post key={postData.id} postData={postData} />

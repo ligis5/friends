@@ -64,6 +64,7 @@ const ChatRoom = ({ onHide, show, user }) => {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      style={{height:'100%'}}
     >
       <Modal.Header style={{ height: "80px" }} closeButton>
         <div
@@ -79,7 +80,7 @@ const ChatRoom = ({ onHide, show, user }) => {
             userPhoto={user.smallProfilePhoto}
             user={user.userId}
           />
-          <h1>{user.UserName}</h1>
+          <h1 style={{fontSize:'calc(1vw + 100%)'}}>{user.UserName}</h1>
         </div>
         <div
           style={{
@@ -94,7 +95,7 @@ const ChatRoom = ({ onHide, show, user }) => {
             userPhoto={userData.smallProfilePhoto}
             user={userData.userId}
           />
-          <h1 style={{ marginLeft: "auto" }}>{userData.UserName}</h1>
+          <h1 style={{ marginLeft: "auto",fontSize:'calc(1vw + 100%)' }}>{userData.UserName}</h1>
         </div>
       </Modal.Header>
       <Modal.Body style={{ overflowY: "auto" }}>
@@ -112,11 +113,11 @@ const ChatRoom = ({ onHide, show, user }) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Form className="writeChat" onSubmit={confirmMessage}>
-          <button type="button" className="chooseButton" onClick={onHide}>
+        <Form className="writeChat" onSubmit={confirmMessage} bsPrefix>
+          <button type="button" className="chooseButton" id='close' onClick={onHide}>
             Close
           </button>
-          <Form.Group style={{ margin: "0px" }}>
+          <Form.Group style={{ margin: "0px", width:'100%' }}>
             <Form.Control
               placeholder="shift+enter for new line"
               onKeyDown={onEnterPress}
@@ -130,13 +131,13 @@ const ChatRoom = ({ onHide, show, user }) => {
                 fontWeight: "400",
                 backgroundColor: "aliceblue",
                 height: "70px",
-                width: "430px",
+                width: "70%",
                 overflowY: "auto",
-                marginTop: "20px",
+                margin:'auto'
               }}
             />
           </Form.Group>
-          <button className="chooseButton" type="submit">
+          <button className="chooseButton" type="submit" id='submit'>
             Send
           </button>
         </Form>

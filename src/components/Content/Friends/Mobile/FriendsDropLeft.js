@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Popover, OverlayTrigger, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import Friend from "../Friend";
 import AllFriendsAssign from "../../../../AllFriendsAssign";
 
@@ -14,8 +14,8 @@ const FriendsDropLeft = () => {
     <Container bsPrefix="dropLeft">
       <OverlayTrigger
         trigger="click"
-        key="left"
-        placement="left"
+        key="top"
+        placement="top"
         overlay={
           <Popover bsPrefix>
             <Popover.Title
@@ -42,7 +42,7 @@ const FriendsDropLeft = () => {
           className="friendsButton"
           variant="secondary"
         >
-          <FontAwesomeIcon className="dropLeftIcon" icon={faChevronLeft} />
+          <FontAwesomeIcon className="dropLeftIcon" icon={faChevronUp} />
         </Button>
       </OverlayTrigger>
     </Container>

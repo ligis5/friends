@@ -159,7 +159,6 @@ const FirebaseFunctionsFiles = ({ children }) => {
       .onSnapshot((querySnapshot) => {
         setUserPosts(querySnapshot.docs);
       });
-    console.log(unsubscribe);
     if (!currentUser) unsubscribe();
     return unsubscribe;
   };

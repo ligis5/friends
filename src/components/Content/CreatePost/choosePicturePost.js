@@ -17,7 +17,7 @@ const ChoosePicturePost = ({ photoFile, newProfilePhoto, showButtons }) => {
   return (
     <Container>
       <Image
-        style={{ width: "450px", maxHeight: "400px", objectFit: "cover" }}
+        style={{ width: "100%", maxHeight:'70vh', objectFit: "cover" }}
         src={newProfilePhoto ? newProfilePhoto : <></>}
       />
       <Form.Group
@@ -29,7 +29,7 @@ const ChoosePicturePost = ({ photoFile, newProfilePhoto, showButtons }) => {
           rows={9}
           style={{
             resize: "none",
-            width: "450px",
+            width: "100%",
             height: "100px",
             color: "rgb(56, 41, 84)",
             fontSize: "120%",

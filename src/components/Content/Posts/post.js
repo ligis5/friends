@@ -67,13 +67,12 @@ const Post = ({ postData }) => {
   };
 
   return (
-    <div ref={ref}>
+    <div ref={ref} style={{width:'100%'}}>
       {loading ? (
         <Card
           className="text-center"
           style={{
-            width: "770px",
-            minWidth: "400px",
+            width: "100%",
             marginTop: "10px",
             marginBottom: "10px",
             color: "aliceblue",
@@ -98,7 +97,8 @@ const Post = ({ postData }) => {
             <a href={postImage} target="_blank" rel="noreferrer">
               <Card.Img
                 style={{
-                  maxHeight: "600px",
+                  height:'auto',
+                  maxHeight:'70vh',
                   objectFit: "cover",
                 }}
                 variant="top"
@@ -109,16 +109,15 @@ const Post = ({ postData }) => {
             <></>
           )}
           {video ? (
-            <ReactPlayer controls={true} width="768px" url={video} />
+            <ReactPlayer controls={true} width="calc(100% - 1px)" url={video} />
           ) : (
             <></>
           )}
           <Card.Body style={{ padding: "0" }}>
-            <Card.Title style={{ marginTop: "20px" }}>{aboutPost}</Card.Title>
+            <Card.Title style={{ marginTop: "20px", fontSize:'calc(100% + 1vw)' }}>{aboutPost}</Card.Title>
             <Card.Body
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, auto)",
+                display: "flex",
                 padding: "0",
                 marginTop: "70px",
                 justifyContent: "space-between",
@@ -189,7 +188,7 @@ const Post = ({ postData }) => {
                 />
               </Card.Body>
               <Card.Text
-                style={{ display: "flex", padding: "0", paddingRight: "10px" }}
+                style={{ display: "flex", padding: "0", paddingRight: "10px",fontSize:'calc(70% + 0.3vw)', alignSelf:'end' }}
               >
                 Date: {publishDate}
               </Card.Text>

@@ -41,13 +41,11 @@ const Header = () => {
   };
 
   return (
-    <Col className="header">
+    <Col className="header" style={{padding:'0', width:'100%'}}>
       <Link to="/">
         <Image
-          style={{ marginTop: "10px" }}
+          style={{ marginTop: "10px", width:'calc(2vw + 4vh)', height:'calc(2vw + 4vh)' }}
           src={Logo}
-          width="80"
-          height="80"
         />
       </Link>
       {userData ? <SearchBar /> : <></>}
@@ -55,31 +53,38 @@ const Header = () => {
       <div className="regLog">
         {currentUser ? (
           <Row
-            style={{ display: "flex", flexWrap: "nowrap", marginRight: "10px" }}
+            style={{ display: "flex", flexWrap: "nowrap" }}
           >
             <Image
               src={userPhoto ? userPhoto : basicUser}
               roundedCircle
               style={{
-                marginTop: "10px",
-                width: "60px",
-                height: "60px",
+
+                marginTop: "auto",
+                 width:'calc(2vw + 4vh)',
+                 height:'calc(2vw + 4vh)',
                 objectFit: "cover",
                 border: "1px solid aliceblue",
                 backgroundColor: "rgb(79,59,120)",
                 boxShadow: "2px 2px aliceblue",
+                zIndex:'100'
               }}
             />
-            <Dropdown style={{ marginTop: "20px", zIndex: "999" }}>
+            <Dropdown style={{ marginTop: "auto", zIndex: "999" }}>
               <Dropdown.Toggle
                 style={{
-                  minWidth: "160px",
-                  maxWidth: "250px",
+                  width:'calc(3vw + 9vh)',
+                  height:'calc(2vw + 3vh)',
+                  maxHeight:'40px',
                   overflow: "hidden",
                   backgroundColor: "rgb(56, 41, 84)",
                   border: "1px solid aliceblue",
                   boxShadow: "1px 1px aliceblue",
                   fontSize: "120%",
+                  display:'flex',
+                  alignItems:'center',
+                  justifyContent:'center'
+
                 }}
                 variant="success"
                 id="dropdown-basic"
@@ -107,7 +112,7 @@ const Header = () => {
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={seeYaLater}
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: "none"}}
                   as={Link}
                   to="/login"
                   href="#/action-2"

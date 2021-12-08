@@ -16,7 +16,6 @@
     "firebase": "^8.2.4",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
-    "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.1",
     "react-loading": "^2.0.3",
     "react-player": "^2.8.2",

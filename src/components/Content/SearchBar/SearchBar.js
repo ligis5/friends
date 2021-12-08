@@ -25,10 +25,10 @@ const SearchBar = () => {
     setFindUser("");
   }, [pathname]);
   return (
-    <div className="SearchBar">
+    <div className="search-bar">
       <InputGroup
         style={{
-          width: "500px",
+          width: "100%",
           height: "60px",
           marginTop: "15px",
           display: "flex",

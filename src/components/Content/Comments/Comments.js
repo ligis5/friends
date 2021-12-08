@@ -50,12 +50,13 @@ const Comments = ({ id }) => {
           Write comment
         </Button>
       ) : (
-        <Form style={{ display: "flex" }}>
+        <Form style={{ display: "flex", justifyContent:'space-between' }}>
           <FontAwesomeIcon
             className="cancel-confirm"
             icon={faBan}
             color="aliceblue"
             onClick={cancelComment}
+            style={{marginLeft:'10px'}}
           />
 
           <Form.Group style={{ margin: "0px" }}>
@@ -70,7 +71,7 @@ const Comments = ({ id }) => {
                 fontWeight: "400",
                 backgroundColor: "aliceblue",
                 height: "70px",
-                width: "430px",
+                width: "99%",
                 overflowY: "auto",
                 marginTop: "20px",
               }}
@@ -78,7 +79,7 @@ const Comments = ({ id }) => {
           </Form.Group>
           <FontAwesomeIcon
             className="cancel-confirm"
-            style={{ marginLeft: "10px" }}
+            style={{ marginRight: "10px" }}
             icon={faCheck}
             color="aliceblue"
             onClick={confirmComment}
