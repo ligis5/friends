@@ -22,13 +22,19 @@ import DesktopFriends from "./components/Content/Friends/Desktop/DesktopFriends"
 const App = () => {
   const containerRef = useRef();
   const [width, setWidth] = useState(window.innerWidth);
+
+  const changeWidth = () => {
+    if(containerRef){
+      setWidth(containerRef.current.clientWidth)
+    }
+    
+  }
   useEffect(() => {
     if(containerRef){
-      window.addEventListener('resize', () => {
-        setWidth(containerRef.current.clientWidth)
-      })
-      
-      
+      window.addEventListener('resize', changeWidth)
+    }
+    return() => {
+      window.removeEventListener('resize', changeWidth)
     }
   }, [containerRef])
   

@@ -556,6 +556,15 @@ const FirebaseFunctionsFiles = ({ children }) => {
       retrieveComments();
       findFriends();
     }
+    return() => {
+      setUserData()
+      setUserPhoto()
+      setUserPosts()
+      setPeopleFound()
+      setAllUsers()
+      setComments()
+      setMessages()
+    }
   }, [currentUser]);
 
   // functions and data for exporting.

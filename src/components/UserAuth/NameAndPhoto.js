@@ -65,7 +65,7 @@ const NameAndPhoto = () => {
   }, []);
 
   return (
-    <Card bsPrefix="Card">
+    <Card className="Card">
       {loading ? (
         <ReactLoading type="bars" color="aliceblue" height={667} width={667} />
       ) : (
@@ -73,7 +73,7 @@ const NameAndPhoto = () => {
           <Col className="cardTitle">
             <h3>Profile Photo</h3>
           </Col>
-          <Card.Body bsPrefix="cardBody">
+          <Card.Body className="cardBody">
             <label htmlFor="file-upload" className="custom-file-upload">
               {profilePhoto ? (
                   <Card.Img className="userImage" src={profilePhoto} />
@@ -87,6 +87,7 @@ const NameAndPhoto = () => {
               type="file"
               accept="image/x-png, image/jpeg"
               onChange={handleAddPhoto}
+              
             />
             <Card.Body className="cardBottom">
               <button className="cancel">
@@ -105,6 +106,7 @@ const NameAndPhoto = () => {
                 placeholder="User Name"
                 size="12"
                 ref={userName}
+                style={{width:'40%'}}
               />
               <button className="confirm" onClick={userProfileButton}>
                 <FontAwesomeIcon

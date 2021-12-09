@@ -5,7 +5,7 @@ import Post from "../Posts/post";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
-const PostProfilePage = () => {
+const PostProfilePage = ({parentWidth}) => {
   const { user } = useParams();
   const allPosts = AllPostsAssign();
 
@@ -13,12 +13,19 @@ const PostProfilePage = () => {
     allPosts && allPosts.filter((x) => x.user.userId === user);
 
   return (
-    <Container fluid style={{ padding: "0", margin: "0" }}>
-      <Row>
-        <Col>
-          <PostProfile user={user} />
+    <Container fluid='xxl' >
+      
+    <Row style={{width:'100%'}}>
+    <Col style={{
+                width:'100%',paddingRight:'0'
+                  }}>
+          <PostProfile user={user} parentWidth={parentWidth}/>
         </Col>
-        <Col>
+        <Col xl='6' lg="12"
+              style={{
+               justifyContent:parentWidth < 1200 ?'flex-start': "center",
+                width:'100%', paddingRight:'0'
+                  }}>
           {filterPosts &&
             filterPosts.map((postData) => (
               <Post key={postData.id} postData={postData} />

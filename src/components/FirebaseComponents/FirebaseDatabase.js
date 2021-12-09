@@ -47,6 +47,9 @@ const FirebaseDatabase = ({ children }) => {
     if (currentUser) {
       getData();
     }
+    return () => {
+      setAllUsersStatus()
+    }
   }, [currentUser]);
 
   const functions = {
