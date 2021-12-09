@@ -37,7 +37,7 @@ const DeleteUser = ({ handleClose1, show1 }) => {
     <Modal
       className="deleteAccModal"
       centered
-      style={{ color: "aliceblue", opacity: "95%" }}
+      style={{ color: "aliceblue", opacity: "95%",width:'100%' }}
       show={show1}
       onHide={handleClose1}
       animation={false}
@@ -45,25 +45,26 @@ const DeleteUser = ({ handleClose1, show1 }) => {
       <Modal.Header>
         <Modal.Title>Delete account ?</Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ display: "grid", justifyContent: "center" }}>
+      <Modal.Body style={{ display: "grid", justifyContent: "center", width:'100%'}}>
         <Image
           style={{
-            marginLeft: "8px",
-            marginBottom: "16px",
             justifySelf: "center",
+            objectFit:'cover',
+            width:'90%'
           }}
-          width="450px"
           src={leaving}
         />
-        <Modal.Footer
+        
+      </Modal.Body>
+      <Modal.Footer
           style={{
             display: "flex",
             justifyContent: "center",
-            maxWidth: "70%",
+            width:'100%',
             justifySelf: "center",
           }}
         >
-          <Row style={{ width: "400px" }}>
+          <Row >
             <Form.Label>
               Password{" "}
               <p style={{ display: wrongPass, color: "#da1c1c" }}>
@@ -81,9 +82,8 @@ const DeleteUser = ({ handleClose1, show1 }) => {
           <Row
             style={{
               display: "flex",
-              marginLeft: "250px",
               gap: "10px",
-              width: "400px",
+              flexWrap:'nowrap'
             }}
           >
             <Button
@@ -108,7 +108,6 @@ const DeleteUser = ({ handleClose1, show1 }) => {
             </Button>
           </Row>
         </Modal.Footer>
-      </Modal.Body>
     </Modal>
   );
 };

@@ -60,10 +60,10 @@ const ChangePassword = ({ handleClose, show }) => {
         onHide={handleClose}
         animation={false}
       >
-        <Modal.Header>
+        <Modal.Header style={{ border:'1px solid aliceblue'}}>
           <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ border:'1px solid aliceblue'}}>
           <Form onSubmit={submitNewPassword}>
             <Form.Group controlId="formGroupPassword">
               <Form.Label>

@@ -4,15 +4,9 @@
 div .search-bar {
   width: 50%;
 }
-@media only screen and (max-width: 800px) {
-  div .search-bar {
-      order: 5;
-      margin:auto;
-      width: 90%;
-  }
-}
+
 .user-list {
-  width: 50vw;
+  width: 50%;
   min-height: max-content;
   max-height: 200px;
   overflow-y: auto;
@@ -48,4 +42,14 @@ div .search-bar {
   background-color: rgb(79, 59, 120, 0);
   color: aliceblue;
   z-index: 1000;
+}
+@media only screen and (max-width: 800px) {
+  div .search-bar {
+      order: 5;
+      margin:auto;
+      width: 90%;
+  }
+  .user-list{
+    width: 90%;
+  }
 }

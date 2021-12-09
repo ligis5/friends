@@ -5,6 +5,7 @@ import Post from "../Posts/post";
 import { useAuth } from "../../FirebaseComponents/firebaseFunctionsAuth";
 import AllPostsAssign from "../../../AllPostsAssign";
 
+
 const ProfilePage = ({parentWidth}) => {
   const { currentUser, updated } = useAuth();
   const allPosts = AllPostsAssign();
@@ -13,10 +14,14 @@ const ProfilePage = ({parentWidth}) => {
     allPosts && allPosts.filter((x) => x.user.userId === currentUser.uid);
 
   return (
-    <Container fluid='xxl' style={{width:'100%'}}>
+    <Container fluid='xxl' >
+      
       <Row style={{width:'100%'}}>
-        <Col xl='6' lg="12" style={{width:'100%',paddingRight:'0'}}>
-          <Profile />
+        
+        <Col style={{
+                width:'100%',paddingRight:'0'
+                  }}>
+          <Profile parentWidth={parentWidth}/>
           {updated ? (
             <h5 style={{ color: "lightGreen", marginLeft: "20px" }}>
               Password successfully changed
@@ -25,8 +30,9 @@ const ProfilePage = ({parentWidth}) => {
             <></>
           )}
         </Col>
-        <Col xl='6' lg="12" style={{ display: "grid",
-               justifyContent:'center',
+        <Col xl='6' lg="12"
+              style={{
+               justifyContent:parentWidth < 1200 ?'flex-start': "center",
                 width:'100%', paddingRight:'0'
                   }}>
           {filterPosts &&

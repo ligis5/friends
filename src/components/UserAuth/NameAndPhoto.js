@@ -5,7 +5,6 @@ import "./NameAndPhoto.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 import { useData } from "../FirebaseComponents/firebaseFunctionsFiles";
-import Tilt from "react-tilt";
 import { useHistory } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import ReactLoading from "react-loading";
@@ -77,9 +76,7 @@ const NameAndPhoto = () => {
           <Card.Body bsPrefix="cardBody">
             <label htmlFor="file-upload" className="custom-file-upload">
               {profilePhoto ? (
-                <Tilt className="Tilt" options={{ max: 10, scale: 1.05 }}>
                   <Card.Img className="userImage" src={profilePhoto} />
-                </Tilt>
               ) : (
                 <Image className="addUserImage" src={addPhoto} />
               )}

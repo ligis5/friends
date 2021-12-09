@@ -1,8 +1,8 @@
+
 .Profile {
   display: grid;
   justify-content: center;
-  width: 70%;
-  margin-left: 10px;
+  width: 80%;
   height: auto;
   border: 2px solid aliceblue;
   color: aliceblue;
@@ -10,10 +10,14 @@
 .userName {
   display: flex;
   justify-content: space-between;
+  margin: 0;
 }
+
 .profileImage {
   cursor: pointer;
   object-fit: cover;
+  height:auto;
+  max-height:70vh;
 }
 .profilePhoto-button {
   background-color: rgb(56, 41, 84);
@@ -45,4 +49,40 @@
 
 .aboutMe-buttonGroup {
   margin-left: auto;
+}
+
+.chooseButton{
+  margin-right:10px;
+  display:grid;
+  align-content:center;
+  font-size: 90%;
+  font-weight:600;
+}
+#delete-user{
+  width: 100px;
+}
+#change-pass{
+  width: 100px;
+}
+@media only screen and (max-width:1200px) {
+  .Profile{
+    width: 100%;
+  }
+}
+@media only screen and (max-width:500px) {
+  #delete-user{
+    margin-left: auto;
+  }
+}
+@media only screen and (max-width:300px) {
+  .chooseButton{
+    font-size: 70%;
+  font-weight:400;
+  }
+  #delete-user{
+   width: min-content;
+  }
+  #change-pass{
+    width: min-content;
+  }
 }

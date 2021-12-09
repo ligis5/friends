@@ -96,9 +96,9 @@ const CreatePost = ({parentWidth}) => {
         border: "solid aliceblue 1px",
         height: "max-content",
         margin:'0',
-        width:parentWidth < 1175 && parentWidth > 720 ? '65%' : '95%' || parentWidth < 720 ? "100%" : '65%',
+        width:parentWidth < 1200 && parentWidth > 720 ? '65%' : '95%' || parentWidth < 720 ? "100%" : '65%',
         maxWidth:'650px',
-     marginLeft:parentWidth < 1175 && parentWidth > 800 ? '200px' : '5px'
+     marginLeft:parentWidth < 1200 && parentWidth > 800 ? '200px' : '5px'
       }}
     >
       {!hideButtons ? (
@@ -111,7 +111,7 @@ const CreatePost = ({parentWidth}) => {
               <div className="choosePhoto chooseButton">
                 <FontAwesomeIcon
                   icon={faImage}
-                  style={{ fontSize: "200%", backgroundColor: "aliceblue" }}
+                  style={{ fontSize: "200%", backgroundColor: "aliceblue",margin:'auto' }}
                 />
               </div>
             </label>
@@ -124,7 +124,7 @@ const CreatePost = ({parentWidth}) => {
             <Button bsPrefix="chooseButton" onClick={choosePlayer}>
               <FontAwesomeIcon
                 icon={faYoutube}
-                style={{ fontSize: "200%", backgroundColor: "aliceblue" }}
+                style={{ fontSize: "200%", backgroundColor: "aliceblue",margin:'auto' }}
               />
             </Button>
           </Col>

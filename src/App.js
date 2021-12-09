@@ -54,7 +54,7 @@ const App = () => {
             <Col xl='6' lg="12"
               className="posts"
               style={{ display: "flex",
-               justifyContent:width < 1750 ?'flex-start': "center",
+               justifyContent:width < 1200 ?'flex-start': "center",
                 width:'100%', paddingRight:'0'
                   }}
             >
@@ -97,7 +97,7 @@ const App = () => {
           <PostProfilePage parentWidth={width}/>
         </PrivateRoutingIn>
         <PrivateRoutingIn exact path="/profile">
-          <ProfilePage />
+          <ProfilePage parentWidth={width}/>
         </PrivateRoutingIn>
       </Switch>
     </Container>

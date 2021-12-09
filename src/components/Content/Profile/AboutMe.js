@@ -47,23 +47,24 @@ const AboutMe = ({ value, name }) => {
 
   return (
     <Container
-      style={{ display: "flex", marginTop: "10px", paddingRight: "0" }}
+      style={{ display: "flex", marginTop: "10px", paddingRight: "0"}}
     >
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex"}}>
         {name}:
         {edit ? (
           <div style={{ marginLeft: "5px" }}>{value}</div>
         ) : (
-          <input style={{ color: "aliceblue" }} ref={inputValue} />
+          <input style={{ color: "aliceblue", width:'100%' }} ref={inputValue} />
         )}
       </div>
-      <div style={{ width: "max-content" }} className="aboutMe-buttonGroup">
+      <div style={{ width: "max-content", display:'flex' }} className="aboutMe-buttonGroup">
         {edit ? (
           <button className="aboutMe-button" onClick={editAboutMe}>
             <FontAwesomeIcon
               className="awesomeAbout"
               icon={faEdit}
               color="aliceblue"
+              style={{marginLeft:'auto'}}
             />
           </button>
         ) : (
@@ -73,6 +74,7 @@ const AboutMe = ({ value, name }) => {
                 className="awesomeAbout"
                 icon={faCheck}
                 color="aliceblue"
+                
               />
             </button>
             <button onClick={cancelEdit} className="aboutMe-button" id="onOff1">

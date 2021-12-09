@@ -9,7 +9,7 @@ import imageCompression from "browser-image-compression";
 import ChangePassword from "./ChangePassword";
 import DeleteUser from "./DeleteUser";
 
-const Profile = () => {
+const Profile = (parentWidth) => {
   const { userPhoto, userData, createUserProfilePhoto } = useData();
   const [newProfilePhoto, setNewProfilePhoto] = useState();
   const [confirmPhoto, setConfirmPhoto] = useState(false);
@@ -84,14 +84,14 @@ const Profile = () => {
   }
 
   return (
-    <Container style={{ marginTop: "10px", padding: "0" }}>
-      <Card bsPrefix="Profile">
-        <Col bsPrefix="userName">
+    <Container style={{ marginTop: "10px"}}>
+      <Card className="Profile">
+        <Card.Title className="userName" style={{margin:'0', backgroundColor:'rgb(33, 27, 28)'}}>
           <h3 style={{ margin: "auto" }}>
             {userData ? userData.UserName : "Profile Name"}
           </h3>
-        </Col>
-        <Card.Body bsPrefix="user">
+        </Card.Title>
+        <Card.Body style={{width:'100%', padding:'0'}}>
           <a href={userPhoto} target="_blank" rel="noreferrer">
             <Card.Img
               loading="lazy"
@@ -151,7 +151,6 @@ const Profile = () => {
               )}
             </Row>
             <Row
-              bsPrefix
               style={{
                 display: "flex",
                 justifyContent: "flex-start",
@@ -159,15 +158,8 @@ const Profile = () => {
             >
               <Button
                 onClick={handleShow}
-                style={{
-                  marginRight: "10px",
-                  width: "100px",
-                  display: "grid",
-                  alignContent: "center",
-                  fontSize: "90%",
-                  fontWeight: "600",
-                }}
                 bsPrefix="chooseButton"
+                id='change-pass'
               >
                 Change Password
               </Button>
@@ -175,21 +167,16 @@ const Profile = () => {
               <Button
                 onClick={handleShow1}
                 style={{
-                  marginRight: "10px",
-                  width: "100px",
-                  display: "grid",
-                  alignContent: "center",
-                  fontSize: "90%",
-                  fontWeight: "600",
                   color: "aliceblue",
                   backgroundColor: "rgb(65, 5, 0)",
                 }}
                 bsPrefix="chooseButton"
+                id='delete-user'
               >
                 Delete user
               </Button>
               <DeleteUser handleClose1={handleClose1} show1={show1} />
-              <div style={{ alignSelf: "flex-end", marginLeft: "auto" }}>
+              <div style={{ alignSelf: "flex-end", marginLeft: "auto",fontSize:'calc(70% + 0.3vw)' }}>
                 <p style={{ textAlign: "end", marginBottom: "0" }}>{email}</p>
                 {joinedAt ? <>Joined at : {joinedAt.substring(4)}</> : <></>}
               </div>
